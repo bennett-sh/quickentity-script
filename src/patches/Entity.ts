@@ -1,7 +1,7 @@
 import { PatchAction, PatchAction_AddCommentData, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPSPropertyData, PatchAction_AddPinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_AddPropertyAliasConnectionData, PatchAction_AddPropertyData, PatchAction_AddSubsetData, PatchAction_PatchArrayPropertyValueData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_RemoveAllEventConnectionsForEventData, PatchAction_RemoveAllEventConnectionsForTriggerData, PatchAction_RemoveAllInputCopyConnectionsForInputData, PatchAction_RemoveAllInputCopyConnectionsForTriggerData, PatchAction_RemoveAllOutputCopyConnectionsForOutput, PatchAction_RemoveAllOutputCopyConnectionsForPropagate, PatchAction_RemoveAllSubsetsForData, PatchAction_RemoveCommentData, PatchAction_RemoveConnectionForPropertyAliasData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExposedEntityData, PatchAction_RemoveExposedInterfaceData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveOutputCopyConnectionData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_RemovePSPropertyByNameData as PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_RemovePropertyAliasData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetEditorOnlyData, PatchAction_SetExposedEntityData, PatchAction_SetExposedInterfaceData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyTypeData, PatchAction_SetPSPropertyValueData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
 import { QNPatch } from './QNPatch.js'
 import { ICreateChildEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, TArrayPatchOperation, TRef } from '../types.js'
-import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
+import { ensureEntity, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 
 const outputsToEvent = (outputs: {[key: string]: TRef[]}) => Object.fromEntries(Object.entries(outputs).map(([key, value]) => [key, value.map(x => ensureID(x))]))
 
@@ -378,7 +378,7 @@ export class Entity {
     })
 
     this.addEvent({ when: whenA, do: 'A', on: addEntity })
-    this.addEvent({ when: whenB, do: 'B', on: addEntity })
+    ensureEntity(this.patch, b).addEvent({ when: whenB, do: 'B', on: addEntity })
 
     return addEntity
   }
@@ -423,7 +423,7 @@ export class Entity {
     })
 
     this.addEvent({ when: whenA, do: 'A', on: addEntity })
-    this.addEvent({ when: whenB, do: 'B', on: addEntity })
+    ensureEntity(this.patch, b).addEvent({ when: whenB, do: 'B', on: addEntity })
 
     return addEntity
   }
@@ -468,7 +468,7 @@ export class Entity {
     })
 
     this.addEvent({ when: whenA, do: 'A', on: mulEntity })
-    this.addEvent({ when: whenB, do: 'B', on: mulEntity })
+    ensureEntity(this.patch, b).addEvent({ when: whenB, do: 'B', on: mulEntity })
 
     return mulEntity
   }
@@ -513,7 +513,7 @@ export class Entity {
     })
 
     this.addEvent({ when: whenA, do: 'A', on: divEntity })
-    this.addEvent({ when: whenB, do: 'B', on: divEntity })
+    ensureEntity(this.patch, b).addEvent({ when: whenB, do: 'B', on: divEntity })
 
     return divEntity
   }
