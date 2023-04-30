@@ -1,6 +1,6 @@
 # 📝Documentation
 
-### Getting Started With A Patch
+### Getting started with a patch
 To write a patch you'll first need to import the ```createPatch(...)``` function from the package root like so:
 ```ts
 import { createPatch } from 'quickentity-script';
