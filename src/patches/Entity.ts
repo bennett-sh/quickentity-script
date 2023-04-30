@@ -300,4 +300,94 @@ export class Entity {
 
     return addEntity
   }
+
+  public multiplyWithConstantNumber(when: string, mul: number, outputs: {[key: string]: TRef[]}): Entity {
+    const mulEntity = this.addChild({
+      factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
+      blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',
+      properties: {
+        m_fA: {
+          type: 'float32',
+          value: mul
+        },
+        m_bDivide: {
+          type: 'bool',
+          value: false
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when, do: 'B', on: mulEntity })
+
+    return mulEntity
+  }
+
+  public mutiplyWithVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef[]}): Entity {
+    const mulEntity = this.addChild({
+      factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
+      blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',
+      properties: {
+        m_bDivide: {
+          type: 'bool',
+          value: false
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when: whenA, do: 'A', on: mulEntity })
+    this.addEvent({ when: whenB, do: 'B', on: mulEntity })
+
+    return mulEntity
+  }
+
+  public divideByConstantNumber(when: string, div: number, outputs: {[key: string]: TRef[]}): Entity {
+    const divEntity = this.addChild({
+      factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
+      blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',
+      properties: {
+        m_fA: {
+          type: 'float32',
+          value: div
+        },
+        m_bDivide: {
+          type: 'bool',
+          value: true
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when, do: 'B', on: divEntity })
+
+    return divEntity
+  }
+
+  public divideByVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef[]}): Entity {
+    const divEntity = this.addChild({
+      factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
+      blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',
+      properties: {
+        m_bDivide: {
+          type: 'bool',
+          value: true
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when: whenA, do: 'A', on: divEntity })
+    this.addEvent({ when: whenB, do: 'B', on: divEntity })
+
+    return divEntity
+  }
 }

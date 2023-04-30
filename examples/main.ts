@@ -38,16 +38,16 @@ async function main() {
   const yes = myEntity0.getConstantBool(true)
 
   const thisWillBeSeven = myEntity0.addInt(0)
-  const thisWillBeNine = myEntity0.addInt(0)
+  const thisWillBeNFive = myEntity0.addInt(0)
 
   // add two + 5 and store it in thisWillBeSeven
   two.addToConstantNumber('OnValue', 5, {
     SetValue: [thisWillBeSeven]
   })
 
-  // add two + thisWillBeSeven and store it in thisWillBeNine
-  two.addToVariableNumber('OnValue', 'OnValue', thisWillBeSeven, {
-    SetValue: [thisWillBeNine]
+  // sub two - thisWillBeSeven
+  two.subtractFromVariableNumber('OnValue', 'OnValue', thisWillBeSeven, {
+    SetValue: [thisWillBeNFive]
   })
 
   // this will be added everytime it's called so you can modify it's value
