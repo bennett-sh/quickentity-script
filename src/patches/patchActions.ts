@@ -18,7 +18,6 @@ export enum PatchAction {
   SET_FACTORY,
   SET_FACTORY_FLAG,
   SET_BLUEPRINT,
-  SET_BLUEPRINT_FLAG,
   REMOVE_EVENT_CONNECTION,
   REMOVE_INPUT_COPY_CONNECTION,
   REMOVE_ENTITY_BY_ID,
@@ -33,6 +32,7 @@ export enum PatchAction {
   REMOVE_PROPERTY_OVERRIDE,
   ADD_PROPERTY_OVERRIDE_CONNECTION,
   REMOVE_PROPERTY_OVERRIDE_CONNECTION,
+  REMOVE_PROPERTY_BY_NAME,
 
   CUSTOM_PATCH
 }
@@ -60,6 +60,7 @@ export type PatchAction_SetSubTypeData = TSubType
 export type PatchAction_SetRootEntityData = string | Entity
 export type PatchAction_RemoveEntityByIDData = string | Entity
 
+export interface PatchAction_RemovePropertyByNameData extends ISubEntityOperation { name: string }
 export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperation {
   when:      string
   do:        string
@@ -68,7 +69,7 @@ export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperati
 export interface PatchAction_RemoveInputCopyConnectionData extends ISubEntityOperation {
   a:        string
   b:        string
-  to:        string | Entity | (string | Entity)[]
+  to:       string | Entity
 }
 export interface PatchAction_AddInputCopyConnectionData extends ISubEntityOperation {
   a:   string,
@@ -90,9 +91,6 @@ export interface PatchAction_SetFactoryFlagData extends ISubEntityOperation {
 }
 export interface PatchAction_SetBlueprintData extends ISubEntityOperation {
   blueprint: string
-}
-export interface PatchAction_SetBlueprintFlagData extends ISubEntityOperation {
-  flag: string
 }
 export interface PatchAction_SetParentData extends ISubEntityOperation {
   parent: string

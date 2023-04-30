@@ -1,4 +1,4 @@
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetBlueprintFlagData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './patchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './patchActions.js'
 import { QNPatch } from './QNPatch.js'
 import { ICreateChildEntity, IEntity, IProperty } from '../types.js'
 import { generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
@@ -62,10 +62,6 @@ export class Entity {
     this.patch.addPatch<PatchAction_SetBlueprintData>(PatchAction.SET_BLUEPRINT, { blueprint, target: this._id })
     return this
   }
-  public setBlueprintFlag(flag: string): this {
-    this.patch.addPatch<PatchAction_SetBlueprintFlagData>(PatchAction.SET_BLUEPRINT_FLAG, { flag, target: this._id })
-    return this
-  }
   public removeEventConnection(event: PatchAction_RemoveEventConnectionData): this {
     this.patch.addPatch(PatchAction.REMOVE_EVENT_CONNECTION, { ...event, target: this._id })
     return this
@@ -80,6 +76,10 @@ export class Entity {
   }
   public removeInputCopyConnection(event: PatchAction_RemoveInputCopyConnectionData): this {
     this.patch.addPatch(PatchAction.REMOVE_INPUT_COPY_CONNECTION, { ...event, target: this._id })
+    return this
+  }
+  public removePropertyByName(name: string): this {
+    this.patch.addPatch(PatchAction.REMOVE_PROPERTY_BY_NAME, { name, target: this._id })
     return this
   }
 
