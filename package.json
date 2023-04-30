@@ -7,7 +7,7 @@
   "type": "module",
   "scripts": {
     "dev:build": "tsc -w",
-    "prod:build": "tsc"
+    "prod:build": "tsc && node scripts/bundleDeclarations.js"
   },
   "keywords": [
     "hitman",
