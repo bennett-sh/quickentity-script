@@ -7,11 +7,8 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * RemoveAllOutputCopyConnectionsForPropagate
 * RemoveAllSubsetsFor
 * RemoveAllInputCopyConnectionsForTrigger
-* RemoveConnectionForPropertyAlias
 * RemoveAllOutputCopyConnectionsForOutput
-* AddPropertyAliasConnection
 * RemoveAllInputCopyConnectionsForInput
-* RemovePropertyAlias
 
 Features:
 - (?) load existing patches

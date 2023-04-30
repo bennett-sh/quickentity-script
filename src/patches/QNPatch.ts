@@ -1,5 +1,5 @@
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_PatchArrayPropertyValueData, PatchAction_AddSubsetData, PatchAction_AddPinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_SetExposedEntity, PatchAction_SetExposedInterface, PatchAction_RemoveExposedEntity, PatchAction_RemoveExposedInterface } from './PatchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_PatchArrayPropertyValueData, PatchAction_AddSubsetData, PatchAction_AddPinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_SetExposedEntityData, PatchAction_SetExposedInterfaceData, PatchAction_RemoveExposedEntityData, PatchAction_RemoveExposedInterfaceData, PatchAction_AddPropertyAliasConnectionData, PatchAction_RemovePropertyAliasData, PatchAction_RemoveConnectionForPropertyAliasData } from './PatchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './SinglePatch.js'
 import { writeFile } from 'fs/promises'
@@ -442,7 +442,7 @@ export class QNPatch {
         }
 
         case PatchAction.SET_EXPOSED_ENTITY: {
-          const data = patch.data as PatchAction_SetExposedEntity
+          const data = patch.data as PatchAction_SetExposedEntityData
           return [{
             "SubEntityOperation": [
               data.target,
@@ -457,7 +457,7 @@ export class QNPatch {
         }
 
         case PatchAction.SET_EXPOSED_INTERFACE: {
-          const data = patch.data as PatchAction_SetExposedInterface
+          const data = patch.data as PatchAction_SetExposedInterfaceData
           return [{
             "SubEntityOperation": [
               data.target,
@@ -472,7 +472,7 @@ export class QNPatch {
         }
 
         case PatchAction.REMOVE_EXPOSED_ENTITY: {
-          const data = patch.data as PatchAction_RemoveExposedEntity
+          const data = patch.data as PatchAction_RemoveExposedEntityData
           return [{
             "SubEntityOperation": [
               data.target,
@@ -484,7 +484,7 @@ export class QNPatch {
         }
 
         case PatchAction.REMOVE_EXPOSED_INTERFACE: {
-          const data = patch.data as PatchAction_RemoveExposedInterface
+          const data = patch.data as PatchAction_RemoveExposedInterfaceData
           return [{
             "SubEntityOperation": [
               data.target,
@@ -502,6 +502,48 @@ export class QNPatch {
               data.target,
               {
                 "RemovePinConnectionOverrideDelete": data.override
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.ADD_PROPERTY_ALIAS_CONNECTION: {
+          const data = patch.data as PatchAction_AddPropertyAliasConnectionData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "AddPropertyAliasConnection": [
+                  data.name,
+                  data.alias
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_CONNECTION_FOR_PROPERTY_ALIAS: {
+          const data = patch.data as PatchAction_RemoveConnectionForPropertyAliasData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveConnectionForPropertyAlias": [
+                  data.name,
+                  data.alias
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_PROPERTY_ALIAS: {
+          const data = patch.data as PatchAction_RemovePropertyAliasData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemovePropertyAlias": data.name
               }
             ]
           }]

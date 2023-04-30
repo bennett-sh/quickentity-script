@@ -4,7 +4,7 @@ export type TSubType = 'brick' | 'scene' | 'template'
 
 export type TPropertyType = 'SEntityTemplateReference' | any
 export interface ISimpleProperty {
-  type:   TPropertyType,
+  type:   TPropertyType
   value:  any
 }
 export interface IProperty extends ISimpleProperty { postInit?: boolean }
@@ -16,39 +16,39 @@ export interface IFullRef {
 }
 export type TRef = IFullRef | string | null | Entity
 export interface IRefWithConstantValue {
-  ref:    TRef,
+  ref:    TRef
   value:  IProperty
 }
 export type TRefMaybeConstantValue = IFullRef | IRefWithConstantValue | string
 
 export interface IPropertyAlias {
-  originalEntity:    TRef,
+  originalEntity:    TRef
   originalProperty:  string
 }
 
 export interface IExposedEntity {
-  isArray:   boolean,
-  refersTo:  TRef[]
+  isArray   :  boolean
+  refersTo  :  TRef[]
 }
 
 export interface IPropertyOverrideConnection {
-  entity:             TRef,
-  propertyName:       string
-  propertyOverride:   IOverridenProperty
+  entity            :  TRef
+  propertyName      :  string
+  propertyOverride  :  IOverridenProperty
 }
 
 export interface IOverridenProperty {
-  type:   string
-  value:  {}
+  type    :  string
+  value   :  any
 }
 export interface IPropertyOverride {
-  entities: TRef[],
-  properties: {[key: string]: IOverridenProperty}
+  entities    :  TRef[]
+  properties  :  {[key: string]: IOverridenProperty}
 }
 
 export interface IDependencyWithFlag {
-  flag:      string
-  resource:  string
+  flag      :  string
+  resource  :  string
 }
 export type TDependency = string | IDependencyWithFlag
 
@@ -70,33 +70,38 @@ export interface IBaseEntity {
   platformSpecificProperties?: {[key: string]: {[key: string]: string}}
 }
 export interface IEntity extends IBaseEntity {
-  id:      string
-  name:    string
-  parent:  string
+  id      :  string
+  name    :  string
+  parent  :  string
 }
 
 export interface ICreateEntity extends IBaseEntity {
-  parent:   string
-  name?:    string
-  id?:      string
+  parent  :  string
+  name   ?:  string
+  id     ?:  string
 }
 
 export interface ICreateChildEntity extends IBaseEntity {
-  parent?:  string
-  name?:    string
-  id?:      string
+  parent  ?:  string
+  name    ?:  string
+  id      ?:  string
 }
 
 export interface IPinConnectionOverride {
-  fromEntity:  TRef
-  fromPin:     string
-  toEntity:    TRef
-  toPin:       string
-  value:       any
+  fromEntity : TRef
+  toEntity   : TRef
+  fromPin    : string
+  toPin      : string
+  value      : any
 }
 export type IPinConnectionOverrideDelete = IPinConnectionOverride
 
 export interface IExposedEntity {
-  isArray:   boolean
-  refersTo:  TRef[]
+  isArray  : boolean
+  refersTo : TRef[]
+}
+
+export interface IPropertyAlias {
+  originalEntity    : TRef
+  originalProperty  : string
 }

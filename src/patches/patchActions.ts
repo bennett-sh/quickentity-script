@@ -1,4 +1,4 @@
-import { IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
+import { IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './Entity.js'
 
 export enum PatchAction {
@@ -51,6 +51,9 @@ export enum PatchAction {
   REMOVE_EXPOSED_INTERFACE,
   SET_EXPOSED_ENTITY,
   REMOVE_EXPOSED_ENTITY,
+  REMOVE_PROPERTY_ALIAS,
+  ADD_PROPERTY_ALIAS_CONNECTION,
+  REMOVE_CONNECTION_FOR_PROPERTY_ALIAS,
 
   CUSTOM_PATCH
 }
@@ -78,10 +81,13 @@ export type PatchAction_SetSubTypeData = TSubType
 export type PatchAction_SetRootEntityData = string | Entity
 export type PatchAction_RemoveEntityByIDData = string | Entity
 
-export interface PatchAction_SetExposedInterface extends ISubEntityOperation { name: string, inf: string }
-export interface PatchAction_RemoveExposedInterface extends ISubEntityOperation { name: string }
-export interface PatchAction_SetExposedEntity extends ISubEntityOperation { name: string, entity: IExposedEntity }
-export interface PatchAction_RemoveExposedEntity extends ISubEntityOperation { name: string }
+export interface PatchAction_AddPropertyAliasConnectionData extends ISubEntityOperation { name: string, alias: IPropertyAlias }
+export interface PatchAction_RemovePropertyAliasData extends ISubEntityOperation { name: string }
+export interface PatchAction_RemoveConnectionForPropertyAliasData extends ISubEntityOperation { name: string, alias: IPropertyAlias }
+export interface PatchAction_SetExposedInterfaceData extends ISubEntityOperation { name: string, inf: string }
+export interface PatchAction_RemoveExposedInterfaceData extends ISubEntityOperation { name: string }
+export interface PatchAction_SetExposedEntityData extends ISubEntityOperation { name: string, entity: IExposedEntity }
+export interface PatchAction_RemoveExposedEntityData extends ISubEntityOperation { name: string }
 export interface PatchAction_AddPinConnectionOverrideData extends ISubEntityOperation { override: IPinConnectionOverride }
 export interface PatchAction_RemovePinConnectionOverrideData extends ISubEntityOperation { override: IPinConnectionOverride }
 export interface PatchAction_AddPinConnectionOverrideDeleteData extends ISubEntityOperation { override: IPinConnectionOverrideDelete }
