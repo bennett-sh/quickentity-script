@@ -1,6 +1,6 @@
 {
   "name": "quickentity-script",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An easier way of writing QN patches with code",
   "main": "dist/examples/main.js",
   "types": "./dist/src/index.d.ts",
@@ -27,7 +27,7 @@
     "md5": "^2.3.0"
   },
   "files": [
-    "dist/src/**/*"
+    "src/**/*"
   ],
   "repository": {
     "type": "git",
