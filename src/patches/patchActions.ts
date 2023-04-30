@@ -1,4 +1,4 @@
-import { IEntity, IProperty, IPropertyOverride, IPropertyOverrideConnection, TDependency, TRef, TSubType } from '../types.js'
+import { IEntity, IProperty, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './Entity.js'
 
 export enum PatchAction {
@@ -34,6 +34,13 @@ export enum PatchAction {
   REMOVE_PROPERTY_OVERRIDE_CONNECTION,
   REMOVE_PROPERTY_BY_NAME,
   ADD_OUTPUT_COPY_CONNECTION,
+  SET_PLATFORM_SPECIFIC_PROPERTY_TYPE,
+  SET_PLATFORM_SPECIFIC_PROPERTY_VALUE,
+  SET_PLATFORM_SPECIFIC_PROPERTY_POSTINIT,
+  ADD_PLATFORM_SPECIFIC_PROPERTY,
+  REMOVE_PLATFORM_SPECIFIC_PROPERTY_BY_NAME,
+  REMOVE_PLATFORM_SPECIFIC_PROPERTIES_FOR_PLATFORM,
+  PATCH_PLATFORM_SPECIFIC_ARRAY_PROPERTY_VALUE,
 
   CUSTOM_PATCH
 }
@@ -121,4 +128,36 @@ export interface PatchAction_SetPropertyTypeData extends ISubEntityOperation {
 export interface PatchAction_SetPropertyPostInitData extends ISubEntityOperation {
   name:      string
   postInit:  boolean
+}
+export interface PatchAction_AddPSPropertyData extends ISubEntityOperation {
+  platform:  string
+  name:      string
+  property:  IProperty
+}
+export interface PatchAction_SetPSPropertyValueData extends ISubEntityOperation {
+  platform:  string
+  name:      string
+  value:     any
+}
+export interface PatchAction_SetPSPropertyTypeData extends ISubEntityOperation {
+  platform:  string
+  name:      string
+  type:      string
+}
+export interface PatchAction_SetPSPropertyPostInitData extends ISubEntityOperation {
+  platform:  string
+  name:      string
+  postInit:  boolean
+}
+export interface PatchAction_RemovePSPropertyByNameData extends ISubEntityOperation {
+  platform:  string
+  name:      string
+}
+export interface PatchAction_RemovePSPropertiesForPlatform extends ISubEntityOperation {
+  platform:  string
+}
+export interface PatchAction_PatchPSArrayPropertyValue extends ISubEntityOperation {
+  platform:    string
+  name:        string
+  operations:  TArrayPatchOperation[]
 }

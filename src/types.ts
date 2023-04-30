@@ -52,6 +52,8 @@ export interface IDependencyWithFlag {
 }
 export type TDependency = string | IDependencyWithFlag
 
+export type TArrayPatchOperation = { RemoveItemByValue: string } | { AddItem: any } | { AddItemBefore: [string, string] } | { AddItemAfter: [string, string] }
+
 export interface IBaseEntity {
   factory: string
   blueprint: string

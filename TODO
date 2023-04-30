@@ -1,11 +1,5 @@
 These patch types will still need to be done (until then you can use QNPatch::addCustomPatch):
 - SubEntityOperation:
-* SetPlatformSpecificPropertyType
-* SetPlatformSpecificPropertyValue
-* PatchPlatformSpecificArrayPropertyValue
-* SetPlatformSpecificPropertyPostInit
-* RemovePlatformSpecificPropertyByName
-* RemovePlatformSpecificPropertiesForPlatform
 * RemoveAllEventConnectionsForTrigger
 * RemoveAllEventConnectionsForEvent
 * RemoveOutputCopyConnection
@@ -20,7 +14,6 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * RemoveExposedEntity
 * RemoveExposedInterface
 * RemoveAllOutputCopyConnectionsForOutput
-* AddPlatformSpecificProperty
 * AddPropertyAliasConnection
 * PatchArrayPropertyValue
 * RemoveAllInputCopyConnectionsForInput

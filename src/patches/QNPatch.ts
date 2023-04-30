@@ -1,5 +1,5 @@
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData } from './PatchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatform, PatchAction_PatchPSArrayPropertyValue } from './PatchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './SinglePatch.js'
 import { writeFile } from 'fs/promises'
@@ -202,6 +202,116 @@ export class QNPatch {
               ]
             }]
           }
+        }
+
+
+        case PatchAction.ADD_PLATFORM_SPECIFIC_PROPERTY: {
+          const data = patch.data as PatchAction_AddPSPropertyData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "AddPlatformSpecificProperty": [
+                  data.platform,
+                  data.name,
+                  data.property
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.SET_PLATFORM_SPECIFIC_PROPERTY_TYPE: {
+          const data = patch.data as PatchAction_SetPSPropertyTypeData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "SetPlatformSpecificPropertyType": [
+                  data.platform,
+                  data.name,
+                  data.type
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.SET_PLATFORM_SPECIFIC_PROPERTY_VALUE: {
+          const data = patch.data as PatchAction_SetPSPropertyValueData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "SetPlatformSpecificPropertyValue": {
+                  "platform": data.platform,
+                  "property_name": data.name,
+                  "value": data.value
+                }
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.SET_PLATFORM_SPECIFIC_PROPERTY_POSTINIT: {
+          const data = patch.data as PatchAction_SetPSPropertyPostInitData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "SetPlatformSpecificPropertyPostInit": [
+                  data.platform,
+                  data.name,
+                  data.postInit
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_PLATFORM_SPECIFIC_PROPERTY_BY_NAME: {
+          const data = patch.data as PatchAction_RemovePSPropertyByNameData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemovePlatformSpecificPropertyByName": [
+                  data.platform,
+                  data.name
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_PLATFORM_SPECIFIC_PROPERTIES_FOR_PLATFORM: {
+          const data = patch.data as PatchAction_RemovePSPropertiesForPlatform
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemovePlatformSpecificPropertiesForPlatform": [
+                  data.platform
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.PATCH_PLATFORM_SPECIFIC_ARRAY_PROPERTY_VALUE: {
+          const data = patch.data as PatchAction_PatchPSArrayPropertyValue
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "PatchPlatformSpecificArrayPropertyValue": [
+                  data.platform,
+                  data.name,
+                  data.operations
+                ]
+              }
+            ]
+          }]
         }
 
 
