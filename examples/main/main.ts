@@ -1,5 +1,6 @@
 
 import { createPatch } from '../../src/lib.js'
+import { deepEnsureID } from '../../src/utils/entities.js'
 
 async function main() {
   // these paths will automatically be hashed
@@ -54,7 +55,11 @@ async function main() {
   existingEntity.removeEventConnection({ when: 'test', do: 'asd', on: [ myEntity0, myEntity1, 'new' ] })
 
   patch.addOverrideDelete('testid')
-  patch.addOverrideDelete({ externalScene: null, ref: zero, exposedEntity: 'myEntity' })
+  patch.addOverrideDelete({ externalScene: 'somescene', ref: zero })
+
+  patch.addCustomPatch({
+    test: existingEntity
+  })
 
   // save the patch
   await patch.save('./example.entity.patch.json')

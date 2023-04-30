@@ -1,4 +1,4 @@
-import { ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
+import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData } from './PatchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './singlePatch.js'
@@ -127,19 +127,25 @@ export class QNPatch {
     return this
   }
 
+  public buildPatch(options: Partial<QNPatchSaveOptions> = {}) {
+    options = { ...QNPatchSaveDefaultOptions, ...options }
+
+    return buildJSON({
+      'tempHash': this.templateHash,
+      'tbluHash': this.blueprintHash,
+      'patch': this.buildQNPatches().flat(Infinity),
+      'patchVersion': QNPatch.patchVersion,
+    })
+      .setIf(options.includeSchema, '$schema', 'https://raw.githubusercontent.com/atampy25/simple-mod-framework/main/Mod%20Manager/src/lib/entity-patch-schema.json')
+      .build()
+  }
+
   public async save(path: string, options: Partial<QNPatchSaveOptions> = {}) {
     options = { ...QNPatchSaveDefaultOptions, ...options }
 
     await writeFile(
       path,
-      buildJSON({
-        'tempHash': this.templateHash,
-        'tbluHash': this.blueprintHash,
-        'patch': this.buildQNPatch().flat(Infinity),
-        'patchVersion': QNPatch.patchVersion,
-      })
-        .setIf(options.includeSchema, '$schema', 'https://raw.githubusercontent.com/atampy25/simple-mod-framework/main/Mod%20Manager/src/lib/entity-patch-schema.json')
-        .stringify(null, options.spaces),
+      JSON.stringify(this.buildPatch(options), null, options.spaces)
     )
   }
 
@@ -152,7 +158,7 @@ export class QNPatch {
     return this
   }
 
-  private buildQNPatch() {
+  private buildQNPatches() {
     return this._patches.map(patch => {
       switch(patch.action) {
         case PatchAction.ADD_ENTITY: {
@@ -534,7 +540,7 @@ export class QNPatch {
         }
 
         case PatchAction.CUSTOM_PATCH: {
-          return [patch.data]
+          return [deepEnsureID(patch.data)]
         }
 
         default:

@@ -19,3 +19,18 @@ export function ensureID(entity: Entity | TRef | string) {
   }
   return entity
 }
+
+export function deepEnsureID<T>(obj: T): T {
+  const result: { [key: string]: any } = {}
+  for(const key of Object.keys(obj ?? {})) {
+    if(obj.hasOwnProperty(key)) {
+      const value = obj[key]
+      if(value instanceof Entity || typeof value !== 'object') {
+        result[key] = ensureID(value)
+        continue
+      }
+      result[key] = deepEnsureID(value)
+    }
+  }
+  return result as T
+}
