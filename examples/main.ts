@@ -1,5 +1,5 @@
 
-import { createPatch } from '../../src/lib.js'
+import { createPatch } from '../src/lib.js'
 
 async function main() {
   // these paths will automatically be hashed
@@ -33,9 +33,22 @@ async function main() {
 
   // get a few constants
   // note: each constant will be generated once per patch. after that it'll get reused so don't change it's value
-  const zero = myEntity0.getConstantInt(0)
+  const two = myEntity0.getConstantInt(2)
   const no = myEntity0.getConstantBool(false)
   const yes = myEntity0.getConstantBool(true)
+
+  const thisWillBeSeven = myEntity0.addInt(0)
+  const thisWillBeNine = myEntity0.addInt(0)
+
+  // add two + 5 and store it in thisWillBeSeven
+  two.addToConstantNumber('OnValue', 5, {
+    SetValue: [thisWillBeSeven]
+  })
+
+  // add two + thisWillBeSeven and store it in thisWillBeNine
+  two.addToVariableNumber('OnValue', 'OnValue', thisWillBeSeven, {
+    SetValue: [thisWillBeNine]
+  })
 
   // this will be added everytime it's called so you can modify it's value
   const myChangingBool = aChild.addBool(false)
@@ -55,7 +68,7 @@ async function main() {
   existingEntity.removeEventConnection({ when: 'test', do: 'asd', on: [ myEntity0, myEntity1, 'new' ] })
 
   patch.addOverrideDelete('testid')
-  patch.addOverrideDelete({ externalScene: 'somescene', ref: zero })
+  patch.addOverrideDelete({ externalScene: 'somescene', ref: two })
 
   patch.addCustomPatch({
     test: existingEntity

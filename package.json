@@ -2,7 +2,7 @@
   "name": "quickentity-script",
   "version": "0.0.1",
   "description": "An easier way of writing QN patches with code",
-  "main": "dist/examples/main/main.js",
+  "main": "dist/examples/main.js",
   "type": "module",
   "scripts": {
     "dev:build": "tsc -w",

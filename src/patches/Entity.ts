@@ -3,6 +3,8 @@ import { QNPatch } from './QNPatch.js'
 import { ICreateChildEntity, IEntity, IProperty, TRef } from '../types.js'
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 
+const outputsToEvent = (outputs: {[key: string]: TRef[]}) => Object.fromEntries(Object.entries(outputs).map(([key, value]) => [key, value.map(x => ensureID(x))]))
+
 export class Entity {
   constructor(
     private patch: QNPatch,
@@ -204,8 +206,98 @@ export class Entity {
         }
       },
       events: {
-        Out: Object.fromEntries(Object.entries(outputs).map(([key, value]) => [key, value.map(x => ensureID(x))]))
+        Out: outputsToEvent(outputs)
       }
     })
+  }
+
+  public addToConstantNumber(when: string, add: number, outputs: {[key: string]: TRef[]}): Entity {
+    const addEntity = this.addChild({
+      factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
+      blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
+      properties: {
+        m_fA: {
+          type: 'float32',
+          value: add
+        },
+        m_bSubtract: {
+          type: 'bool',
+          value: false
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when, do: 'B', on: addEntity })
+
+    return addEntity
+  }
+
+  public addToVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef[]}): Entity {
+    const addEntity = this.addChild({
+      factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
+      blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
+      properties: {
+        m_bSubtract: {
+          type: 'bool',
+          value: false
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when: whenA, do: 'A', on: addEntity })
+    this.addEvent({ when: whenB, do: 'B', on: addEntity })
+
+    return addEntity
+  }
+
+  public subtractFromConstantNumber(when: string, add: number, outputs: {[key: string]: TRef[]}): Entity {
+    const addEntity = this.addChild({
+      factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
+      blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
+      properties: {
+        m_fA: {
+          type: 'float32',
+          value: add
+        },
+        m_bSubtract: {
+          type: 'bool',
+          value: true
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when, do: 'B', on: addEntity })
+
+    return addEntity
+  }
+
+  public subtractFromVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef[]}): Entity {
+    const addEntity = this.addChild({
+      factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
+      blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
+      properties: {
+        m_bSubtract: {
+          type: 'bool',
+          value: true
+        }
+      },
+      events: {
+        Out: outputsToEvent(outputs)
+      }
+    })
+
+    this.addEvent({ when: whenA, do: 'A', on: addEntity })
+    this.addEvent({ when: whenB, do: 'B', on: addEntity })
+
+    return addEntity
   }
 }
