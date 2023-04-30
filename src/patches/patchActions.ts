@@ -1,0 +1,110 @@
+import { IEntity, IProperty, IPropertyOverride, IPropertyOverrideConnection, TDependency, TSubType } from '../types.js'
+import { Entity } from './Entity.js'
+
+export enum PatchAction {
+  ADD_ENTITY,
+  ADD_EVENT_CONNECTION,
+  ADD_INPUT_COPY_CONNECTION,
+  ADD_PROPERTY,
+  SET_PROPERTY_VALUE,
+  SET_PROPERTY_TYPE,
+  SET_PROPERTY_POSTINIT,
+  SET_ROOT_ENTITY,
+  SET_SUB_TYPE,
+  SET_NAME,
+  SET_PARENT,
+  SET_FACTORY,
+  SET_FACTORY_FLAG,
+  SET_BLUEPRINT,
+  SET_BLUEPRINT_FLAG,
+  REMOVE_EVENT_CONNECTION,
+  REMOVE_ENTITY_BY_ID,
+  REMOVE_SUBSET,
+  REMOVE_EXTRA_BLUEPRINT_DEPENDENCY,
+  ADD_EXTRA_BLUEPRINT_DEPENDENCY,
+  REMOVE_EXTRA_FACTORY_DEPENDENCY,
+  ADD_EXTRA_FACTORY_DEPENDENCY,
+  ADD_EXTERNAL_SCENE,
+  REMOVE_EXTERNAL_SCENE,
+  ADD_PROPERTY_OVERRIDE,
+  REMOVE_PROPERTY_OVERRIDE,
+  ADD_PROPERTY_OVERRIDE_CONNECTION,
+  REMOVE_PROPERTY_OVERRIDE_CONNECTION,
+
+  CUSTOM_PATCH
+}
+
+interface ISubEntityOperation {
+  target?: string
+}
+
+export type PatchAction_CustomPatch = {[key: string]: any}
+
+export type PatchAction_AddPropertyOverrideData = IPropertyOverride
+export type PatchAction_RemovePropertyOverrideData = IPropertyOverride
+export type PatchAction_AddPropertyOverrideConnectionData = IPropertyOverrideConnection
+export type PatchAction_RemovePropertyOverrideConnectionData = IPropertyOverrideConnection
+export type PatchAction_AddExternalSceneData = string
+export type PatchAction_RemoveExternalSceneData = string
+export type PatchAction_AddExtraBlueprintDependencyData = TDependency
+export type PatchAction_RemoveExtraBlueprintDependencyData = TDependency
+export type PatchAction_AddExtraFactoryDependencyData = TDependency
+export type PatchAction_RemoveExtraFactoryDependencyData = TDependency
+export type PatchAction_AddEntityData = IEntity
+export type PatchAction_SetSubTypeData = TSubType
+export type PatchAction_SetRootEntityData = string | Entity
+export type PatchAction_RemoveEntityByIDData = string | Entity
+
+export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperation {
+  when:      string
+  do:        string
+  on:        string | Entity | (string | Entity)[]
+}
+export interface PatchAction_AddInputCopyConnectionData extends ISubEntityOperation {
+  a: string,
+  b: string,
+  copyTo: string | Entity
+}
+export interface PatchAction_RemoveSubsetData extends ISubEntityOperation {
+  a: string,
+  b: string
+}
+export interface PatchAction_SetNameData extends ISubEntityOperation {
+  name: string
+}
+export interface PatchAction_SetFactoryData extends ISubEntityOperation {
+  factory: string
+}
+export interface PatchAction_SetFactoryFlagData extends ISubEntityOperation {
+  flag: string
+}
+export interface PatchAction_SetBlueprintData extends ISubEntityOperation {
+  blueprint: string
+}
+export interface PatchAction_SetBlueprintFlagData extends ISubEntityOperation {
+  flag: string
+}
+export interface PatchAction_SetParentData extends ISubEntityOperation {
+  parent: string
+}
+export interface PatchAction_AddEventConnectionData extends ISubEntityOperation {
+  when:      string
+  do:        string
+  on:        string | Entity | (string | Entity)[]
+}
+export interface PatchAction_AddPropertyData extends ISubEntityOperation {
+  name:      string
+  property:  IProperty
+}
+export interface PatchAction_SetPropertyValueData extends ISubEntityOperation {
+  name:      string
+  value:     any
+}
+export interface PatchAction_SetPropertyTypeData extends ISubEntityOperation {
+  name:      string
+  type:      string
+}
+export interface PatchAction_SetPropertyPostInitData extends ISubEntityOperation {
+  name:      string
+  postInit:  boolean
+}

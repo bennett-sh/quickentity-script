@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "declaration": true
+  },
+  "include": ["./src/**/*", "./examples/**/*"]
+}

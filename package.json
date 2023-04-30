@@ -1,0 +1,27 @@
+{
+  "name": "quickentity-script",
+  "version": "0.0.1",
+  "description": "An easier way of writing QN patches with code",
+  "main": "dist/examples/main/main.js",
+  "type": "module",
+  "scripts": {
+    "dev:build": "tsc -w",
+    "prod:build": "tsc"
+  },
+  "keywords": ["hitman", "quickentity", "qn", "patch", "h3"],
+  "author": "BSh",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.16.3",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "md5": "^2.3.0"
+  },
+  "files": ["dist/src/**/*"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bennett-sh/quickentity-script.git"
+  },
+  "homepage": "https://github.com/bennett-sh/quickentity-script"
+}
