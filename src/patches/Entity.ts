@@ -1,4 +1,4 @@
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPSPropertyData, PatchAction_AddPinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_AddPropertyAliasConnectionData, PatchAction_AddPropertyData, PatchAction_AddSubsetData, PatchAction_PatchArrayPropertyValueData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_RemoveConnectionForPropertyAliasData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExposedEntityData, PatchAction_RemoveExposedInterfaceData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_RemovePSPropertyByNameData as PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_RemovePropertyAliasData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetEditorOnlyData, PatchAction_SetExposedEntityData, PatchAction_SetExposedInterfaceData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyTypeData, PatchAction_SetPSPropertyValueData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
+import { PatchAction, PatchAction_AddCommentData, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPSPropertyData, PatchAction_AddPinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_AddPropertyAliasConnectionData, PatchAction_AddPropertyData, PatchAction_AddSubsetData, PatchAction_PatchArrayPropertyValueData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_RemoveAllEventConnectionsForEventData, PatchAction_RemoveAllEventConnectionsForTriggerData, PatchAction_RemoveAllInputCopyConnectionsForInputData, PatchAction_RemoveAllInputCopyConnectionsForTriggerData, PatchAction_RemoveAllOutputCopyConnectionsForOutput, PatchAction_RemoveAllOutputCopyConnectionsForPropagate, PatchAction_RemoveAllSubsetsForData, PatchAction_RemoveCommentData, PatchAction_RemoveConnectionForPropertyAliasData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExposedEntityData, PatchAction_RemoveExposedInterfaceData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveOutputCopyConnectionData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_RemovePSPropertyByNameData as PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_RemovePropertyAliasData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetEditorOnlyData, PatchAction_SetExposedEntityData, PatchAction_SetExposedInterfaceData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyTypeData, PatchAction_SetPSPropertyValueData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
 import { QNPatch } from './QNPatch.js'
 import { ICreateChildEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, TArrayPatchOperation, TRef } from '../types.js'
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
@@ -48,6 +48,14 @@ export class Entity {
     return this
   }
 
+  public removeAllOutputCopyConnectionsForPropagate(a: string, b: string): this {
+    this.patch.addPatch<PatchAction_RemoveAllOutputCopyConnectionsForPropagate>(PatchAction.REMOVE_ALL_OUTPUT_COPY_CONNECTIONS_FOR_PROPAGATE, { a, b, target: this._id })
+    return this
+  }
+  public removeAllOutputCopyConnectionsForOutput(a: string): this {
+    this.patch.addPatch<PatchAction_RemoveAllOutputCopyConnectionsForOutput>(PatchAction.REMOVE_ALL_OUTPUT_COPY_CONNECTIONS_FOR_OUTPUT, { a, target: this._id })
+    return this
+  }
   public addPlatformSpecificProperty(platform: string, name: string, property: IProperty): this {
     this.patch.addPatch<PatchAction_AddPSPropertyData>(PatchAction.ADD_PLATFORM_SPECIFIC_PROPERTY, { name, platform, property, target: this._id })
     return this
@@ -77,15 +85,39 @@ export class Entity {
     return this
   }
 
+  public removeOutputCopyConnection(a: string, b: string, to: TRef): this {
+    this.patch.addPatch<PatchAction_RemoveOutputCopyConnectionData>(PatchAction.REMOVE_OUTPUT_COPY_CONNECTION, { a, b, to, target: this._id })
+    return this
+  }
+  public removeAllInputCopyConnectionsForTrigger(a: string, b: string): this {
+    this.patch.addPatch<PatchAction_RemoveAllInputCopyConnectionsForTriggerData>(PatchAction.REMOVE_ALL_INPUT_COPY_CONNECTIONS_FOR_TRIGGER, { a, b, target: this._id })
+    return this
+  }
+  public removeAllInputCopyConnectionsForInput(input: string): this {
+    this.patch.addPatch<PatchAction_RemoveAllInputCopyConnectionsForInputData>(PatchAction.REMOVE_ALL_INPUT_COPY_CONNECTIONS_FOR_INPUT, { input, target: this._id })
+    return this
+  }
+  public removeAllEventConnectionsForTrigger(a: string, b: string): this {
+    this.patch.addPatch<PatchAction_RemoveAllEventConnectionsForTriggerData>(PatchAction.REMOVE_ALL_EVENT_CONNECTIONS_FOR_TRIGGER, { a, b, target: this._id })
+    return this
+  }
+  public removeAllEventConnectionsForEvent(event: string): this {
+    this.patch.addPatch<PatchAction_RemoveAllEventConnectionsForEventData>(PatchAction.REMOVE_ALL_EVENT_CONNECTIONS_FOR_EVENT, { event, target: this._id })
+    return this
+  }
+  public removeAllSubsetsFor(forThing: string): this {
+    this.patch.addPatch<PatchAction_RemoveAllSubsetsForData>(PatchAction.REMOVE_ALL_SUBSETS_FOR, { forThing, target: this._id })
+    return this
+  }
   public setEditorOnly(editorOnly: boolean): this {
-    this.patch.addPatch<PatchAction_SetEditorOnlyData>(PatchAction.SET_EDITOR_ONLY, { editorOnly, target: this.id })
+    this.patch.addPatch<PatchAction_SetEditorOnlyData>(PatchAction.SET_EDITOR_ONLY, { editorOnly, target: this._id })
     return this
   }
   public setName(name: string): this {
     this.patch.addPatch<PatchAction_SetNameData>(PatchAction.SET_NAME, { name, target: this._id })
     return this
   }
-  public setParent(parent: string): this {
+  public setParent(parent: TRef): this {
     this.patch.addPatch<PatchAction_SetParentData>(PatchAction.SET_PARENT, { parent, target: this._id })
     return this
   }
@@ -171,6 +203,16 @@ export class Entity {
   }
   public addOutputCopyConnection(data: PatchAction_AddOutputCopyConnectionData): this {
     this.patch.addPatch(PatchAction.ADD_OUTPUT_COPY_CONNECTION, { data, target: this._id })
+    return this
+  }
+
+  public addComment(name: string, text: string): this {
+    this.patch.addPatch<PatchAction_AddCommentData>(PatchAction.ADD_COMMENT, { name, text, parent: this._id })
+    return this
+  }
+
+  public removeComment(name: string, text: string): this {
+    this.patch.addPatch<PatchAction_RemoveCommentData>(PatchAction.REMOVE_COMMENT, { name, text, parent: this._id })
     return this
   }
 

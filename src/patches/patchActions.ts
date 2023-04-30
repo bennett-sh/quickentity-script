@@ -1,4 +1,4 @@
-import { IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
+import { ICommentEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './Entity.js'
 
 export enum PatchAction {
@@ -55,6 +55,17 @@ export enum PatchAction {
   ADD_PROPERTY_ALIAS_CONNECTION,
   REMOVE_CONNECTION_FOR_PROPERTY_ALIAS,
   SET_EDITOR_ONLY,
+  REMOVE_ALL_SUBSETS_FOR,
+  REMOVE_ALL_EVENT_CONNECTIONS_FOR_TRIGGER,
+  REMOVE_ALL_EVENT_CONNECTIONS_FOR_EVENT,
+  REMOVE_ALL_INPUT_COPY_CONNECTIONS_FOR_INPUT,
+  REMOVE_ALL_INPUT_COPY_CONNECTIONS_FOR_TRIGGER,
+  REMOVE_OUTPUT_COPY_CONNECTION,
+  REMOVE_ALL_OUTPUT_COPY_CONNECTIONS_FOR_PROPAGATE,
+  REMOVE_ALL_OUTPUT_COPY_CONNECTIONS_FOR_OUTPUT,
+
+  ADD_COMMENT,
+  REMOVE_COMMENT,
 
   CUSTOM_PATCH
 }
@@ -65,6 +76,8 @@ interface ISubEntityOperation {
 
 export type PatchAction_CustomPatch = {[key: string]: any}
 
+export type PatchAction_AddCommentData = ICommentEntity
+export type PatchAction_RemoveCommentData = ICommentEntity
 export type PatchAction_AddOverrideDeleteData = TRef | TRef[]
 export type PatchAction_RemoveOverrideDeleteData = TRef | TRef[]
 export type PatchAction_AddPropertyOverrideData = IPropertyOverride
@@ -82,6 +95,14 @@ export type PatchAction_SetSubTypeData = TSubType
 export type PatchAction_SetRootEntityData = string | Entity
 export type PatchAction_RemoveEntityByIDData = string | Entity
 
+export interface PatchAction_RemoveAllOutputCopyConnectionsForPropagate extends ISubEntityOperation { a: string, b: string }
+export interface PatchAction_RemoveAllOutputCopyConnectionsForOutput extends ISubEntityOperation { a: string }
+export interface PatchAction_RemoveOutputCopyConnectionData extends ISubEntityOperation { a: string, b: string, to: TRef }
+export interface PatchAction_RemoveAllInputCopyConnectionsForTriggerData extends ISubEntityOperation { a: string, b: string }
+export interface PatchAction_RemoveAllInputCopyConnectionsForInputData extends ISubEntityOperation { input: string }
+export interface PatchAction_RemoveAllEventConnectionsForTriggerData extends ISubEntityOperation { a: string, b: string }
+export interface PatchAction_RemoveAllEventConnectionsForEventData extends ISubEntityOperation { event: string }
+export interface PatchAction_RemoveAllSubsetsForData extends ISubEntityOperation { forThing: string }
 export interface PatchAction_SetEditorOnlyData extends ISubEntityOperation { editorOnly: boolean }
 export interface PatchAction_AddPropertyAliasConnectionData extends ISubEntityOperation { name: string, alias: IPropertyAlias }
 export interface PatchAction_RemovePropertyAliasData extends ISubEntityOperation { name: string }
@@ -103,17 +124,17 @@ export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperati
 export interface PatchAction_RemoveInputCopyConnectionData extends ISubEntityOperation {
   a:        string
   b:        string
-  to:       string | Entity
+  to:       TRef
 }
 export interface PatchAction_AddInputCopyConnectionData extends ISubEntityOperation {
   a:   string,
   b:   string,
-  to:  string | Entity
+  to:  TRef
 }
 export interface PatchAction_AddOutputCopyConnectionData extends ISubEntityOperation {
   a:   string,
   b:   string,
-  to:  string | Entity
+  to:  TRef
 }
 export interface PatchAction_RemoveSubsetData extends ISubEntityOperation {
   a: string,
@@ -132,12 +153,12 @@ export interface PatchAction_SetBlueprintData extends ISubEntityOperation {
   blueprint: string
 }
 export interface PatchAction_SetParentData extends ISubEntityOperation {
-  parent: string
+  parent: TRef
 }
 export interface PatchAction_AddEventConnectionData extends ISubEntityOperation {
   when:      string
   do:        string
-  on:        string | Entity | (string | Entity)[]
+  on:        TRef | TRef[]
 }
 export interface PatchAction_AddPropertyData extends ISubEntityOperation {
   name:      string

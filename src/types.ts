@@ -105,3 +105,9 @@ export interface IPropertyAlias {
   originalEntity    : TRef
   originalProperty  : string
 }
+
+export interface ICommentEntity {
+  name    :  string
+  text    :  string
+  parent  :  TRef
+}

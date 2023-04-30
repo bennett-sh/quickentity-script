@@ -1,5 +1,5 @@
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_PatchArrayPropertyValueData, PatchAction_AddSubsetData, PatchAction_AddPinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_SetExposedEntityData, PatchAction_SetExposedInterfaceData, PatchAction_RemoveExposedEntityData, PatchAction_RemoveExposedInterfaceData, PatchAction_AddPropertyAliasConnectionData, PatchAction_RemovePropertyAliasData, PatchAction_RemoveConnectionForPropertyAliasData, PatchAction_SetEditorOnlyData } from './PatchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_PatchArrayPropertyValueData, PatchAction_AddSubsetData, PatchAction_AddPinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_SetExposedEntityData, PatchAction_SetExposedInterfaceData, PatchAction_RemoveExposedEntityData, PatchAction_RemoveExposedInterfaceData, PatchAction_AddPropertyAliasConnectionData, PatchAction_RemovePropertyAliasData, PatchAction_RemoveConnectionForPropertyAliasData, PatchAction_SetEditorOnlyData, PatchAction_RemoveAllSubsetsForData, PatchAction_RemoveAllEventConnectionsForEventData, PatchAction_RemoveAllEventConnectionsForTriggerData, PatchAction_RemoveAllInputCopyConnectionsForInputData, PatchAction_RemoveAllInputCopyConnectionsForTriggerData, PatchAction_RemoveOutputCopyConnectionData, PatchAction_RemoveAllOutputCopyConnectionsForPropagate, PatchAction_RemoveAllOutputCopyConnectionsForOutput, PatchAction_AddCommentData, PatchAction_RemoveCommentData } from './PatchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './SinglePatch.js'
 import { writeFile } from 'fs/promises'
@@ -124,6 +124,16 @@ export class QNPatch {
 
   public removeOverrideDelete(ref: TRef | TRef[]): this {
     this.addPatch<PatchAction_RemoveOverrideDeleteData>(PatchAction.REMOVE_OVERRIDE_DELETE, ref)
+    return this
+  }
+
+  public addComment(name: string, text: string, parent: TRef): this {
+    this.addPatch<PatchAction_AddCommentData>(PatchAction.ADD_COMMENT, { name, text, parent })
+    return this
+  }
+
+  public removeComment(name: string, text: string, parent: TRef): this {
+    this.addPatch<PatchAction_RemoveCommentData>(PatchAction.REMOVE_COMMENT, { name, text, parent })
     return this
   }
 
@@ -281,6 +291,27 @@ export class QNPatch {
                 ]
               }
             ]
+          }]
+        }
+
+        case PatchAction.ADD_COMMENT: {
+          const data = patch.data as PatchAction_AddCommentData
+          return [{
+            "AddComment": {
+              text: data.text,
+              parent: ensureID(data.parent),
+              name: data.name
+            }
+          }]
+        }
+        case PatchAction.REMOVE_COMMENT: {
+          const data = patch.data as PatchAction_RemoveCommentData
+          return [{
+            "RemoveComment": {
+              text: data.text,
+              parent: ensureID(data.parent),
+              name: data.name
+            }
           }]
         }
 
@@ -549,6 +580,103 @@ export class QNPatch {
           }]
         }
 
+        case PatchAction.REMOVE_ALL_EVENT_CONNECTIONS_FOR_EVENT: {
+          const data = patch.data as PatchAction_RemoveAllEventConnectionsForEventData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveAllEventConnectionsForEvent": data.event
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_ALL_EVENT_CONNECTIONS_FOR_TRIGGER: {
+          const data = patch.data as PatchAction_RemoveAllEventConnectionsForTriggerData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveAllEventConnectionsForTrigger": [
+                  data.a,
+                  data.b
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_ALL_INPUT_COPY_CONNECTIONS_FOR_INPUT: {
+          const data = patch.data as PatchAction_RemoveAllInputCopyConnectionsForInputData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveAllInputCopyConnectionsForInput": data.input
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_ALL_INPUT_COPY_CONNECTIONS_FOR_TRIGGER: {
+          const data = patch.data as PatchAction_RemoveAllInputCopyConnectionsForTriggerData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveAllInputCopyConnectionsForTrigger": [
+                  data.a,
+                  data.b
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_ALL_OUTPUT_COPY_CONNECTIONS_FOR_OUTPUT: {
+          const data = patch.data as PatchAction_RemoveAllOutputCopyConnectionsForPropagate
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveAllOutputCopyConnectionsForPropagate": [
+                  data.a,
+                  data.b
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_ALL_OUTPUT_COPY_CONNECTIONS_FOR_PROPAGATE: {
+          const data = patch.data as PatchAction_RemoveAllOutputCopyConnectionsForOutput
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveAllOutputCopyConnectionsForOutput": data.a
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_OUTPUT_COPY_CONNECTION: {
+          const data = patch.data as PatchAction_RemoveOutputCopyConnectionData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveOutputCopyConnection": [
+                  data.a,
+                  data.b,
+                  ensureID(data.to)
+                ]
+              }
+            ]
+          }]
+        }
+
         case PatchAction.SET_EDITOR_ONLY: {
           const data = patch.data as PatchAction_SetEditorOnlyData
           return [{
@@ -556,6 +684,18 @@ export class QNPatch {
               data.target,
               {
                 "SetEditorOnly": data.editorOnly
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_ALL_SUBSETS_FOR: {
+          const data = patch.data as PatchAction_RemoveAllSubsetsForData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemoveAllSubsetsFor": data.forThing
               }
             ]
           }]
@@ -598,7 +738,7 @@ export class QNPatch {
             "SubEntityOperation": [
               data.target,
               {
-                "SetParent": data.parent
+                "SetParent": ensureID(data.parent)
               }
             ]
           }]

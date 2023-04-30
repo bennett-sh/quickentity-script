@@ -46,7 +46,7 @@ myEntity.setPropertyValue('m_nValue', 10);
 ```
 
 ### How to use patch options that aren't yet implemented?
-A few patch options aren't implemented yet so if you're project depends on these APIs, you can use custom patches.
+It's not recommended to use this but when you ever need to make a custom patch you can use ```QNPatch::addCustomPatch```. The function requires an object, which will get appended to the patches ```patch``` array.
 ```ts
 patch.addCustomPatch({
   'SubEntityOperation': [
@@ -56,7 +56,7 @@ patch.addCustomPatch({
   ]
 });
 ```
-*Note: SetEditorOnly is available (```Entity::setEditorOnly```) so please don't use this example*
+*Note: SetEditorOnly is available as ```Entity::setEditorOnly``` so please don't use this example*
 
 ## As this was a lot of dull writing down, some patch APIs will still have erros
 ### Please report them!
