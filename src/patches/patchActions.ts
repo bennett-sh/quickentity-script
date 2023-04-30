@@ -33,6 +33,7 @@ export enum PatchAction {
   ADD_PROPERTY_OVERRIDE_CONNECTION,
   REMOVE_PROPERTY_OVERRIDE_CONNECTION,
   REMOVE_PROPERTY_BY_NAME,
+  ADD_OUTPUT_COPY_CONNECTION,
 
   CUSTOM_PATCH
 }
@@ -72,6 +73,11 @@ export interface PatchAction_RemoveInputCopyConnectionData extends ISubEntityOpe
   to:       string | Entity
 }
 export interface PatchAction_AddInputCopyConnectionData extends ISubEntityOperation {
+  a:   string,
+  b:   string,
+  to:  string | Entity
+}
+export interface PatchAction_AddOutputCopyConnectionData extends ISubEntityOperation {
   a:   string,
   b:   string,
   to:  string | Entity
