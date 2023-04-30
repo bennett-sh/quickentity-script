@@ -1,4 +1,4 @@
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPSPropertyData, PatchAction_AddPropertyData, PatchAction_PatchPSArrayPropertyValue, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemovePSPropertiesForPlatform, PatchAction_RemovePSPropertyByNameData as PatchAction_RemovePSPropertyByNameData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyTypeData, PatchAction_SetPSPropertyValueData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPSPropertyData, PatchAction_AddPropertyData, PatchAction_PatchArrayPropertyValue, PatchAction_PatchPSArrayPropertyValue, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemovePSPropertiesForPlatform, PatchAction_RemovePSPropertyByNameData as PatchAction_RemovePSPropertyByNameData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyTypeData, PatchAction_SetPSPropertyValueData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
 import { QNPatch } from './QNPatch.js'
 import { ICreateChildEntity, IEntity, IProperty, TArrayPatchOperation, TRef } from '../types.js'
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
@@ -41,6 +41,10 @@ export class Entity {
   }
   public setPropertyPostinit(name: string, postInit: boolean): this {
     this.patch.addPatch<PatchAction_SetPropertyPostInitData>(PatchAction.SET_PROPERTY_POSTINIT, { name, postInit, target: this._id })
+    return this
+  }
+  public patchArrayPropertyValue(name: string, operations: TArrayPatchOperation[]): this {
+    this.patch.addPatch<PatchAction_PatchArrayPropertyValue>(PatchAction.PATCH_ARRAY_PROPERTY_VALUE, { name, operations, target: this._id })
     return this
   }
 

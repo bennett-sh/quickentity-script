@@ -15,7 +15,6 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * RemoveExposedInterface
 * RemoveAllOutputCopyConnectionsForOutput
 * AddPropertyAliasConnection
-* PatchArrayPropertyValue
 * RemoveAllInputCopyConnectionsForInput
 * RemovePropertyAlias
 - AddPinConnectionOverride

@@ -1,5 +1,5 @@
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatform, PatchAction_PatchPSArrayPropertyValue } from './PatchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatform, PatchAction_PatchPSArrayPropertyValue, PatchAction_PatchArrayPropertyValue } from './PatchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './SinglePatch.js'
 import { writeFile } from 'fs/promises'
@@ -369,6 +369,21 @@ export class QNPatch {
                 "SetPropertyPostInit": [
                   data.name,
                   data.postInit
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.PATCH_ARRAY_PROPERTY_VALUE: {
+          const data = patch.data as PatchAction_PatchArrayPropertyValue
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "PatchArrayPropertyValue": [
+                  data.name,
+                  data.operations
                 ]
               }
             ]

@@ -41,6 +41,7 @@ export enum PatchAction {
   REMOVE_PLATFORM_SPECIFIC_PROPERTY_BY_NAME,
   REMOVE_PLATFORM_SPECIFIC_PROPERTIES_FOR_PLATFORM,
   PATCH_PLATFORM_SPECIFIC_ARRAY_PROPERTY_VALUE,
+  PATCH_ARRAY_PROPERTY_VALUE,
 
   CUSTOM_PATCH
 }
@@ -158,6 +159,10 @@ export interface PatchAction_RemovePSPropertiesForPlatform extends ISubEntityOpe
 }
 export interface PatchAction_PatchPSArrayPropertyValue extends ISubEntityOperation {
   platform:    string
+  name:        string
+  operations:  TArrayPatchOperation[]
+}
+export interface PatchAction_PatchArrayPropertyValue extends ISubEntityOperation {
   name:        string
   operations:  TArrayPatchOperation[]
 }
