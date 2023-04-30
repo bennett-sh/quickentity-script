@@ -62,7 +62,7 @@ export interface IBaseEntity {
   exposedInterfaces?: {[key: string]: string}
   exposedEntities?: {[key: string]: IExposedEntity}
   propertyAliases?: {[ key: string ]: IPropertyAlias}
-  events?: {[ key: string ]: {[ key: string ]: (string | Entity)[]}}
+  events?: {[ key: string ]: {[ key: string ]: TRef[]}}
   inputCopying?: {[key: string]: TRefMaybeConstantValue[]}
   outputCopying?: {[key: string]: TRefMaybeConstantValue[]}
   platformSpecificProperties?: {[key: string]: {[key: string]: string}}

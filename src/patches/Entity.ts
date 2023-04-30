@@ -1,7 +1,7 @@
 import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
 import { QNPatch } from './QNPatch.js'
-import { ICreateChildEntity, IEntity, IProperty } from '../types.js'
-import { generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
+import { ICreateChildEntity, IEntity, IProperty, TRef } from '../types.js'
+import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 
 export class Entity {
   constructor(
@@ -92,7 +92,7 @@ export class Entity {
     entityConfig.events = Object.fromEntries(
       Object.entries(entityConfig.events ?? {})
         .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
-          .map(outpin => [outpin[0], outpin[1].map(out => out instanceof Entity ? out.id : out)])
+          .map(outpin => [outpin[0], outpin[1]?.map(out => out instanceof Entity ? out.id : out)])
         )])
     )
 
@@ -184,6 +184,27 @@ export class Entity {
           type: 'bool',
           value
         }
+      }
+    })
+  }
+
+  public addTimer(timeMS: number, outputs: {[key: string]: TRef[]}, name = 'Timer ' + generateRandomEntityName()) {
+    return this.addChild({
+      name,
+      factory: '[assembly:/_pro/design/logic.template?/timersimple.entitytemplate].pc_entitytype',
+      blueprint: '[assembly:/_pro/design/logic.template?/timersimple.entitytemplate].pc_entityblueprint',
+      properties: {
+        'Delay time (ms)': {
+          type: 'int32',
+          value: timeMS
+        },
+        m_bEnabled: {
+          type: 'bool',
+          value: true
+        }
+      },
+      events: {
+        Out: Object.fromEntries(Object.entries(outputs).map(([key, value]) => [key, value.map(x => ensureID(x))]))
       }
     })
   }

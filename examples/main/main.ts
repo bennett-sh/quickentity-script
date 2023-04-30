@@ -1,6 +1,5 @@
 
 import { createPatch } from '../../src/lib.js'
-import { deepEnsureID } from '../../src/utils/entities.js'
 
 async function main() {
   // these paths will automatically be hashed
@@ -41,6 +40,7 @@ async function main() {
   // this will be added everytime it's called so you can modify it's value
   const myChangingBool = aChild.addBool(false)
   const myChangingInt = aChild.addInt(0, 'A cool counter')
+  const myTimer = aChild.addTimer(250, { SetTrue: [myChangingBool] })
 
   // get an existing entity
   // note: my_entity_id is neither a valid entity id nor existing in the agent47_default.entitytemplate
