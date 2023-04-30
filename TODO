@@ -3,7 +3,6 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * RemoveAllEventConnectionsForTrigger
 * RemoveAllEventConnectionsForEvent
 * RemoveOutputCopyConnection
-* SetEditorOnly
 * RemoveAllOutputCopyConnectionsForPropagate
 * RemoveAllSubsetsFor
 * RemoveAllInputCopyConnectionsForTrigger

@@ -46,7 +46,7 @@ myEntity.setPropertyValue('m_nValue', 10);
 ```
 
 ### How to use patch options that aren't yet implemented?
-A few patch options aren't implemented yet (e.g. SetEditorOnly). If you're project depends on these APIs, you can use custom patches.
+A few patch options aren't implemented yet so if you're project depends on these APIs, you can use custom patches.
 ```ts
 patch.addCustomPatch({
   'SubEntityOperation': [
@@ -56,6 +56,7 @@ patch.addCustomPatch({
   ]
 });
 ```
+*Note: SetEditorOnly is available (```Entity::setEditorOnly```) so please don't use this example*
 
 ## As this was a lot of dull writing down, some patch APIs will still have erros
 ### Please report them!

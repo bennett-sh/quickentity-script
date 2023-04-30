@@ -54,6 +54,7 @@ export enum PatchAction {
   REMOVE_PROPERTY_ALIAS,
   ADD_PROPERTY_ALIAS_CONNECTION,
   REMOVE_CONNECTION_FOR_PROPERTY_ALIAS,
+  SET_EDITOR_ONLY,
 
   CUSTOM_PATCH
 }
@@ -81,6 +82,7 @@ export type PatchAction_SetSubTypeData = TSubType
 export type PatchAction_SetRootEntityData = string | Entity
 export type PatchAction_RemoveEntityByIDData = string | Entity
 
+export interface PatchAction_SetEditorOnlyData extends ISubEntityOperation { editorOnly: boolean }
 export interface PatchAction_AddPropertyAliasConnectionData extends ISubEntityOperation { name: string, alias: IPropertyAlias }
 export interface PatchAction_RemovePropertyAliasData extends ISubEntityOperation { name: string }
 export interface PatchAction_RemoveConnectionForPropertyAliasData extends ISubEntityOperation { name: string, alias: IPropertyAlias }
