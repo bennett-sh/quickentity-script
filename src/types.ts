@@ -12,9 +12,9 @@ export interface IProperty extends ISimpleProperty { postInit?: boolean }
 export interface IFullRef {
   exposedEntity?:  string
   externalScene:   string
-  ref:             string
+  ref:             string | Entity
 }
-export type TRef = IFullRef | string | null
+export type TRef = IFullRef | string | null | Entity
 export interface IRefWithConstantValue {
   ref:    TRef,
   value:  IProperty

@@ -1,9 +1,9 @@
 import { ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData } from './patchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData } from './PatchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './singlePatch.js'
 import { writeFile } from 'fs/promises'
-import { ICreateEntity, IEntity, IPropertyOverride, IPropertyOverrideConnection, TDependency, TRef, TSubType } from '../types.js'
+import { ICreateEntity, IPropertyOverride, IPropertyOverrideConnection, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './Entity.js'
 import { Constants } from './Constants.js'
 
@@ -452,11 +452,11 @@ export class QNPatch {
           const data = patch.data as PatchAction_AddOverrideDeleteData
           if(data instanceof Array) {
             return data.map(x => ({
-              "AddOverrideDelete": x
+              "AddOverrideDelete": ensureID(x)
             }))
           } else {
             return [{
-              "AddOverrideDelete": data
+              "AddOverrideDelete": ensureID(data)
             }]
           }
         }
@@ -465,11 +465,11 @@ export class QNPatch {
           const data = patch.data as PatchAction_RemoveOverrideDeleteData
           if(data instanceof Array) {
             return data.map(x => ({
-              "RemoveOverrideDelete": x
+              "RemoveOverrideDelete": ensureID(x)
             }))
           } else {
             return [{
-              "RemoveOverrideDelete": data
+              "RemoveOverrideDelete": ensureID(data)
             }]
           }
         }

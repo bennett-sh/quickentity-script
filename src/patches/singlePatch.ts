@@ -1,4 +1,4 @@
-import { PatchAction } from './patchActions.js'
+import { PatchAction } from './PatchActions.js'
 
 export default class SinglePatch {
   constructor(

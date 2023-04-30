@@ -53,6 +53,9 @@ async function main() {
   // remove multiple connections at once
   existingEntity.removeEventConnection({ when: 'test', do: 'asd', on: [ myEntity0, myEntity1, 'new' ] })
 
+  patch.addOverrideDelete('testid')
+  patch.addOverrideDelete({ externalScene: null, ref: zero, exposedEntity: 'myEntity' })
+
   // save the patch
   await patch.save('./example.entity.patch.json')
 }
