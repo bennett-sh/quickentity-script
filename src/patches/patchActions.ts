@@ -1,4 +1,4 @@
-import { IEntity, IProperty, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
+import { IEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './Entity.js'
 
 export enum PatchAction {
@@ -42,6 +42,11 @@ export enum PatchAction {
   REMOVE_PLATFORM_SPECIFIC_PROPERTIES_FOR_PLATFORM,
   PATCH_PLATFORM_SPECIFIC_ARRAY_PROPERTY_VALUE,
   PATCH_ARRAY_PROPERTY_VALUE,
+  ADD_SUBSET,
+  ADD_PIN_CONNECTION_OVERRIDE,
+  ADD_PIN_CONNECTION_OVERRIDE_DELETE,
+  REMOVE_PIN_CONNECTION_OVERRIDE,
+  REMOVE_PIN_CONNECTION_OVERRIDE_DELETE,
 
   CUSTOM_PATCH
 }
@@ -69,6 +74,10 @@ export type PatchAction_SetSubTypeData = TSubType
 export type PatchAction_SetRootEntityData = string | Entity
 export type PatchAction_RemoveEntityByIDData = string | Entity
 
+export interface PatchAction_AddPinConnectionOverrideData extends ISubEntityOperation { override: IPinConnectionOverride }
+export interface PatchAction_RemovePinConnectionOverrideData extends ISubEntityOperation { override: IPinConnectionOverride }
+export interface PatchAction_AddPinConnectionOverrideDeleteData extends ISubEntityOperation { override: IPinConnectionOverrideDelete }
+export interface PatchAction_RemovePinConnectionOverrideDeleteData extends ISubEntityOperation { override: IPinConnectionOverrideDelete }
 export interface PatchAction_RemovePropertyByNameData extends ISubEntityOperation { name: string }
 export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperation {
   when:      string
@@ -154,15 +163,19 @@ export interface PatchAction_RemovePSPropertyByNameData extends ISubEntityOperat
   platform:  string
   name:      string
 }
-export interface PatchAction_RemovePSPropertiesForPlatform extends ISubEntityOperation {
+export interface PatchAction_RemovePSPropertiesForPlatformData extends ISubEntityOperation {
   platform:  string
 }
-export interface PatchAction_PatchPSArrayPropertyValue extends ISubEntityOperation {
+export interface PatchAction_PatchPSArrayPropertyValueData extends ISubEntityOperation {
   platform:    string
   name:        string
   operations:  TArrayPatchOperation[]
 }
-export interface PatchAction_PatchArrayPropertyValue extends ISubEntityOperation {
+export interface PatchAction_PatchArrayPropertyValueData extends ISubEntityOperation {
   name:        string
   operations:  TArrayPatchOperation[]
+}
+export interface PatchAction_AddSubsetData extends ISubEntityOperation {
+  a:  string
+  b:  string
 }

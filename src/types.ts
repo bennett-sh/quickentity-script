@@ -86,3 +86,12 @@ export interface ICreateChildEntity extends IBaseEntity {
   name?:    string
   id?:      string
 }
+
+export interface IPinConnectionOverride {
+  fromEntity:  TRef
+  fromPin:     string
+  toEntity:    TRef
+  toPin:       string
+  value:       any
+}
+export type IPinConnectionOverrideDelete = IPinConnectionOverride

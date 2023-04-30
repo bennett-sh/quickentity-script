@@ -1,6 +1,6 @@
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPSPropertyData, PatchAction_AddPropertyData, PatchAction_PatchArrayPropertyValue, PatchAction_PatchPSArrayPropertyValue, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemovePSPropertiesForPlatform, PatchAction_RemovePSPropertyByNameData as PatchAction_RemovePSPropertyByNameData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyTypeData, PatchAction_SetPSPropertyValueData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddOutputCopyConnectionData, PatchAction_AddPSPropertyData, PatchAction_AddPinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_AddPropertyData, PatchAction_AddSubsetData, PatchAction_PatchArrayPropertyValueData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_RemovePSPropertyByNameData as PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyTypeData, PatchAction_SetPSPropertyValueData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './PatchActions.js'
 import { QNPatch } from './QNPatch.js'
-import { ICreateChildEntity, IEntity, IProperty, TArrayPatchOperation, TRef } from '../types.js'
+import { ICreateChildEntity, IEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, TArrayPatchOperation, TRef } from '../types.js'
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 
 const outputsToEvent = (outputs: {[key: string]: TRef[]}) => Object.fromEntries(Object.entries(outputs).map(([key, value]) => [key, value.map(x => ensureID(x))]))
@@ -44,7 +44,7 @@ export class Entity {
     return this
   }
   public patchArrayPropertyValue(name: string, operations: TArrayPatchOperation[]): this {
-    this.patch.addPatch<PatchAction_PatchArrayPropertyValue>(PatchAction.PATCH_ARRAY_PROPERTY_VALUE, { name, operations, target: this._id })
+    this.patch.addPatch<PatchAction_PatchArrayPropertyValueData>(PatchAction.PATCH_ARRAY_PROPERTY_VALUE, { name, operations, target: this._id })
     return this
   }
 
@@ -69,11 +69,11 @@ export class Entity {
     return this
   }
   public removePlatformSpecficPropertiesForPlatform(platform: string): this {
-    this.patch.addPatch<PatchAction_RemovePSPropertiesForPlatform>(PatchAction.REMOVE_PLATFORM_SPECIFIC_PROPERTIES_FOR_PLATFORM, { platform, target: this._id })
+    this.patch.addPatch<PatchAction_RemovePSPropertiesForPlatformData>(PatchAction.REMOVE_PLATFORM_SPECIFIC_PROPERTIES_FOR_PLATFORM, { platform, target: this._id })
     return this
   }
   public patchPlatformSpecificArrayPropertyValue(platform: string, name: string, operations: TArrayPatchOperation[]): this {
-    this.patch.addPatch<PatchAction_PatchPSArrayPropertyValue>(PatchAction.PATCH_PLATFORM_SPECIFIC_ARRAY_PROPERTY_VALUE, { platform, name, operations, target: this._id })
+    this.patch.addPatch<PatchAction_PatchPSArrayPropertyValueData>(PatchAction.PATCH_PLATFORM_SPECIFIC_ARRAY_PROPERTY_VALUE, { platform, name, operations, target: this._id })
     return this
   }
 
@@ -95,6 +95,26 @@ export class Entity {
   }
   public setBlueprint(blueprint: string): this {
     this.patch.addPatch<PatchAction_SetBlueprintData>(PatchAction.SET_BLUEPRINT, { blueprint, target: this._id })
+    return this
+  }
+  public addSubset(a: string, b: string): this {
+    this.patch.addPatch<PatchAction_AddSubsetData>(PatchAction.ADD_SUBSET, { a, b, target: this._id })
+    return this
+  }
+  public addPinConnectionOverride(override: IPinConnectionOverride): this {
+    this.patch.addPatch<PatchAction_AddPinConnectionOverrideData>(PatchAction.ADD_PIN_CONNECTION_OVERRIDE, { override, target: this._id })
+    return this
+  }
+  public removePinConnectionOverride(override: IPinConnectionOverride): this {
+    this.patch.addPatch<PatchAction_RemovePinConnectionOverrideData>(PatchAction.REMOVE_PIN_CONNECTION_OVERRIDE, { override, target: this._id })
+    return this
+  }
+  public addPinConnectionOverrideDelete(override: IPinConnectionOverrideDelete): this {
+    this.patch.addPatch<PatchAction_AddPinConnectionOverrideDeleteData>(PatchAction.ADD_PIN_CONNECTION_OVERRIDE_DELETE, { override, target: this._id })
+    return this
+  }
+  public removePinConnectionOverrideDelete(override: IPinConnectionOverrideDelete): this {
+    this.patch.addPatch<PatchAction_RemovePinConnectionOverrideDeleteData>(PatchAction.REMOVE_PIN_CONNECTION_OVERRIDE_DELETE, { override, target: this._id })
     return this
   }
   public removeEventConnection(data: PatchAction_RemoveEventConnectionData): this {

@@ -8,7 +8,6 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * SetExposedEntity
 * SetExposedInterface
 * RemoveAllSubsetsFor
-* AddSubset
 * RemoveAllInputCopyConnectionsForTrigger
 * RemoveConnectionForPropertyAlias
 * RemoveExposedEntity
@@ -17,10 +16,6 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * AddPropertyAliasConnection
 * RemoveAllInputCopyConnectionsForInput
 * RemovePropertyAlias
-- AddPinConnectionOverride
-- RemovePinConnectionOverride
-- AddPinConnectionOverrideDelete
-- RemovePinConnectionOverrideDelete
 
 Features:
 - (?) load existing patches

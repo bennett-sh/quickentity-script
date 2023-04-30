@@ -1,5 +1,5 @@
 import { deepEnsureID, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatform, PatchAction_PatchPSArrayPropertyValue, PatchAction_PatchArrayPropertyValue } from './PatchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_PatchArrayPropertyValueData, PatchAction_AddSubsetData, PatchAction_AddPinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_RemovePinConnectionOverrideDeleteData } from './PatchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './SinglePatch.js'
 import { writeFile } from 'fs/promises'
@@ -285,7 +285,7 @@ export class QNPatch {
         }
 
         case PatchAction.REMOVE_PLATFORM_SPECIFIC_PROPERTIES_FOR_PLATFORM: {
-          const data = patch.data as PatchAction_RemovePSPropertiesForPlatform
+          const data = patch.data as PatchAction_RemovePSPropertiesForPlatformData
           return [{
             "SubEntityOperation": [
               data.target,
@@ -299,7 +299,7 @@ export class QNPatch {
         }
 
         case PatchAction.PATCH_PLATFORM_SPECIFIC_ARRAY_PROPERTY_VALUE: {
-          const data = patch.data as PatchAction_PatchPSArrayPropertyValue
+          const data = patch.data as PatchAction_PatchPSArrayPropertyValueData
           return [{
             "SubEntityOperation": [
               data.target,
@@ -376,7 +376,7 @@ export class QNPatch {
         }
 
         case PatchAction.PATCH_ARRAY_PROPERTY_VALUE: {
-          const data = patch.data as PatchAction_PatchArrayPropertyValue
+          const data = patch.data as PatchAction_PatchArrayPropertyValueData
           return [{
             "SubEntityOperation": [
               data.target,
@@ -389,6 +389,70 @@ export class QNPatch {
             ]
           }]
         }
+
+        case PatchAction.ADD_SUBSET: {
+          const data = patch.data as PatchAction_AddSubsetData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "AddSubset": [
+                  data.a,
+                  data.b
+                ]
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.ADD_PIN_CONNECTION_OVERRIDE: {
+          const data = patch.data as PatchAction_AddPinConnectionOverrideData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "AddPinConnectionOverride": data.override
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_PIN_CONNECTION_OVERRIDE: {
+          const data = patch.data as PatchAction_RemovePinConnectionOverrideData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemovePinConnectionOverride": data.override
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.ADD_PIN_CONNECTION_OVERRIDE_DELETE: {
+          const data = patch.data as PatchAction_AddPinConnectionOverrideDeleteData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "AddPinConnectionOverrideDelete": data.override
+              }
+            ]
+          }]
+        }
+
+        case PatchAction.REMOVE_PIN_CONNECTION_OVERRIDE_DELETE: {
+          const data = patch.data as PatchAction_RemovePinConnectionOverrideDeleteData
+          return [{
+            "SubEntityOperation": [
+              data.target,
+              {
+                "RemovePinConnectionOverrideDelete": data.override
+              }
+            ]
+          }]
+        }
+
 
         case PatchAction.SET_ROOT_ENTITY: {
           return [{
