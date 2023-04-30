@@ -10,7 +10,7 @@ async function main() {
 
   // create a new entity with a random id & name
   // note: fill in parent, factory & blueprint
-  const myEntity0 = patch.addEntity({ id: null, name: null, parent: '', factory: '', blueprint: '' })
+  const myEntity0 = patch.addEntity({ parent: '', factory: '', blueprint: '' })
 
   // create another entity with an event to the previous entity & a property added later
   const myEntity1 = patch.addEntity({
@@ -28,6 +28,18 @@ async function main() {
     }
   }) // returns an entity object
     .addProperty('m_sUseThisThing', { type: 'SEntityTemplateReference', value: myEntity0.id })
+
+  const aChild = myEntity1.addChild({ factory: '', blueprint: '' })
+
+  // get a few constants
+  // note: each constant will be generated once per patch. after that it'll get reused so don't change it's value
+  const zero = myEntity0.getConstantInt(0)
+  const no = myEntity0.getConstantBool(false)
+  const yes = myEntity0.getConstantBool(true)
+
+  // this will be added everytime it's called so you can modify it's value
+  const myChangingBool = aChild.addBool(false)
+  const myChangingInt = aChild.addInt(0, 'A cool counter')
 
   // get an existing entity
   // note: my_entity_id is neither a valid entity id nor existing in the agent47_default.entitytemplate

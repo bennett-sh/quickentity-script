@@ -1,7 +1,9 @@
-import { IEntity, IProperty, IPropertyOverride, IPropertyOverrideConnection, TDependency, TSubType } from '../types.js'
+import { IEntity, IProperty, IPropertyOverride, IPropertyOverrideConnection, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './Entity.js'
 
 export enum PatchAction {
+  ADD_OVERRIDE_DELETE,
+  REMOVE_OVERRIDE_DELETE,
   ADD_ENTITY,
   ADD_EVENT_CONNECTION,
   ADD_INPUT_COPY_CONNECTION,
@@ -18,6 +20,7 @@ export enum PatchAction {
   SET_BLUEPRINT,
   SET_BLUEPRINT_FLAG,
   REMOVE_EVENT_CONNECTION,
+  REMOVE_INPUT_COPY_CONNECTION,
   REMOVE_ENTITY_BY_ID,
   REMOVE_SUBSET,
   REMOVE_EXTRA_BLUEPRINT_DEPENDENCY,
@@ -40,6 +43,8 @@ interface ISubEntityOperation {
 
 export type PatchAction_CustomPatch = {[key: string]: any}
 
+export type PatchAction_AddOverrideDeleteData = TRef | TRef[]
+export type PatchAction_RemoveOverrideDeleteData = TRef | TRef[]
 export type PatchAction_AddPropertyOverrideData = IPropertyOverride
 export type PatchAction_RemovePropertyOverrideData = IPropertyOverride
 export type PatchAction_AddPropertyOverrideConnectionData = IPropertyOverrideConnection
@@ -60,10 +65,15 @@ export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperati
   do:        string
   on:        string | Entity | (string | Entity)[]
 }
+export interface PatchAction_RemoveInputCopyConnectionData extends ISubEntityOperation {
+  a:        string
+  b:        string
+  to:        string | Entity | (string | Entity)[]
+}
 export interface PatchAction_AddInputCopyConnectionData extends ISubEntityOperation {
-  a: string,
-  b: string,
-  copyTo: string | Entity
+  a:   string,
+  b:   string,
+  to:  string | Entity
 }
 export interface PatchAction_RemoveSubsetData extends ISubEntityOperation {
   a: string,

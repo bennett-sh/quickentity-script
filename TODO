@@ -14,7 +14,6 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * SetExposedEntity
 * SetExposedInterface
 * RemoveAllSubsetsFor
-* RemoveInputCopyConnection
 * AddOutputCopyConnection
 * RemovePropertyByName
 * AddSubset
@@ -28,12 +27,14 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * PatchArrayPropertyValue
 * RemoveAllInputCopyConnectionsForInput
 * RemovePropertyAlias
-- AddOverrideDelete
-- RemoveOverrideDelete
 - AddPinConnectionOverride
 - RemovePinConnectionOverride
 - AddPinConnectionOverrideDelete
 - RemovePinConnectionOverrideDelete
+
+Features:
+- (?) load existing patches
+- more utility functions (e.g. trigger pin every n ms)
 
 (unimportant)
 - AddComment

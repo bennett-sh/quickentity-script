@@ -1,10 +1,11 @@
 import { ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
-import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData } from './patchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData } from './patchActions.js'
 import { buildJSON } from '../utils/json.js'
 import SinglePatch from './singlePatch.js'
 import { writeFile } from 'fs/promises'
-import { IEntity, IPropertyOverride, IPropertyOverrideConnection, TDependency, TSubType } from '../types.js'
+import { ICreateEntity, IEntity, IPropertyOverride, IPropertyOverrideConnection, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './Entity.js'
+import { Constants } from './Constants.js'
 
 export interface QNPatchSaveOptions {
   spaces: number,
@@ -17,6 +18,7 @@ export const QNPatchSaveDefaultOptions: QNPatchSaveOptions = {
 }
 
 export class QNPatch {
+  public __constants: Constants = new Constants()
   private _patches: SinglePatch[] = []
 
   constructor(
@@ -28,7 +30,7 @@ export class QNPatch {
     return 6;
   }
 
-  public addEntity(entityConfig: IEntity & { name?: string, id?: string }): Entity {
+  public addEntity(entityConfig: ICreateEntity): Entity {
     // Replace all entity class refs with their respective ids
     entityConfig.events = Object.fromEntries(
       Object.entries(entityConfig.events ?? {})
@@ -112,6 +114,16 @@ export class QNPatch {
 
   public removePropertyOverrideConnection(connection: IPropertyOverrideConnection): this {
     this.addPatch<PatchAction_RemovePropertyOverrideConnectionData>(PatchAction.REMOVE_EXTERNAL_SCENE, connection)
+    return this
+  }
+
+  public addOverrideDelete(ref: TRef | TRef[]): this {
+    this.addPatch<PatchAction_AddOverrideDeleteData>(PatchAction.ADD_OVERRIDE_DELETE, ref)
+    return this
+  }
+
+  public removeOverrideDelete(ref: TRef | TRef[]): this {
+    this.addPatch<PatchAction_RemoveOverrideDeleteData>(PatchAction.REMOVE_OVERRIDE_DELETE, ref)
     return this
   }
 
@@ -322,7 +334,7 @@ export class QNPatch {
                 "AddInputCopyConnection": [
                   data.a,
                   data.b,
-                  ensureID(data.copyTo)
+                  ensureID(data.to)
                 ]
               }
             ]
@@ -422,6 +434,32 @@ export class QNPatch {
           return [{
             "RemovePropertyOverrideConnection": patch.data
           }]
+        }
+
+        case PatchAction.ADD_OVERRIDE_DELETE: {
+          const data = patch.data as PatchAction_AddOverrideDeleteData
+          if(data instanceof Array) {
+            return data.map(x => ({
+              "AddOverrideDelete": x
+            }))
+          } else {
+            return [{
+              "AddOverrideDelete": data
+            }]
+          }
+        }
+
+        case PatchAction.REMOVE_OVERRIDE_DELETE: {
+          const data = patch.data as PatchAction_RemoveOverrideDeleteData
+          if(data instanceof Array) {
+            return data.map(x => ({
+              "RemoveOverrideDelete": x
+            }))
+          } else {
+            return [{
+              "RemoveOverrideDelete": data
+            }]
+          }
         }
 
         case PatchAction.CUSTOM_PATCH: {

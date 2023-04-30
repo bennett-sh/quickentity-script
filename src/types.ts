@@ -52,10 +52,7 @@ export interface IDependencyWithFlag {
 }
 export type TDependency = string | IDependencyWithFlag
 
-export interface IEntity {
-  id: string
-  name: string
-  parent: string
+export interface IBaseEntity {
   factory: string
   blueprint: string
   factoryFlag?: string
@@ -69,4 +66,21 @@ export interface IEntity {
   inputCopying?: {[key: string]: TRefMaybeConstantValue[]}
   outputCopying?: {[key: string]: TRefMaybeConstantValue[]}
   platformSpecificProperties?: {[key: string]: {[key: string]: string}}
+}
+export interface IEntity extends IBaseEntity {
+  id:      string
+  name:    string
+  parent:  string
+}
+
+export interface ICreateEntity extends IBaseEntity {
+  parent:   string
+  name?:    string
+  id?:      string
+}
+
+export interface ICreateChildEntity extends IBaseEntity {
+  parent?:  string
+  name?:    string
+  id?:      string
 }

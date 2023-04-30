@@ -1,6 +1,7 @@
-import { PatchAction, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetBlueprintFlagData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './patchActions.js'
+import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetBlueprintData, PatchAction_SetBlueprintFlagData, PatchAction_SetFactoryData, PatchAction_SetFactoryFlagData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData } from './patchActions.js'
 import { QNPatch } from './QNPatch.js'
-import { IProperty } from '../types.js'
+import { ICreateChildEntity, IEntity, IProperty } from '../types.js'
+import { generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 
 export class Entity {
   constructor(
@@ -76,5 +77,110 @@ export class Entity {
   public removeSubset(event: PatchAction_RemoveSubsetData): this {
     this.patch.addPatch(PatchAction.REMOVE_SUBSET, { ...event, target: this._id })
     return this
+  }
+  public removeInputCopyConnection(event: PatchAction_RemoveInputCopyConnectionData): this {
+    this.patch.addPatch(PatchAction.REMOVE_INPUT_COPY_CONNECTION, { ...event, target: this._id })
+    return this
+  }
+
+  public addChild(entityConfig: ICreateChildEntity): Entity {
+    // Replace all entity class refs with their respective ids
+    entityConfig.events = Object.fromEntries(
+      Object.entries(entityConfig.events ?? {})
+        .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
+          .map(outpin => [outpin[0], outpin[1].map(out => out instanceof Entity ? out.id : out)])
+        )])
+    )
+
+    const parent = entityConfig.parent ?? this._id
+    const name = entityConfig.name ?? generateRandomEntityName()
+    const id = entityConfig.id ?? generateRandomEntityID()
+    const entity = new Entity(this.patch, id)
+
+    this.patch.addPatch<PatchAction_AddEntityData>(PatchAction.ADD_ENTITY, { ...entityConfig, name, id, parent })
+
+    return entity
+  }
+
+  public getConstantBool(value: boolean): Entity {
+    if(value) {
+      const id = this.patch.__constants.BOOL_TRUE
+      if(!id) {
+        return this.addChild({
+          name: 'Constant TRUE',
+          factory: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entitytype',
+          blueprint: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entityblueprint',
+          properties: {
+            m_bValue: {
+              type: 'bool',
+              value: true
+            }
+          }
+        })
+      }
+      return new Entity(this.patch, id)
+    } else {
+      const id = this.patch.__constants.BOOL_FALSE
+      if(!id) {
+        return this.addChild({
+          name: 'Constant FALSE',
+          factory: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entitytype',
+          blueprint: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entityblueprint',
+          properties: {
+            m_bValue: {
+              type: 'bool',
+              value: false
+            }
+          }
+        })
+      }
+      return new Entity(this.patch, id)
+    }
+  }
+
+  public getConstantInt(value: number): Entity {
+    const id = this.patch.__constants.INTS[value]
+    if(!id) {
+      return this.addChild({
+        name: `Constant ${value}`,
+        factory: '[modules:/zvalueint_basic.class].pc_entitytype',
+        blueprint: '[modules:/zvalueint_basic.class].pc_entityblueprint',
+        properties: {
+          m_nValue: {
+            type: 'int32',
+            value
+          }
+        }
+      })
+    }
+    return new Entity(this.patch, id)
+  }
+
+  public addInt(value: number, name = 'Int ' + generateRandomEntityName()) {
+    return this.addChild({
+      name,
+      factory: '[modules:/zvalueint_basic.class].pc_entitytype',
+      blueprint: '[modules:/zvalueint_basic.class].pc_entityblueprint',
+      properties: {
+        m_nValue: {
+          type: 'int32',
+          value
+        }
+      }
+    })
+  }
+
+  public addBool(value: boolean, name = 'Bool ' + generateRandomEntityName()) {
+    return this.addChild({
+      name,
+      factory: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entitytype',
+      blueprint: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entityblueprint',
+      properties: {
+        m_bValue: {
+          type: 'bool',
+          value
+        }
+      }
+    })
   }
 }
