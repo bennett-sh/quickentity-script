@@ -5,13 +5,9 @@ These patch types will still need to be done (until then you can use QNPatch::ad
 * RemoveOutputCopyConnection
 * SetEditorOnly
 * RemoveAllOutputCopyConnectionsForPropagate
-* SetExposedEntity
-* SetExposedInterface
 * RemoveAllSubsetsFor
 * RemoveAllInputCopyConnectionsForTrigger
 * RemoveConnectionForPropertyAlias
-* RemoveExposedEntity
-* RemoveExposedInterface
 * RemoveAllOutputCopyConnectionsForOutput
 * AddPropertyAliasConnection
 * RemoveAllInputCopyConnectionsForInput

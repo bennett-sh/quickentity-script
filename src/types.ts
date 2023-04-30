@@ -95,3 +95,8 @@ export interface IPinConnectionOverride {
   value:       any
 }
 export type IPinConnectionOverrideDelete = IPinConnectionOverride
+
+export interface IExposedEntity {
+  isArray:   boolean
+  refersTo:  TRef[]
+}
