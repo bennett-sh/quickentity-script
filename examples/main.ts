@@ -21,9 +21,7 @@ async function main() {
     parent: '',
     events: {
       'In': {
-        'Out': [
-          myEntity0
-        ]
+        'Out': myEntity0
       }
     }
   }) // returns an entity object

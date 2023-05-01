@@ -1,4 +1,4 @@
-import { Entity } from './patches/Entity.js'
+import { Entity } from './patches/entity/base.js'
 
 export type TSubType = 'brick' | 'scene' | 'template'
 
@@ -64,7 +64,7 @@ export interface IBaseEntity {
   exposedInterfaces?: {[key: string]: string}
   exposedEntities?: {[key: string]: IExposedEntity}
   propertyAliases?: {[ key: string ]: IPropertyAlias}
-  events?: {[ key: string ]: {[ key: string ]: TRef[]}}
+  events?: {[ key: string ]: {[ key: string ]: TRef | TRef[]}}
   inputCopying?: {[key: string]: TRefMaybeConstantValue[]}
   outputCopying?: {[key: string]: TRefMaybeConstantValue[]}
   platformSpecificProperties?: {[key: string]: {[key: string]: string}}

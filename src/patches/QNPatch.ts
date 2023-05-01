@@ -4,7 +4,7 @@ import { buildJSON } from '../utils/json.js'
 import SinglePatch from './SinglePatch.js'
 import { writeFile } from 'fs/promises'
 import { ICreateEntity, IPropertyOverride, IPropertyOverrideConnection, TDependency, TRef, TSubType } from '../types.js'
-import { Entity } from './Entity.js'
+import { Entity } from './entity/_index.js'
 import { Constants } from './Constants.js'
 
 export interface QNPatchSaveOptions {
@@ -35,7 +35,7 @@ export class QNPatch {
     entityConfig.events = Object.fromEntries(
       Object.entries(entityConfig.events ?? {})
         .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
-          .map(outpin => [outpin[0], outpin[1].map(out => out instanceof Entity ? out.id : out)])
+          .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : ensureID(outpin[1])])
         )])
     )
 

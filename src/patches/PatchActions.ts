@@ -1,5 +1,5 @@
 import { ICommentEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
-import { Entity } from './Entity.js'
+import { Entity } from './entity/_index.js'
 
 export enum PatchAction {
   ADD_OVERRIDE_DELETE,

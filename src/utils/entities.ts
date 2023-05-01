@@ -1,5 +1,5 @@
 import { QNPatch } from '../patches/QNPatch.js'
-import { Entity } from '../patches/Entity.js'
+import { Entity } from '../patches/entity/base.js'
 import { IFullRef, TRef } from '../types.js'
 
 const ENTITY_ID_PREFIX = 'faad'
@@ -42,3 +42,5 @@ export function ensureEntity(patch: QNPatch, ref: TRef) {
 
   throw new Error('the option to use full refs in math hasn\'t been added yet!')
 }
+
+export const outputsToEvent = (outputs: {[key: string]: TRef | TRef[]}) => Object.fromEntries(Object.entries(outputs).map(([key, value]) => [key, value instanceof Array ? value.map(x => ensureID(x)) : ensureID(value)]))
