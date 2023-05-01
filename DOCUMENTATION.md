@@ -77,6 +77,16 @@ myNumber.addToConstantNumber('OnValue', 5, { SetValue: [result] });
 result.subtractFromVariableNumber('OnValue', 'OnValue', myNumber, { SetValue: [result] });
 ```
 
+### Conditions
+You can use ```Entity::if``` to do an if check.
+```ts
+const myBool = myEntity.addBool(true)
+const myThing = patch.getEntity('faaba1a56ed6c03f')
+
+// if OnValue triggers with true: triggeryes on mything else triggerno on mything
+myBool.if('OnValue', { TriggerYes: myThing }, { TriggerNo: myThing })
+```
+
 ### Timers
 There're a handful of other utility functions in QNS. For example, timers.
 ```ts

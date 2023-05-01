@@ -517,4 +517,19 @@ export class Entity {
 
     return divEntity
   }
+
+  public if(trigger: string, then: {[key: string]: TRef[]}, elseThen: {[key: string]: TRef[]} = {}): Entity {
+    const ifEntity = this.addChild({
+      factory: "[modules:/zlogicifentity.class].pc_entitytype",
+      blueprint: "[modules:/zlogicifentity.class].pc_entityblueprint",
+      events: {
+        Then: then,
+        Else: elseThen
+      }
+    })
+
+    this.addEvent({ when: trigger, do: 'If', on: ifEntity })
+
+    return ifEntity
+  }
 }
