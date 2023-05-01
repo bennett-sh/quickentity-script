@@ -84,7 +84,7 @@ const myBool = myEntity.addBool(true)
 const myThing = patch.getEntity('faaba1a56ed6c03f')
 
 // if OnValue triggers with true: triggeryes on mything else triggerno on mything
-myBool.if('OnValue', { TriggerYes: myThing }, { TriggerNo: myThing })
+myBool.if('OnValue', { TriggerYes: [myThing] }, { TriggerNo: [myThing] })
 ```
 
 ### Timers
