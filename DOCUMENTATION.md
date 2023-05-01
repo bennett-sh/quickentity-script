@@ -40,7 +40,7 @@ myEntity.addChild({
 ### Changing a property on an existing entity
 To change a property on an existing object, you'll first need to get the existing object using ```QNPatch::getEntity```. After that you can call ```Entity::setPropertyValue``` with the new value.
 ```ts
-const cameraEntity = patch.getEntity('51ab3ac12b6d0ef0');
+const myEntity = patch.getEntity('51ab3ac12b6d0ef0');
 
 myEntity.setPropertyValue('m_nValue', 10);
 ```
