@@ -71,10 +71,10 @@ const myNumber = patch.getEntity('faab202ebba161af');
 const result = myEntity.addInt(0); // the result of the math operation will be stored here
 
 // when OnValue on myNumber triggers, add 5 to it and store it in result
-myNumber.addToConstantNumber('OnValue', 5, { SetValue: [result] });
+myNumber.addToConstantNumber('OnValue', 5, { SetValue: result });
 
 // when OnValue on result & myNumber triggers, subtract myNumber from result and store it in result
-result.subtractFromVariableNumber('OnValue', 'OnValue', myNumber, { SetValue: [result] });
+result.subtractFromVariableNumber('OnValue', 'OnValue', myNumber, { SetValue: result });
 ```
 
 ### Conditions
@@ -84,7 +84,7 @@ const myBool = myEntity.addBool(true)
 const myThing = patch.getEntity('faaba1a56ed6c03f')
 
 // if OnValue triggers with true: triggeryes on mything else triggerno on mything
-myBool.if('OnValue', { TriggerYes: [myThing] }, { TriggerNo: [myThing] })
+myBool.if('OnValue', { TriggerYes: myThing }, { TriggerNo: myThing })
 ```
 
 ### Timers
@@ -93,7 +93,7 @@ There're a handful of other utility functions in QNS. For example, timers.
 const myRootEntity = patch.getEntity('facf1234567890AB');
 // Add a timer triggering 1s after receiving In and then triggering DoSomething on myRootEntity
 // Note: you'll still need to manually trigger the In pin of myTimer
-const myTimer = myRootEntity.addTimer(1000, { DoSomething: [myRootEntity] });
+const myTimer = myRootEntity.addTimer(1000, { DoSomething: myRootEntity });
 ```
 
 ### Custom Patches
