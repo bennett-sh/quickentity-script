@@ -8,7 +8,9 @@
   "scripts": {
     "dev:build": "tsc -w",
     "prod:build": "tsc && dts-bundle-generator -o dist/src/index.d.ts src/lib.ts",
-    "prepublish": "pnpm run prod:build"
+    "prepublish": "rm -rf dist && pnpm run prod:build",
+    "test": "mocha",
+    "test:watch": "mocha --parallel --watch --watch-files src/**/*,test/**/* test/**/*.test.js"
   },
   "keywords": [
     "hitman",
@@ -23,8 +25,8 @@
     "@types/jest": "^29.5.1",
     "@types/node": "^18.16.3",
     "dts-bundle-generator": "^8.0.1",
-    "jest": "^29.5.0",
-    "ts-jest": "^29.1.0",
+    "mocha": "^10.2.0",
+    "sinon": "^15.0.4",
     "typescript": "^5.0.4"
   },
   "dependencies": {

@@ -2,7 +2,7 @@ import { QNPatch } from '../patches/QNPatch.js'
 import { Entity } from '../patches/entity/base.js'
 import { IFullRef, TRef } from '../types.js'
 
-const ENTITY_ID_PREFIX = 'faad'
+export const ENTITY_ID_PREFIX = 'faad'
 
 if(ENTITY_ID_PREFIX.length > 6) throw new Error('ERR: the entity id prefix should be less than 7 characters to allow for more ids')
 

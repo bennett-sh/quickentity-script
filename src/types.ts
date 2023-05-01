@@ -1,3 +1,4 @@
+import { PatchAction } from './lib.js'
 import { Entity } from './patches/entity/base.js'
 
 export type TSubType = 'brick' | 'scene' | 'template'
@@ -110,4 +111,9 @@ export interface ICommentEntity {
   name    :  string
   text    :  string
   parent  :  TRef
+}
+
+export interface ISinglePatch<T> {
+  action: PatchAction,
+  data: T
 }
