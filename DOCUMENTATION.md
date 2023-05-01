@@ -16,7 +16,7 @@ After you're done building everything you can use the following code to save the
 ```ts
 myPatch.save('./my.entity.patch.json', { spaces: 0 /* use spaces = 0 to not format at all */ });
 // or use QNPatch::buildPatch to get everything as an object if you need to do more with it
-const myBuiltQNPatch = myPatch.buildPatch(buildPatch);
+const myBuiltQNPatch = myPatch.buildPatch();
 ```
 By default this will save the file with a 2-space indentation and the QN patch schema included. You can pass an object as the second argument to change this.
 
