@@ -1,7 +1,7 @@
 
 import md5 from 'md5'
 
-const HASH_PATTERN = /[A-F0-9]{16}/i
+const HASH_PATTERN = /00[A-F0-9]{14}/i
 
 export const isHash = (data: string) => HASH_PATTERN.test(data)
 export const normalizeToHash = (path: string) => isHash(path) ? path : hashPath(path)
