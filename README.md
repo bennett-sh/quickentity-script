@@ -1,4 +1,5 @@
 # QuickEntity Script
+[![Tests](https://github.com/bennett-sh/quickentity-script/actions/workflows/tests.yml/badge.svg?event=push)](https://github.com/bennett-sh/quickentity-script/actions/workflows/tests.yml)
 #### A TS library for easy synthesis of QN patch files
 
 ## What can I use this for? / What advantages does it have over plain QN?
@@ -19,5 +20,4 @@ To get started, install the package with ```npm i quickentity-script```. Then fo
 <br/>
 <br/>
 
-## As this was a lot of dull writing down, some patch APIs may work incorrectly
-### [Please report them!](https://github.com/bennett-sh/quickentity-script/issues)
+### [Please report issues here](https://github.com/bennett-sh/quickentity-script/issues)
