@@ -1,0 +1,38 @@
+name: Artifacts
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        uses: ./.github/workflows/_setup_build.yml
+
+      - name: Build
+        uses: ./.github/workflows/_build.yml
+
+      - name: Ready library for compression
+        run: |
+          rm -rf output
+          mkdir output
+          rm -r *.d.ts
+          find output -name '*.d.ts' ! -name 'index.d.ts' -delete
+          cp -r package.json pnpm-lock.yaml tsconfig.json dist/ src/ DOCUMENTATION.md LICENSE output/
+
+      - name: ZIP Library
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: 'zip'
+          filename: 'qns.lib.zip'
+          path: ./output
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: QNS
+          path: ./qns.lib.zip
