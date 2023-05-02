@@ -18,6 +18,13 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Cache
+        id: cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: node_modules
+          key: buildCachev25
+
       - name: Install PNPM
         run: |
           npm install -g pnpm

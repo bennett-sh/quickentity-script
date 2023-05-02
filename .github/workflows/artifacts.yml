@@ -18,6 +18,13 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Cache
+        id: cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: node_modules
+          key: buildCachev25
+
       - name: Install PNPM
         run: |
           npm install -g pnpm
@@ -30,22 +37,15 @@ jobs:
         run: |
           pnpm run build
 
-      - name: Ready library for compression
+      - name: Ready library for upload
         run: |
           rm -rf output
           mkdir output
           find output -name '*.d.ts' ! -name 'index.d.ts' -delete
           cp -r package.json pnpm-lock.yaml tsconfig.json dist/ src/ DOCUMENTATION.md LICENSE output/
 
-      - name: ZIP Library
-        uses: thedoctor0/zip-release@0.7.1
-        with:
-          type: 'zip'
-          filename: 'qns.lib.zip'
-          path: ./output
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: QNS
-          path: ./qns.lib.zip
+          name: QNS-Library
+          path: ./output
