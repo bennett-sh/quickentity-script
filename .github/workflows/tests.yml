@@ -13,11 +13,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup
-        uses: ./.github/workflows/_setup_build.yml
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+
+      - name: Install PNPM
+        run: |
+          npm install -g pnpm
+
+      - name: Install dependencies
+        run: |
+          pnpm install
 
       - name: Build
-        uses: ./.github/workflows/_build.yml
+        run: |
+          pnpm run build
 
       - name: Run tests
         run: |
