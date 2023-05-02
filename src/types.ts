@@ -117,3 +117,11 @@ export interface ISinglePatch<T> {
   action: PatchAction,
   data: T
 }
+
+export interface IPath {
+  factory    :  string
+  blueprint  :  string
+}
+
+export type TLocation = 'golden' | 'ancestral' | 'edgy' | 'elegant' | 'wet' | 'trapped' | 'opulent' | 'caged' | 'greedy' | 'salty' | 'hawk' | 'theark' | 'skunk' | 'mumbai' | 'colombia' | 'miami' | 'sheep' | 'hokkaido' | 'colorado' | 'bangkok' | 'marrakesh' | 'coastaltown' | 'paris' | 'rocky' | 'snug'
+export type TLocationKey = 'Dubai' | 'Dartmoor' | 'Berlin' | 'Mendoza' | 'Chongqing' | 'Romania' | 'HavenIsland' | 'Siberia' | 'NewYork' | 'HantuPort' | 'Himmelstein' | 'IsleOfSgail' | 'WhittletonCreek' | 'Mumbai' | 'SantaFortuna' | 'Miami' | 'HawkesBay' | 'Hokkaido' | 'Colorado' | 'Bangkok' | 'Marrakesh' | 'Sapienza' | 'Paris' | 'AmbroseIsland' | 'Safehouse';

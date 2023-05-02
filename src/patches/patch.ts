@@ -1,9 +1,20 @@
 import { normalizeToHash } from '../utils/hash.js'
+import { IPath } from '../CommonPaths.js'
 import { QNPatch } from './QNPatch.js'
 
+export function createPatch(path: IPath): QNPatch
+export function createPatch(factory: string, blueprint: string): QNPatch
 export function createPatch(
-  template: string,
-  blueprint: string
+  template: string | IPath,
+  blueprint?: string
 ): QNPatch {
-  return new QNPatch(normalizeToHash(template), normalizeToHash(blueprint))
+  if((template as IPath)?.factory && (template as IPath)?.blueprint) {
+    template = template as IPath
+    return new QNPatch(
+      normalizeToHash(template.factory),
+      normalizeToHash(template.blueprint)
+    )
+  }
+
+  return new QNPatch(normalizeToHash(template as string), normalizeToHash(blueprint))
 }
