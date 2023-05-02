@@ -34,8 +34,7 @@ jobs:
         run: |
           rm -rf output
           mkdir output
-          rm -r *.d.ts
-          find output -name '*.d.ts' ! -name 'index.d.ts' -delete || true
+          find output -name '*.d.ts' ! -name 'index.d.ts' -delete
           cp -r package.json pnpm-lock.yaml tsconfig.json dist/ src/ DOCUMENTATION.md LICENSE output/
 
       - name: ZIP Library
