@@ -1,5 +1,5 @@
+import { Entity } from '../patches/entity/_index.js'
 import { QNPatch } from '../patches/QNPatch.js'
-import { Entity } from '../patches/entity/base.js'
 import { IFullRef, TRef } from '../types.js'
 
 export const ENTITY_ID_PREFIX = 'faad'

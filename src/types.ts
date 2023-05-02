@@ -1,5 +1,5 @@
 import { PatchAction } from './lib.js'
-import { Entity } from './patches/entity/base.js'
+import { Entity } from './patches/entity/_index.js'
 
 export type TSubType = 'brick' | 'scene' | 'template'
 
