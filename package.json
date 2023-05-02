@@ -6,11 +6,14 @@
   "types": "./dist/src/index.d.ts",
   "type": "module",
   "scripts": {
-    "dev:build": "tsc -w",
-    "prod:build": "tsc && dts-bundle-generator -o dist/src/index.d.ts src/lib.ts",
-    "prepublish": "rm -rf dist && pnpm run prod:build",
+    "build": "tsc && pnpm run build:types",
+    "build:watch": "tsc -w",
+    "build:types": "dts-bundle-generator --export-referenced-types false -o dist/src/index.d.ts src/lib.ts",
+
     "test": "mocha",
-    "test:watch": "mocha --parallel --watch --watch-files src/**/*,test/**/* test/**/*.test.js"
+    "test:watch": "mocha --parallel --watch --watch-files src/**/*,test/**/* test/**/*.test.js",
+
+    "prepublish": "rm -rf dist && pnpm run build"
   },
   "keywords": [
     "hitman",

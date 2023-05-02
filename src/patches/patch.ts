@@ -1,6 +1,6 @@
 import { normalizeToHash } from '../utils/hash.js'
-import { IPath } from '../CommonPaths.js'
 import { QNPatch } from './QNPatch.js'
+import { IPath } from '../types.js'
 
 export function createPatch(path: IPath): QNPatch
 export function createPatch(factory: string, blueprint: string): QNPatch

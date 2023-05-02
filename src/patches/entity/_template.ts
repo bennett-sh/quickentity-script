@@ -4,5 +4,3 @@ declare module './_index.js' {
   interface Entity {
   }
 }
-
-Entity.prototype

@@ -3,11 +3,11 @@ import { Entity } from './base.js'
 
 declare module './_index.js' {
   interface Entity {
-    if(trigger: string, then: {[key: string]: TRef[]}, elseThen?: {[key: string]: TRef[]}): Entity;
+    if(trigger: string, then: {[key: string]: TRef | TRef[]}, elseThen?: {[key: string]: TRef | TRef[]}): Entity;
   }
 }
 
-Entity.prototype.if = function(trigger: string, then: {[key: string]: TRef[]}, elseThen: {[key: string]: TRef[]} = {}) {
+Entity.prototype.if = function(trigger: string, then: {[key: string]: TRef | TRef[]}, elseThen: {[key: string]: TRef | TRef[]} = {}) {
   const ifEntity = this.addChild({
     factory: "[modules:/zlogicifentity.class].pc_entitytype",
     blueprint: "[modules:/zlogicifentity.class].pc_entityblueprint",
