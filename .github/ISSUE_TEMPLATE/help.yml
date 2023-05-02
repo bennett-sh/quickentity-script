@@ -1,0 +1,32 @@
+name: 🤔 Help/Questions
+description: Ask for help
+title: "help: "
+labels: ["help"]
+assignees:
+  - bennett-sh
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Help
+        Use this form to ask for help.
+#  - type: checkboxes
+#      attributes:
+#      label: Is there an existing issue for this?
+#      description: Please search to see if an issue already exists for the you're asking.
+#      options:
+#      - label: I have searched the existing issues
+#        required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Ask your question
+      description: Please provide a detailed description of your question. Include any relevant information, such as what you have tried so far, any error messages you have received, and any specific details about the context of your question.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: If applicable, add your logs here.
+      render: shell
