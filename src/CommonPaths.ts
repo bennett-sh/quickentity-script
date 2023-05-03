@@ -9,5 +9,7 @@ export const CommonPaths = {
 
   Agent47_Default: getTemplateFactoryPath('[assembly:/_pro/characters/templates/hero/agent47/agent47.template?/agent47_default.entitytemplate].'),
 
-  Safehouse: getMissionBrickPath(Location.Safehouse, 'mission_vanilla')
+  Safehouse: getMissionBrickPath(Location.Safehouse, 'mission_vanilla'),
+
+  EvergreenSetup: getTemplateFactoryPath('[assembly:/_pro/scenes/bricks/evergreen_setup.brick].')
 }
