@@ -255,8 +255,10 @@ export class Entity {
     })
   }
 
-  public addTimer(timeMS: number, outputs: {[key: string]: TRef | TRef[]}, name = 'Timer ' + generateRandomEntityName()) {
+  public addTimer(timeMS: number, outputs: {[key: string]: TRef | TRef[]}, recursive = false, name = 'Timer ' + generateRandomEntityName()) {
+    const id = generateRandomEntityID()
     return this.addChild({
+      id,
       name,
       factory: '[assembly:/_pro/design/logic.template?/timersimple.entitytemplate].pc_entitytype',
       blueprint: '[assembly:/_pro/design/logic.template?/timersimple.entitytemplate].pc_entityblueprint',
@@ -271,7 +273,10 @@ export class Entity {
         }
       },
       events: {
-        Out: outputsToEvent(outputs)
+        Out: {
+          ...outputsToEvent(outputs),
+          In: id
+        }
       }
     })
   }
