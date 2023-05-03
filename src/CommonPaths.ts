@@ -14,5 +14,5 @@ export const CommonPaths = {
 
   GameEventListener: getTemplateFactoryPath('[modules:/zgameeventlistenerentity.class]'),
 
-  SingalOnce_Void: getTemplateFactoryPath('[modules:/zgameeventlistenerentity.class]')
+  SingalOnce_Void: getTemplateFactoryPath('[modules:/zvoidsignalonceentity.class]')
 }
