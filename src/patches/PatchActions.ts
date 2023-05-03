@@ -1,4 +1,4 @@
-import { ICommentEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
+import { ICommentEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, IRefWithConstantValue, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
 import { Entity } from './entity/_index.js'
 
 export enum PatchAction {
@@ -158,7 +158,7 @@ export interface PatchAction_SetParentData extends ISubEntityOperation {
 export interface PatchAction_AddEventConnectionData extends ISubEntityOperation {
   when:      string
   do:        string
-  on:        TRef | TRef[]
+  on:        TRef | TRef[] | IRefWithConstantValue | IRefWithConstantValue[]
 }
 export interface PatchAction_AddPropertyData extends ISubEntityOperation {
   name:      string

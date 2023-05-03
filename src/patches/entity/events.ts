@@ -1,10 +1,10 @@
 import { CommonPaths, getTemplateFactoryPath } from '../../lib.js'
-import { TRef } from '../../types.js'
+import { IEventTriggers, TRef } from '../../types.js'
 import { Entity } from './base.js'
 
 declare module './_index.js' {
   interface Entity {
-    addOnGameStartListener(outputs: {[key: string]: TRef | TRef[]}): Entity
+    addOnGameStartListener(outputs: IEventTriggers): Entity
   }
 }
 

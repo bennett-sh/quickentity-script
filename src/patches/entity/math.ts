@@ -1,24 +1,24 @@
 import { ensureEntity, outputsToEvent } from '../../utils/entities.js'
-import { TRef } from '../../types.js'
+import { IEventTriggers, TRef } from '../../types.js'
 import { Entity } from './_index.js'
 
 declare module './_index.js' {
   interface Entity {
-    addToConstantNumber(when: string, add: number, outputs: {[key: string]: TRef | TRef[]}): Entity
-    addToVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity
+    addToConstantNumber(when: string, add: number, outputs: IEventTriggers): Entity
+    addToVariableNumber(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity
 
-    subtractFromConstantNumber(when: string, add: number, outputs: {[key: string]: TRef | TRef[]}): Entity
-    subtractFromVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity
+    subtractFromConstantNumber(when: string, add: number, outputs: IEventTriggers): Entity
+    subtractFromVariableNumber(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity
 
-    multiplyWithConstantNumber(when: string, mul: number, outputs: {[key: string]: TRef | TRef[]}): Entity
-    multiplyWithVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity
+    multiplyWithConstantNumber(when: string, mul: number, outputs: IEventTriggers): Entity
+    multiplyWithVariableNumber(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity
 
-    divideByConstantNumber(when: string, div: number, outputs: {[key: string]: TRef | TRef[]}): Entity
-    divideByVariableNumber(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity
+    divideByConstantNumber(when: string, div: number, outputs: IEventTriggers): Entity
+    divideByVariableNumber(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity
   }
 }
 
-Entity.prototype.addToConstantNumber = function(when: string, add: number, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.addToConstantNumber = function(when: string, add: number, outputs: IEventTriggers): Entity {
   const addEntity = this.addChild({
     factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
     blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
@@ -42,7 +42,7 @@ Entity.prototype.addToConstantNumber = function(when: string, add: number, outpu
   return addEntity
 }
 
-Entity.prototype.addToVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.addToVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity {
   const addEntity = this.addChild({
     factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
     blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
@@ -63,7 +63,7 @@ Entity.prototype.addToVariableNumber = function(whenA: string, whenB: string, b:
   return addEntity
 }
 
-Entity.prototype.subtractFromConstantNumber = function(when: string, add: number, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.subtractFromConstantNumber = function(when: string, add: number, outputs: IEventTriggers): Entity {
   const addEntity = this.addChild({
     factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
     blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
@@ -87,7 +87,7 @@ Entity.prototype.subtractFromConstantNumber = function(when: string, add: number
   return addEntity
 }
 
-Entity.prototype.subtractFromVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.subtractFromVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity {
   const addEntity = this.addChild({
     factory: '[modules:/zmathaddsubstract.class].pc_entitytype',
     blueprint: '[modules:/zmathaddsubstract.class].pc_entityblueprint',
@@ -108,7 +108,7 @@ Entity.prototype.subtractFromVariableNumber = function(whenA: string, whenB: str
   return addEntity
 }
 
-Entity.prototype.multiplyWithConstantNumber = function(when: string, mul: number, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.multiplyWithConstantNumber = function(when: string, mul: number, outputs: IEventTriggers): Entity {
   const mulEntity = this.addChild({
     factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
     blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',
@@ -132,7 +132,7 @@ Entity.prototype.multiplyWithConstantNumber = function(when: string, mul: number
   return mulEntity
 }
 
-Entity.prototype.multiplyWithVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.multiplyWithVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity {
   const mulEntity = this.addChild({
     factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
     blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',
@@ -153,7 +153,7 @@ Entity.prototype.multiplyWithVariableNumber = function(whenA: string, whenB: str
   return mulEntity
 }
 
-Entity.prototype.divideByConstantNumber = function(when: string, div: number, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.divideByConstantNumber = function(when: string, div: number, outputs: IEventTriggers): Entity {
   const divEntity = this.addChild({
     factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
     blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',
@@ -177,7 +177,7 @@ Entity.prototype.divideByConstantNumber = function(when: string, div: number, ou
   return divEntity
 }
 
-Entity.prototype.divideByVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: {[key: string]: TRef | TRef[]}): Entity {
+Entity.prototype.divideByVariableNumber = function(whenA: string, whenB: string, b: TRef, outputs: IEventTriggers): Entity {
   const divEntity = this.addChild({
     factory: '[modules:/zmathmultiplydivide.class].pc_entitytype',
     blueprint: '[modules:/zmathmultiplydivide.class].pc_entityblueprint',

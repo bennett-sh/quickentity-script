@@ -55,6 +55,8 @@ export type TDependency = string | IDependencyWithFlag
 
 export type TArrayPatchOperation = { RemoveItemByValue: string } | { AddItem: any } | { AddItemBefore: [string, string] } | { AddItemAfter: [string, string] }
 
+export type IEventTriggers = {[key: string]: TRef | TRef[] | IRefWithConstantValue | IRefWithConstantValue[]}
+
 export interface IBaseEntity {
   factory: string
   blueprint: string
@@ -65,9 +67,9 @@ export interface IBaseEntity {
   exposedInterfaces?: {[key: string]: string}
   exposedEntities?: {[key: string]: IExposedEntity}
   propertyAliases?: {[ key: string ]: IPropertyAlias}
-  events?: {[ key: string ]: {[ key: string ]: TRef | TRef[]}}
-  inputCopying?: {[ key: string ]: {[ key: string ]: TRef | TRef[]}}
-  outputCopying?: {[ key: string ]: {[ key: string ]: TRef | TRef[]}}
+  events?: {[ key: string ]: IEventTriggers}
+  inputCopying?: {[ key: string ]: IEventTriggers}
+  outputCopying?: {[ key: string ]: IEventTriggers}
   platformSpecificProperties?: {[key: string]: {[key: string]: string}}
 }
 export interface IEntity extends IBaseEntity {
