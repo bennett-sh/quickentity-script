@@ -36,7 +36,6 @@ function createQNSEventListeners(entity: Entity) {
     ...getTemplateFactoryPath('[modules:/zentity.class]')
   })
   createGameStartListener(root)
-  this.patch.__constants.EVENT_LISTENERS = root.id
   return root
 }
 
@@ -45,6 +44,7 @@ Entity.prototype.addOnGameStartListener = function(outputs) {
   let listener = new Entity(this.patch, id)
   if(!id) {
     listener = createQNSEventListeners(this)
+    this.__constants.EVENT_LISTENERS = listener.id
   }
   Object.entries(outputs).forEach(([k, v]) => listener.addEvent({ when: 'OnGameStart', do: k, on: v }))
   return listener
