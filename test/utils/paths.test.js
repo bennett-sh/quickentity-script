@@ -4,7 +4,7 @@ import assert from 'assert'
 
 describe('Path Utilities', () => {
   it('should get temp\'s and tblu\'s of a path', () => {
-    const path = getTemplateFactoryPath('[assembly:/_pro/something.entitytemplate].')
+    const path = getTemplateFactoryPath('[assembly:/_pro/something.entitytemplate]')
 
     assert.strictEqual(
       path.factory,

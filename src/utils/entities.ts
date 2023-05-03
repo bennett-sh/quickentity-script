@@ -1,6 +1,6 @@
 import { Entity } from '../patches/entity/_index.js'
 import { QNPatch } from '../patches/QNPatch.js'
-import { IFullRef, TRef } from '../types.js'
+import { ICreateChildEntity, ICreateEntity, IFullRef, TRef } from '../types.js'
 
 export const ENTITY_ID_PREFIX = 'faad'
 
@@ -44,3 +44,26 @@ export function ensureEntity(patch: QNPatch, ref: TRef) {
 }
 
 export const outputsToEvent = (outputs: {[key: string]: TRef | TRef[]}) => Object.fromEntries(Object.entries(outputs).map(([key, value]) => [key, value instanceof Array ? value.map(x => ensureID(x)) : ensureID(value)]))
+
+export function ensureEventIDs<T extends ICreateEntity | ICreateChildEntity>(entityConfig: T): T {
+  entityConfig.events = Object.fromEntries(
+    Object.entries(entityConfig.events ?? {})
+      .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
+        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : ensureID(outpin[1])])
+      )])
+  )
+  entityConfig.outputCopying = Object.fromEntries(
+    Object.entries(entityConfig.outputCopying ?? {})
+      .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
+        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : ensureID(outpin[1])])
+      )])
+  )
+  entityConfig.inputCopying = Object.fromEntries(
+    Object.entries(entityConfig.inputCopying ?? {})
+      .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
+        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : ensureID(outpin[1])])
+      )])
+  )
+
+  return entityConfig
+}

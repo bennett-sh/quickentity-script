@@ -107,8 +107,6 @@ describe('Simple Patch', () => {
   it('should add events', () => {
     const build = patch.buildPatch()
 
-    console.log(build.patch.find(x => x.SubEntityOperation != null && x.SubEntityOperation[0] == timer.id).SubEntityOperation[1])
-
     assert.ok(
       build.patch.some(
         x =>

@@ -66,8 +66,8 @@ export interface IBaseEntity {
   exposedEntities?: {[key: string]: IExposedEntity}
   propertyAliases?: {[ key: string ]: IPropertyAlias}
   events?: {[ key: string ]: {[ key: string ]: TRef | TRef[]}}
-  inputCopying?: {[key: string]: TRefMaybeConstantValue[]}
-  outputCopying?: {[key: string]: TRefMaybeConstantValue[]}
+  inputCopying?: {[ key: string ]: {[ key: string ]: TRef | TRef[]}}
+  outputCopying?: {[ key: string ]: {[ key: string ]: TRef | TRef[]}}
   platformSpecificProperties?: {[key: string]: {[key: string]: string}}
 }
 export interface IEntity extends IBaseEntity {
