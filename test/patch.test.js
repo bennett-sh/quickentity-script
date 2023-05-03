@@ -1,6 +1,7 @@
 import { createPatch } from '../dist/src/lib.js'
 import { readFile, rm } from 'fs/promises'
 import assert from 'assert'
+import { writeFile } from 'fs'
 
 describe('Simple Patch', () => {
   const patch = createPatch('00C175B9C0F1B6A8', 'b')
@@ -56,6 +57,8 @@ describe('Simple Patch', () => {
 
   it('should add calculations', () => {
     const build = patch.buildPatch()
+
+    writeFile('./test.json', JSON.stringify(build), () => {})
 
     assert.ok(
       build.patch.some(

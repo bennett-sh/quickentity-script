@@ -49,19 +49,19 @@ export function ensureEventIDs<T extends ICreateEntity | ICreateChildEntity>(ent
   entityConfig.events = Object.fromEntries(
     Object.entries(entityConfig.events ?? {})
       .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
-        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : ensureID(outpin[1])])
+        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : [ensureID(outpin[1])]])
       )])
   )
   entityConfig.outputCopying = Object.fromEntries(
     Object.entries(entityConfig.outputCopying ?? {})
       .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
-        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : ensureID(outpin[1])])
+        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : [ensureID(outpin[1])]])
       )])
   )
   entityConfig.inputCopying = Object.fromEntries(
     Object.entries(entityConfig.inputCopying ?? {})
       .map(inpin => [inpin[0], Object.fromEntries(Object.entries(inpin[1] ?? {})
-        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : ensureID(outpin[1])])
+        .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : [ensureID(outpin[1])]])
       )])
   )
 
