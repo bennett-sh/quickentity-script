@@ -41,6 +41,10 @@ export function deepEnsureID<T>(obj: T): T {
         result[key] = ensureID(value)
         continue
       }
+      if(value?.[Symbol.iterator]) {
+        result[key] = [...value].map(x => deepEnsureID(x))
+        continue
+      }
       result[key] = deepEnsureID(value)
     }
   }
