@@ -2,7 +2,7 @@
 import { createPatch, CommonPaths } from '../src/lib.js'
 
 async function main() {
-  const patch = createPatch(CommonPaths.Agent47_Default)
+  const patch = createPatch(CommonPaths.Agent47)
 
   const entity = patch.addEntity({ parent: '', factory: '', blueprint: '' });
 

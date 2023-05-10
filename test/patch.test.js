@@ -1,4 +1,4 @@
-import { createPatch } from '../dist/src/lib.js'
+import { CommonPaths, createPatch, getTemplateFactoryPath } from '../dist/src/lib.js'
 import { readFile, rm } from 'fs/promises'
 import assert from 'assert'
 
@@ -117,6 +117,29 @@ describe('Simple Patch', () => {
           && x.SubEntityOperation[1].AddEventConnection[1] === 'Other'
           && x.SubEntityOperation[1].AddEventConnection[2] === someBool.id
       )
+    )
+  })
+
+  const propertyIdReplaceTestEntity = root.addChild({
+    ...CommonPaths.Entity,
+    properties: {
+      SomeProp: {
+        type: 'SEntityTemplateReference',
+        value: timer
+      }
+    }
+  })
+
+  it('should replace ids for property values', () => {
+    const build = patch.buildPatch()
+
+    assert.strictEqual(
+      build.patch.find(
+        x =>
+          x.hasOwnProperty('AddEntity')
+          && x.AddEntity?.[0] === propertyIdReplaceTestEntity.id
+      ).AddEntity[1].properties.SomeProp.value,
+      timer.id
     )
   })
 

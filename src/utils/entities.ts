@@ -34,6 +34,8 @@ export function ensureID(entity: TRef | IRefWithConstantValue): TRef | IRefWithC
 
 export function deepEnsureID<T>(obj: T): T {
   const result: { [key: string]: any } = {}
+  if(obj instanceof String) return obj
+  if(obj instanceof Entity) return obj.id as T
   for(const key of Object.keys(obj ?? {})) {
     if(obj.hasOwnProperty(key)) {
       const value = obj[key]
@@ -79,6 +81,27 @@ export function ensureEventIDs<T extends ICreateEntity | ICreateChildEntity>(ent
         .map(outpin => [outpin[0], outpin[1] instanceof Array ? outpin[1].map(out => ensureID(out)) : [ensureID(outpin[1])]])
       )])
   ) as any
+
+  return entityConfig
+}
+
+export function ensurePropertyIDs<T extends ICreateChildEntity | ICreateEntity>(entityConfig: T): T {
+  entityConfig.properties = Object.fromEntries(
+    Object.entries(entityConfig.properties ?? {})
+      .map(([propName, propValue]) => [propName,
+        {
+          ...propValue,
+          value: ensureID(propValue.value)
+        }
+      ])
+  )
+
+  return entityConfig
+}
+
+export function ensureEntityIDs<T extends ICreateChildEntity | ICreateEntity>(entityConfig: T): T {
+  entityConfig = ensureEventIDs(entityConfig)
+  entityConfig = ensurePropertyIDs(entityConfig)
 
   return entityConfig
 }

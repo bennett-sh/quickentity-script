@@ -1,6 +1,6 @@
 import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionData, PatchAction_AddExternalSceneData, PatchAction_AddExtraBlueprintDependencyData, PatchAction_AddExtraFactoryDependencyData, PatchAction_AddInputCopyConnectionData, PatchAction_AddPropertyData, PatchAction_AddPropertyOverrideData, PatchAction_AddPropertyOverrideConnectionData, PatchAction_CustomPatch, PatchAction_RemoveEntityByIDData, PatchAction_RemoveEventConnectionData, PatchAction_RemoveExternalSceneData, PatchAction_RemoveExtraBlueprintDependencyData, PatchAction_RemoveExtraFactoryDependencyData, PatchAction_RemovePropertyOverrideData, PatchAction_RemovePropertyOverrideConnectionData, PatchAction_SetBlueprintData, PatchAction_SetFactoryData, PatchAction_SetNameData, PatchAction_SetParentData, PatchAction_SetPropertyPostInitData, PatchAction_SetPropertyTypeData, PatchAction_SetPropertyValueData, PatchAction_SetRootEntityData, PatchAction_SetSubTypeData, PatchAction_AddOverrideDeleteData, PatchAction_RemoveOverrideDeleteData, PatchAction_RemovePropertyByNameData, PatchAction_RemoveInputCopyConnectionData, PatchAction_RemoveSubsetData, PatchAction_SetFactoryFlagData, PatchAction_AddOutputCopyConnectionData, PatchAction_SetPSPropertyPostInitData, PatchAction_SetPSPropertyValueData, PatchAction_SetPSPropertyTypeData, PatchAction_AddPSPropertyData, PatchAction_RemovePSPropertyByNameData, PatchAction_RemovePSPropertiesForPlatformData, PatchAction_PatchPSArrayPropertyValueData, PatchAction_PatchArrayPropertyValueData, PatchAction_AddSubsetData, PatchAction_AddPinConnectionOverrideData, PatchAction_RemovePinConnectionOverrideData, PatchAction_AddPinConnectionOverrideDeleteData, PatchAction_RemovePinConnectionOverrideDeleteData, PatchAction_SetExposedEntityData, PatchAction_SetExposedInterfaceData, PatchAction_RemoveExposedEntityData, PatchAction_RemoveExposedInterfaceData, PatchAction_AddPropertyAliasConnectionData, PatchAction_RemovePropertyAliasData, PatchAction_RemoveConnectionForPropertyAliasData, PatchAction_SetEditorOnlyData, PatchAction_RemoveAllSubsetsForData, PatchAction_RemoveAllEventConnectionsForEventData, PatchAction_RemoveAllEventConnectionsForTriggerData, PatchAction_RemoveAllInputCopyConnectionsForInputData, PatchAction_RemoveAllInputCopyConnectionsForTriggerData, PatchAction_RemoveOutputCopyConnectionData, PatchAction_RemoveAllOutputCopyConnectionsForPropagate, PatchAction_RemoveAllOutputCopyConnectionsForOutput, PatchAction_AddCommentData, PatchAction_RemoveCommentData } from './PatchActions.js'
 import { ICreateEntity, IPropertyOverride, IPropertyOverrideConnection, ISinglePatch, TDependency, TRef, TSubType } from '../types.js'
-import { deepEnsureID, ensureEventIDs, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
+import { deepEnsureID, ensureEntityIDs, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 import { buildJSON } from '../utils/json.js'
 import { Entity } from './entity/_index.js'
 import { Constants } from './Constants.js'
@@ -30,7 +30,7 @@ export class QNPatch {
   }
 
   public addEntity(entityConfig: ICreateEntity): Entity {
-    entityConfig = ensureEventIDs(entityConfig)
+    entityConfig = ensureEntityIDs(entityConfig)
 
     const name = entityConfig.name ?? generateRandomEntityName()
     const id = entityConfig.id ?? generateRandomEntityID()
@@ -170,8 +170,8 @@ export class QNPatch {
             "AddEntity": [
               data.id,
               buildJSON(data)
-                .strip('id')
-                .build()
+              .strip('id')
+              .build()
             ]
           }]
         }
