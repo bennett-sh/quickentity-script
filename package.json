@@ -9,10 +9,8 @@
     "build": "tsc && pnpm run build:types",
     "build:watch": "tsc -w",
     "build:types": "dts-bundle-generator --export-referenced-types false -o dist/src/index.d.ts src/lib.ts",
-
     "test": "mocha",
     "test:watch": "mocha --parallel --watch --watch-files src/**/*,test/**/* test/**/*.test.js",
-
     "prepublish": "rm -rf dist && pnpm run build"
   },
   "keywords": [
@@ -26,6 +24,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.1",
+    "@types/md5": "^2.3.2",
     "@types/node": "^18.16.3",
     "dts-bundle-generator": "^8.0.1",
     "mocha": "^10.2.0",
