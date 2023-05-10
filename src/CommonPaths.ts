@@ -8,6 +8,7 @@ export const CommonPaths = {
   GlobalData_S3: getTemplateFactoryPath('[assembly:/_pro/scenes/bricks/globaldata_s3.brick]'),
 
   Agent47_Default: getTemplateFactoryPath('[assembly:/_pro/characters/templates/hero/agent47/agent47.template?/agent47_default.entitytemplate]'),
+  NPC: getTemplateFactoryPath('[assembly:/templates/gameplay/ai2/actors.template?/npcactor.entitytemplate]'),
 
   Safehouse: getMissionBrickPath(Location.Safehouse, 'mission_vanilla'),
   EvergreenSetup: getTemplateFactoryPath('[assembly:/_pro/scenes/bricks/evergreen_setup.brick]'),
