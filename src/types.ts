@@ -3,12 +3,41 @@ import { Entity } from './patches/entity/_index.js'
 
 export type TSubType = 'brick' | 'scene' | 'template'
 
-export type TPropertyType = 'SEntityTemplateReference' | any
+export type TRoomBehaviour = 'ROOM_DYNAMIC' | 'ROOM_STATIC' | 'ROOM_STATIC_OUTSIDE_CLIENT'
+export interface ITransform {
+  rotation: {
+    x: number
+    y: number
+    z: number
+  }
+  position: {
+    x: number
+    y: number
+    z: number
+  }
+}
+
+export type TPropertyType = 'SEntityTemplateReference' | 'ZGuid' | 'ZString' | string
 export interface ISimpleProperty {
   type:   TPropertyType
   value:  any
 }
 export interface IProperty extends ISimpleProperty { postInit?: boolean }
+export type ICommonProperties = Partial<{
+  m_mTransform: {
+    type: 'SMatrix43'
+    value: ITransform
+  },
+  m_eidParent: {
+    type: 'SEntityTemplateReference',
+    value: TRef
+  },
+  m_eRoomBehaviour: {
+    type: 'ZSpatialEntity.ERoomBehaviour',
+    value: TRoomBehaviour
+  }
+}>
+export type TProperties = ICommonProperties & Record<string, IProperty>
 
 export interface IFullRef {
   exposedEntity?:  string
@@ -63,7 +92,7 @@ export interface IBaseEntity {
   factoryFlag?: string
   editorOnly?: boolean
   subsets?: {[ key: string ]: string[]}
-  properties?: {[ key: string ]: IProperty}
+  properties?: TProperties
   exposedInterfaces?: {[key: string]: string}
   exposedEntities?: {[key: string]: IExposedEntity}
   propertyAliases?: {[ key: string ]: IPropertyAlias}
@@ -75,17 +104,17 @@ export interface IBaseEntity {
 export interface IEntity extends IBaseEntity {
   id      :  string
   name    :  string
-  parent  :  string
+  parent  :  TRef
 }
 
 export interface ICreateEntity extends IBaseEntity {
-  parent  :  string
+  parent  :  TRef
   name   ?:  string
   id     ?:  string
 }
 
 export interface ICreateChildEntity extends IBaseEntity {
-  parent  ?:  string
+  parent  ?:  TRef
   name    ?:  string
   id      ?:  string
 }

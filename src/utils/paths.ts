@@ -7,6 +7,8 @@ export function getTemplateFactoryPath(basePath: string): IPath {
   }
 }
 
+export const getClassPath = (clazz: string) => getTemplateFactoryPath(`[modules:/z${clazz.toLowerCase()}.class]`)
+
 export function getMissionBrickPath(location: TLocation, sub: string): IPath {
   return getTemplateFactoryPath(
     `[assembly:/_pro/scenes/missions/${location}/${sub}.brick]`

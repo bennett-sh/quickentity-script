@@ -105,5 +105,7 @@ export function ensureEntityIDs<T extends ICreateChildEntity | ICreateEntity>(en
   entityConfig = ensureEventIDs(entityConfig)
   entityConfig = ensurePropertyIDs(entityConfig)
 
+  if(entityConfig.parent) entityConfig.parent = ensureID(entityConfig.parent) as TRef
+
   return entityConfig
 }

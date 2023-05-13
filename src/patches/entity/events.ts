@@ -11,7 +11,7 @@ declare module './_index.js' {
 function createQNSEventListeners(entity: Entity) {
   function createGameStartListener(root: Entity) {
     const signal = root.addChild({
-      ...CommonPaths.SingalOnce_Void,
+      ...CommonPaths.SignalOnce_Void,
       outputCopying: {
         Out: {
           OnGameStart: root

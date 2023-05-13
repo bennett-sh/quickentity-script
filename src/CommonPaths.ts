@@ -1,4 +1,4 @@
-import { getMissionBrickPath, getTemplateFactoryPath } from './utils/paths.js'
+import { getClassPath, getMissionBrickPath, getTemplateFactoryPath } from './utils/paths.js'
 import { Location } from './game.js'
 
 export const CommonPaths = {
@@ -13,12 +13,11 @@ export const CommonPaths = {
   Safehouse: getMissionBrickPath(Location.Safehouse, 'mission_vanilla'),
   EvergreenSetup: getTemplateFactoryPath('[assembly:/_pro/scenes/bricks/evergreen_setup.brick]'),
 
-  GameEventListener: getTemplateFactoryPath('[modules:/zgameeventlistenerentity.class]'),
+  GameEventListener: getClassPath('GameEventListenerEntity'),
+  SignalOnce_Void: getClassPath('VoidSignalOnceEntity'),
 
-  SingalOnce_Void: getTemplateFactoryPath('[modules:/zvoidsignalonceentity.class]'),
-
-  Entity: getTemplateFactoryPath('[modules:/zentity.class]'),
-  SpatialEntity: getTemplateFactoryPath('[modules:/zspatialentity.class]'),
-  TokenIdentity: getTemplateFactoryPath('[modules:/ztokenidentity.class]'),
-  CameraEntity: getTemplateFactoryPath('[modules:/zcameraentity.class]'),
+  Entity: getClassPath('Entity'),
+  SpatialEntity: getClassPath('SpatialEntity'),
+  TokenIdentity: getClassPath('TokenIdentity'),
+  CameraEntity: getClassPath('CameraEntity'),
 }

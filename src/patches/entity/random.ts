@@ -1,4 +1,4 @@
-import { CommonPaths, getTemplateFactoryPath } from '../../lib.js'
+import { CommonPaths, getClassPath } from '../../lib.js'
 import { IEventTriggers } from '../../types.js'
 import { scope } from '../../utils/common.js'
 import { buildJSON } from '../../utils/json.js'
@@ -23,7 +23,7 @@ Entity.prototype.randomAction = function(options) {
   const optionEntities = options.map(option => {
     const isConditional = scope(option as IConditionalEventTriggers, [x => x.hasOwnProperty('condition'), x => x.hasOwnProperty('triggers')]).allTrue
     return root.addChild({
-        ...getTemplateFactoryPath('[modules:/zrandomselectorchoice.class]'),
+        ...getClassPath('RandomSelectorChoice'),
         properties:
           buildJSON({})
             .addIf(isConditional, {
@@ -44,7 +44,7 @@ Entity.prototype.randomAction = function(options) {
   })
 
   return root.addChild({
-    ...getTemplateFactoryPath('[modules:/zrandomselector.class]'),
+    ...getClassPath('RandomSelector'),
     properties: {
       m_Seed: {
         type: 'SEntityTemplateReference',
