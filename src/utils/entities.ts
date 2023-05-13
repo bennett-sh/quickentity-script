@@ -88,12 +88,14 @@ export function ensureEventIDs<T extends ICreateEntity | ICreateChildEntity>(ent
 export function ensurePropertyIDs<T extends ICreateChildEntity | ICreateEntity>(entityConfig: T): T {
   entityConfig.properties = Object.fromEntries(
     Object.entries(entityConfig.properties ?? {})
-      .map(([propName, propValue]) => [propName,
-        {
-          ...propValue,
-          value: ensureID(propValue.value)
-        }
-      ])
+      .map(([propName, propValue]) => {
+        return [propName,
+          {
+            ...propValue,
+            value: propValue.value instanceof Array ? propValue.value.map(x => ensureID(x)) : ensureID(propValue.value)
+          }
+        ]
+      })
   )
 
   return entityConfig

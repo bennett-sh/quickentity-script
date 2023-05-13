@@ -9,7 +9,16 @@ async function main() {
 
   const entity = patch.addEntity({ parent: '', factory: '', blueprint: '' });
 
-  entity.if('OnValue', { Test: entity })
+  entity.if('OnValue', {
+    Pick: entity.randomAction([
+      {
+        SetTrue: entity
+      },
+      {
+        SetFalse: entity
+      }
+    ])
+  })
 
   await patch.save('./example.entity.patch.json')
 }
