@@ -18,6 +18,7 @@ export const CommonPaths = {
 
   Entity: getClassPath('Entity'),
   SpatialEntity: getClassPath('SpatialEntity'),
+  CompositeEntity: getClassPath('CompositeEntity'),
   TokenIdentity: getClassPath('TokenIdentity'),
   CameraEntity: getClassPath('CameraEntity'),
 }

@@ -1,0 +1,15 @@
+{
+  "name": "random-item-spawner",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "dist/main.js",
+  "type": "module",
+  "scripts": {
+
+  },
+  "dependencies": {
+    "quickentity-script": "^2.0.0",
+    "repository-script": "^1.0.15"
+  }
+}
