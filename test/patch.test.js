@@ -12,7 +12,7 @@ describe('Simple Patch', () => {
     assert(patch.buildPatch().tbluHash, '00EB5FFEE6AE2FEC')
   })
 
-  const root = patch.addEntity({ factory: '[modules:/zentity.class].pc_entitytype', blueprint: '[modules:/zentity.class].pc_entityblueprint', id: 'faabe06eb9659c2d', name: 'Root', parent: 'ffffffffffffffff' })
+  const root = patch.addEntity({ ...CommonPaths.Entity, id: 'faabe06eb9659c2d', name: 'Root', parent: 'ffffffffffffffff' })
 
   it('should create root entity', () => {
     const build = patch.buildPatch()

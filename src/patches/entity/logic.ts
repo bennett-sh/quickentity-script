@@ -1,16 +1,16 @@
-import { TRef } from '../../types'
-import { Entity } from './base.js'
+import { getClassPath } from '../../lib.js'
+import type { TRef } from '../../types.js'
+import { PatchEntity } from './base.js'
 
 declare module './_index.js' {
-  interface Entity {
-    if(trigger: string, then: {[key: string]: TRef | TRef[]}, elseThen?: {[key: string]: TRef | TRef[]}): Entity;
+  interface PatchEntity {
+    if(trigger: string, then: {[key: string]: TRef | TRef[]}, elseThen?: {[key: string]: TRef | TRef[]}): PatchEntity;
   }
 }
 
-Entity.prototype.if = function(trigger: string, then: {[key: string]: TRef | TRef[]}, elseThen: {[key: string]: TRef | TRef[]} = {}) {
+PatchEntity.prototype.if = function(trigger: string, then: {[key: string]: TRef | TRef[]}, elseThen: {[key: string]: TRef | TRef[]} = {}) {
   const ifEntity = this.addChild({
-    factory: "[modules:/zlogicifentity.class].pc_entitytype",
-    blueprint: "[modules:/zlogicifentity.class].pc_entityblueprint",
+    ...getClassPath('LogicIfEntity'),
     events: {
       Then: then,
       Else: elseThen

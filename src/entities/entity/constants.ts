@@ -1,14 +1,14 @@
-import { getClassPath } from '../../lib.js'
-import { PatchEntity } from './base.js'
+import { getClassPath, getTemplateFactoryPath } from '../../lib.js'
+import { Entity } from './base.js'
 
 declare module './_index.js' {
-  interface PatchEntity {
-    getConstantInt(value: number): PatchEntity
-    getConstantBool(value: boolean): PatchEntity
+  interface Entity {
+    getConstantInt(value: number): Entity
+    getConstantBool(value: boolean): Entity
   }
 }
 
-PatchEntity.prototype.getConstantBool = function(value: boolean): PatchEntity {
+Entity.prototype.getConstantBool = function(value: boolean): Entity {
   if(value) {
     const id = this.patch.__constants.BOOL_TRUE
     if(!id) {
@@ -26,14 +26,13 @@ PatchEntity.prototype.getConstantBool = function(value: boolean): PatchEntity {
       this.patch.__constants.BOOL_TRUE = child.id
       return child
     }
-    return new PatchEntity(this.patch, id)
+    return new Entity(this.patch, id)
   } else {
     const id = this.patch.__constants.BOOL_FALSE
     if(!id) {
       const child = this.addChild({
         name: 'Constant FALSE',
-        factory: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entitytype',
-        blueprint: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entityblueprint',
+        ...getTemplateFactoryPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
         properties: {
           m_bValue: {
             type: 'bool',
@@ -44,11 +43,11 @@ PatchEntity.prototype.getConstantBool = function(value: boolean): PatchEntity {
       this.patch.__constants.BOOL_FALSE = child.id
       return child
     }
-    return new PatchEntity(this.patch, id)
+    return new Entity(this.patch, id)
   }
 }
 
-PatchEntity.prototype.getConstantInt = function(value: number): PatchEntity {
+Entity.prototype.getConstantInt = function(value: number): Entity {
   const id = this.patch.__constants.INTS[value]
   if(!id) {
     const child = this.addChild({
@@ -64,5 +63,5 @@ PatchEntity.prototype.getConstantInt = function(value: number): PatchEntity {
     this.patch.__constants.INTS[value] = child.id
     return child
   }
-  return new PatchEntity(this.patch, id)
+  return new Entity(this.patch, id)
 }

@@ -2,16 +2,16 @@ import { PatchAction, PatchAction_AddEntityData, PatchAction_AddEventConnectionD
 import { ICreateEntity, IPropertyOverride, IPropertyOverrideConnection, ISinglePatch, TDependency, TRef, TSubType } from '../types.js'
 import { deepEnsureID, ensureEntityIDs, ensureID, generateRandomEntityID, generateRandomEntityName } from '../utils/entities.js'
 import { buildJSON } from '../utils/json.js'
-import { Entity } from './entity/_index.js'
-import { Constants } from './Constants.js'
+import { PatchEntity } from './entity/_index.js'
+import { Constants } from '../Constants.js'
 import { writeFile } from 'fs/promises'
 
-export interface QNPatchSaveOptions {
+export interface QNSaveOptions {
   spaces: number,
   includeSchema: boolean
 }
 
-export const QNPatchSaveDefaultOptions: QNPatchSaveOptions = {
+export const QNSaveDefaultOptions: QNSaveOptions = {
   spaces: 2,
   includeSchema: true
 }
@@ -29,28 +29,28 @@ export class QNPatch {
     return 6;
   }
 
-  public addEntity(entityConfig: ICreateEntity): Entity {
+  public addEntity(entityConfig: ICreateEntity): PatchEntity {
     entityConfig = ensureEntityIDs(entityConfig)
 
     const name = entityConfig.name ?? generateRandomEntityName()
     const id = entityConfig.id ?? generateRandomEntityID()
-    const entity = new Entity(this, id)
+    const entity = new PatchEntity(this, id)
 
     this.addPatch<PatchAction_AddEntityData>(PatchAction.ADD_ENTITY, { ...entityConfig, name, id })
 
     return entity
   }
 
-  public getEntity(id: string): Entity {
-    return new Entity(this, id)
+  public getEntity(id: string): PatchEntity {
+    return new PatchEntity(this, id)
   }
 
-  public setRootEntity(entity: string | Entity): this {
+  public setRootEntity(entity: string | PatchEntity): this {
     this.addPatch<PatchAction_SetRootEntityData>(PatchAction.SET_ROOT_ENTITY, entity)
     return this
   }
 
-  public removeEntityByID(entity: string | Entity): this {
+  public removeEntityByID(entity: string | PatchEntity): this {
     this.addPatch<PatchAction_RemoveEntityByIDData>(PatchAction.REMOVE_ENTITY_BY_ID, entity)
     return this
   }
@@ -130,8 +130,8 @@ export class QNPatch {
     return this
   }
 
-  public buildPatch(options: Partial<QNPatchSaveOptions> = {}) {
-    options = { ...QNPatchSaveDefaultOptions, ...options }
+  public buildPatch(options: Partial<QNSaveOptions> = {}) {
+    options = { ...QNSaveDefaultOptions, ...options }
 
     return buildJSON({
       'tempHash': this.templateHash,
@@ -143,8 +143,8 @@ export class QNPatch {
       .build()
   }
 
-  public async save(path: string, options: Partial<QNPatchSaveOptions> = {}) {
-    options = { ...QNPatchSaveDefaultOptions, ...options }
+  public async save(path: string, options: Partial<QNSaveOptions> = {}) {
+    options = { ...QNSaveDefaultOptions, ...options }
 
     await writeFile(
       path,

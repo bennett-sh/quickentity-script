@@ -1,6 +1,6 @@
 import type { IEventTriggers, ITransform, TRef, TRoomBehaviour } from '../../types.js'
 import { CommonPaths, getClassPath } from '../../lib.js'
-import { PatchEntity } from './base.js'
+import { Entity } from './base.js'
 
 export interface IItemSpawnerConfig {
   // built-in item spawner props
@@ -21,14 +21,14 @@ export interface IItemSpawnerConfig {
 }
 
 declare module './_index.js' {
-  interface PatchEntity {
+  interface Entity {
     spawnItem(repositoryID: string, config?: Partial<IItemSpawnerConfig>)
-    getItemKey(repositoryID: string): PatchEntity
+    getItemKey(repositoryID: string): Entity
   }
 }
 
-PatchEntity.prototype.getItemKey = function(repositoryID) {
-  return (this as PatchEntity).addChild({
+Entity.prototype.getItemKey = function(repositoryID) {
+  return (this as Entity).addChild({
     ...getClassPath('ItemRepositoryKeyEntity'),
     properties: {
       m_RepositoryId: {
@@ -39,8 +39,8 @@ PatchEntity.prototype.getItemKey = function(repositoryID) {
   })
 }
 
-PatchEntity.prototype.spawnItem = function(repositoryID, config = {}) {
-  const root = (this as PatchEntity).addChild({ ...CommonPaths.Entity })
+Entity.prototype.spawnItem = function(repositoryID, config = {}) {
+  const root = (this as Entity).addChild({ ...CommonPaths.Entity })
   const itemKey = root.getItemKey(repositoryID)
   const spawner = root.addChild({
     ...getClassPath('ItemSpawner'),

@@ -1,15 +1,15 @@
 import { CommonPaths, getTemplateFactoryPath } from '../../lib.js'
-import type { IEventTriggers } from '../../types.js'
-import { PatchEntity } from './base.js'
+import { IEventTriggers, TRef } from '../../types.js'
+import { Entity } from './base.js'
 
 declare module './_index.js' {
-  interface PatchEntity {
-    addOnGameStartListener(outputs: IEventTriggers): PatchEntity
+  interface Entity {
+    addOnGameStartListener(outputs: IEventTriggers): Entity
   }
 }
 
-function createQNSEventListeners(entity: PatchEntity) {
-  function createGameStartListener(root: PatchEntity) {
+function createQNSEventListeners(entity: Entity) {
+  function createGameStartListener(root: Entity) {
     const signal = root.addChild({
       ...CommonPaths.SignalOnce_Void,
       outputCopying: {
@@ -39,9 +39,9 @@ function createQNSEventListeners(entity: PatchEntity) {
   return root
 }
 
-PatchEntity.prototype.addOnGameStartListener = function(outputs) {
+Entity.prototype.addOnGameStartListener = function(outputs) {
   const id = this.patch.__constants.EVENT_LISTENERS
-  let listener = new PatchEntity(this.patch, id)
+  let listener = new Entity(this.patch, id)
   if(!id) {
     listener = createQNSEventListeners(this)
     this.patch.__constants.EVENT_LISTENERS = listener.id

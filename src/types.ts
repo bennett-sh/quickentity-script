@@ -1,5 +1,6 @@
+import { PatchEntity } from './patches/entity/_index.js'
+import { Entity } from './entities/entity/_index.js'
 import { PatchAction } from './lib.js'
-import { Entity } from './patches/entity/_index.js'
 
 export type TSubType = 'brick' | 'scene' | 'template'
 
@@ -42,9 +43,9 @@ export type TProperties = ICommonProperties & Record<string, IProperty>
 export interface IFullRef {
   exposedEntity?:  string
   externalScene:   string
-  ref:             string | Entity
+  ref:             string | Entity | PatchEntity
 }
-export type TRef = IFullRef | string | null | Entity
+export type TRef = IFullRef | string | null | Entity | PatchEntity
 export interface IRefWithConstantValue {
   ref:    TRef
   value:  IProperty
@@ -107,6 +108,11 @@ export interface IEntity extends IBaseEntity {
   parent  :  TRef
 }
 
+export interface IEntityNoID extends IBaseEntity {
+  parent  :  TRef
+  name   ?:  string
+}
+
 export interface ICreateEntity extends IBaseEntity {
   parent  :  TRef
   name   ?:  string
@@ -117,6 +123,11 @@ export interface ICreateChildEntity extends IBaseEntity {
   parent  ?:  TRef
   name    ?:  string
   id      ?:  string
+}
+
+export interface IRootEntity extends IBaseEntity {
+  name   ?:  string
+  id     ?:  string
 }
 
 export interface IPinConnectionOverride {
@@ -156,3 +167,20 @@ export interface IPath {
 
 export type TLocation = 'golden' | 'ancestral' | 'edgy' | 'elegant' | 'wet' | 'trapped' | 'opulent' | 'caged' | 'greedy' | 'salty' | 'hawk' | 'theark' | 'skunk' | 'mumbai' | 'colombia' | 'miami' | 'sheep' | 'hokkaido' | 'colorado' | 'bangkok' | 'marrakesh' | 'coastaltown' | 'paris' | 'rocky' | 'snug'
 export type TLocationKey = 'Dubai' | 'Dartmoor' | 'Berlin' | 'Mendoza' | 'Chongqing' | 'Romania' | 'HavenIsland' | 'Siberia' | 'NewYork' | 'HantuPort' | 'Himmelstein' | 'IsleOfSgail' | 'WhittletonCreek' | 'Mumbai' | 'SantaFortuna' | 'Miami' | 'HawkesBay' | 'Hokkaido' | 'Colorado' | 'Bangkok' | 'Marrakesh' | 'Sapienza' | 'Paris' | 'AmbroseIsland' | 'Safehouse';
+
+export interface IQNEntity {
+  tempHash: string
+  tbluHash: string
+  rootEntity: string
+  entities: {[id: string]: IEntityNoID}
+  propertyOverrides: IPropertyOverride[]
+  overrideDeletes: TRef[]
+  pinConnectionOverrides: IPinConnectionOverride[]
+  pinConnectionOverrideDeletes: IPinConnectionOverrideDelete[]
+  externalScenes: string[]
+  subType: TSubType
+  quickEntityVersion: number
+  extraFactoryDependencies: TDependency[]
+  extraBlueprintDependencies: TDependency[]
+  comments: ICommentEntity[]
+}

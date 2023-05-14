@@ -1,5 +1,5 @@
 import { ICommentEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, IRefWithConstantValue, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
-import { Entity } from './entity/_index.js'
+import { PatchEntity } from './entity/_index.js'
 
 export enum PatchAction {
   ADD_OVERRIDE_DELETE,
@@ -92,8 +92,8 @@ export type PatchAction_AddExtraFactoryDependencyData = TDependency
 export type PatchAction_RemoveExtraFactoryDependencyData = TDependency
 export type PatchAction_AddEntityData = IEntity
 export type PatchAction_SetSubTypeData = TSubType
-export type PatchAction_SetRootEntityData = string | Entity
-export type PatchAction_RemoveEntityByIDData = string | Entity
+export type PatchAction_SetRootEntityData = string | PatchEntity
+export type PatchAction_RemoveEntityByIDData = string | PatchEntity
 
 export interface PatchAction_RemoveAllOutputCopyConnectionsForPropagate extends ISubEntityOperation { a: string, b: string }
 export interface PatchAction_RemoveAllOutputCopyConnectionsForOutput extends ISubEntityOperation { a: string }
@@ -119,7 +119,7 @@ export interface PatchAction_RemovePropertyByNameData extends ISubEntityOperatio
 export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperation {
   when:      string
   do:        string
-  on:        string | Entity | (string | Entity)[]
+  on:        string | PatchEntity | (string | PatchEntity)[]
 }
 export interface PatchAction_RemoveInputCopyConnectionData extends ISubEntityOperation {
   a:        string

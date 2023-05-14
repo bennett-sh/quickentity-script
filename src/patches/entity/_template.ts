@@ -1,6 +1,6 @@
-import { Entity } from './base.js'
+import { PatchEntity } from './base.js'
 
 declare module './_index.js' {
-  interface Entity {
+  interface PatchEntity {
   }
 }

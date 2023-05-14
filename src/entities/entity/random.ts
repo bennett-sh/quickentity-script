@@ -2,21 +2,21 @@ import { CommonPaths, getClassPath } from '../../lib.js'
 import { IEventTriggers } from '../../types.js'
 import { scope } from '../../utils/common.js'
 import { buildJSON } from '../../utils/json.js'
-import { PatchEntity } from './base.js'
+import { Entity } from './base.js'
 
 export interface IConditionalEventTriggers {
-  condition: PatchEntity | string
+  condition: Entity | string
   triggers: IEventTriggers
 }
 
 declare module './_index.js' {
-  interface PatchEntity {
-    randomAction(options: (IEventTriggers | IConditionalEventTriggers)[]): PatchEntity;
+  interface Entity {
+    randomAction(options: (IEventTriggers | IConditionalEventTriggers)[]): Entity
   }
 }
 
-PatchEntity.prototype.randomAction = function(options) {
-  const root = (this as PatchEntity).addChild({
+Entity.prototype.randomAction = function(options) {
+  const root = (this as Entity).addChild({
     ...CommonPaths.Entity
   })
 
