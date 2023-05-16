@@ -1,10 +1,10 @@
 import { Location } from '../../dist/src/lib.js'
-import { getMissionBrickPath, getMissionTemplatePath, getTemplateFactoryPath } from '../../dist/src/utils/paths.js'
+import { getMissionBrickPath, getMissionTemplatePath, getPath } from '../../dist/src/utils/paths.js'
 import assert from 'assert'
 
 describe('Path Utilities', () => {
   it('should get temp\'s and tblu\'s of a path', () => {
-    const path = getTemplateFactoryPath('[assembly:/_pro/something.entitytemplate]')
+    const path = getPath('[assembly:/_pro/something.entitytemplate]')
 
     assert.strictEqual(
       path.factory,

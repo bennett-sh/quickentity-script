@@ -1,4 +1,4 @@
-import { getClassPath, getTemplateFactoryPath } from '../../lib.js'
+import { getClassPath, getPath } from '../../lib.js'
 import { Entity } from './base.js'
 
 declare module './_index.js' {
@@ -32,7 +32,7 @@ Entity.prototype.getConstantBool = function(value: boolean): Entity {
     if(!id) {
       const child = this.addChild({
         name: 'Constant FALSE',
-        ...getTemplateFactoryPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
+        ...getPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
         properties: {
           m_bValue: {
             type: 'bool',

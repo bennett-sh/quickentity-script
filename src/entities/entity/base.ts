@@ -1,4 +1,4 @@
-import { getClassPath, getTemplateFactoryPath } from '../../lib.js'
+import { getClassPath, getPath } from '../../lib.js'
 import type { PatchAction_AddEventConnectionData } from '../../patches/PatchActions.js'
 import type { ICreateChildEntity, IEntityNoID, IEventTriggers, IQNEntity } from '../../types.js'
 import { generateRandomEntityID, generateRandomEntityName, outputsToEvent } from '../../utils/entities.js'
@@ -52,7 +52,7 @@ export class Entity {
   public addBool(value: boolean, name = 'Bool ' + generateRandomEntityName()) {
     return this.addChild({
       name,
-      ...getTemplateFactoryPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
+      ...getPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
       properties: {
         m_bValue: {
           type: 'bool',
@@ -82,7 +82,7 @@ export class Entity {
       events: {
         Out: {
           ...outputsToEvent(outputs),
-          In: id
+          In: recursive ? id : []
         }
       }
     })

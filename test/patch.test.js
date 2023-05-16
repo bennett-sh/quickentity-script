@@ -1,4 +1,4 @@
-import { CommonPaths, createPatch, getTemplateFactoryPath } from '../dist/src/lib.js'
+import { CommonPaths, createPatch } from '../dist/src/lib.js'
 import { readFile, rm } from 'fs/promises'
 import assert from 'assert'
 

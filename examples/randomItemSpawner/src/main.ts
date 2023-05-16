@@ -1,10 +1,10 @@
-import { CommonPaths, createEntity, getClassPath, getTemplateFactoryPath } from 'quickentity-script'
+import { CommonPaths, createEntity, getClassPath, getPath } from '../../../dist/src/lib.js'
 import { RepositoryGroup } from 'repository-script'
 
 // NOTE: this is incomplete/not working
 
 async function main() {
-  const entity = createEntity(getTemplateFactoryPath('[assembly:/_pro/bsh/random_item_spawner?/all.entitytemplate]'), 'template')
+  const entity = createEntity(getPath('[assembly:/_pro/bsh/random_item_spawner?/all.entitytemplate]'), 'template')
   const root = entity.addRoot({ ...CommonPaths.SpatialEntity, name: 'Random Item Spawner' })
   const itemsContainer = root.addChild({ ...CommonPaths.Entity, name: 'Items' })
 

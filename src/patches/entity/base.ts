@@ -2,7 +2,7 @@ import { PatchAction, PatchAction_AddCommentData, PatchAction_AddEntityData, Pat
 import { ICreateChildEntity, IEventTriggers, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, TArrayPatchOperation, TRef } from '../../types.js'
 import { ensureEntityIDs, generateRandomEntityID, generateRandomEntityName, outputsToEvent } from '../../utils/entities.js'
 import { QNPatch } from '../QNPatch.js'
-import { getClassPath, getTemplateFactoryPath } from '../../lib.js'
+import { getClassPath, getPath } from '../../lib.js'
 
 export class PatchEntity {
   constructor(
@@ -244,7 +244,7 @@ export class PatchEntity {
   public addBool(value: boolean, name = 'Bool ' + generateRandomEntityName()) {
     return this.addChild({
       name,
-      ...getTemplateFactoryPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
+      ...getPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
       properties: {
         m_bValue: {
           type: 'bool',
@@ -259,7 +259,7 @@ export class PatchEntity {
     return this.addChild({
       id,
       name,
-      ...getTemplateFactoryPath('[assembly:/_pro/design/logic.template?/timersimple.entitytemplate]'),
+      ...getPath('[assembly:/_pro/design/logic.template?/timersimple.entitytemplate]'),
       properties: {
         'Delay time (ms)': {
           type: 'int32',
@@ -273,7 +273,7 @@ export class PatchEntity {
       events: {
         Out: {
           ...outputsToEvent(outputs),
-          In: id
+          In: recursive ? id : []
         }
       }
     })

@@ -1,4 +1,4 @@
-import { CommonPaths, getTemplateFactoryPath } from '../../lib.js'
+import { CommonPaths, getPath } from '../../lib.js'
 import type { IEventTriggers } from '../../types.js'
 import { PatchEntity } from './base.js'
 
@@ -33,7 +33,7 @@ function createQNSEventListeners(entity: PatchEntity) {
 
   const root = entity.addChild({
     name: 'QNS Event Listeners',
-    ...getTemplateFactoryPath('[modules:/zentity.class]')
+    ...getPath('[modules:/zentity.class]')
   })
   createGameStartListener(root)
   return root

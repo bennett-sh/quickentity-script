@@ -36,6 +36,10 @@ export type ICommonProperties = Partial<{
   m_eRoomBehaviour: {
     type: 'ZSpatialEntity.ERoomBehaviour',
     value: TRoomBehaviour
+  },
+  m_RepositoryId: {
+    type: 'ZGuid',
+    value: string
   }
 }>
 export type TProperties = ICommonProperties & Record<string, IProperty>

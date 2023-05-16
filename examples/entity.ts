@@ -1,8 +1,8 @@
 
-import { createEntity, getClassPath, getTemplateFactoryPath } from '../src/lib.js'
+import { createEntity, getClassPath, getPath } from '../src/lib.js'
 
 async function main() {
-  const entity = createEntity(getTemplateFactoryPath('[assembly:/pro/bsh/my_cool_entity.entitytemplate]'), 'template')
+  const entity = createEntity(getPath('[assembly:/pro/bsh/my_cool_entity.entitytemplate]'), 'template')
 
   const root = entity.addRoot({
     ...getClassPath('SpatialCompositeEntity')
