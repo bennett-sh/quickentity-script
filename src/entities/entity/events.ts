@@ -10,25 +10,20 @@ declare module './_index.js' {
 
 function createQNSEventListeners(entity: Entity) {
   function createGameStartListener(root: Entity) {
-    const signal = root.addChild({
-      ...CommonPaths.SignalOnce_Void,
-      outputCopying: {
-        Out: {
-          OnGameStart: root
+    root.addChild({
+      ...CommonPaths.GameEventListener,
+      properties: {
+        m_eEvent: {
+          type: 'EGameEventType',
+          value: 'GET_IntroCutEnd'
         }
       },
-      properties: {
-        m_fExpireInterval: {
-          type: "float32",
-          value: 5
-        },
-        m_bSignaling: {
-          type: "bool",
-          value: true
+      events: {
+        EventOccurred: {
+          OnGameStart: root
         }
       }
     })
-    root.addChild({ ...CommonPaths.GameEventListener, events: { EventOccurred: { Signal: signal } } })
   }
 
   const root = entity.addChild({
