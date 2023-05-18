@@ -1,5 +1,5 @@
+import type { IEventTriggers } from '../../types.js'
 import { CommonPaths, getPath } from '../../lib.js'
-import { IEventTriggers, TRef } from '../../types.js'
 import { Entity } from './base.js'
 
 declare module './_index.js' {

@@ -1,5 +1,7 @@
 
 export * as entities from './utils/entities.js'
+export * from './entities/entity/_index.js'
+export * from './patches/entity/_index.js'
 export * from './patches/PatchActions.js'
 export * as hash from './utils/hash.js'
 export * from './entities/QNEntity.js'

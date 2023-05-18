@@ -1,6 +1,7 @@
 import { CommonPaths, getClassPath } from '../../lib.js'
 import { IEventTriggers } from '../../types.js'
 import { generateRandomEntityID } from '../../utils/entities.js'
+import { normalizeToHash } from '../../utils/hash.js'
 import { Entity } from './base.js'
 
 declare module './_index.js' {
@@ -34,7 +35,7 @@ Entity.prototype.setHeroOutfit = function(outfitRepositoryID: string) {
   const root = (this as Entity).addChild({
     ...CommonPaths.Entity,
     events: {
-      Set: {
+      SetOutfit: {
         GiveOutfit: heroOutfitModifierRef
       }
     }

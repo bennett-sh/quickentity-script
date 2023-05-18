@@ -1,6 +1,6 @@
 {
   "name": "quickentity-script",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "An easier way of writing QN patches with code",
   "main": "dist/src/lib.js",
   "types": "./dist/src/index.d.ts",

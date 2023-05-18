@@ -21,7 +21,7 @@ export interface ITransform {
 export type TPropertyType = 'SEntityTemplateReference' | 'ZGuid' | 'ZString' | string
 export interface ISimpleProperty {
   type:   TPropertyType
-  value:  any
+  value:  IFullRef | any
 }
 export interface IProperty extends ISimpleProperty { postInit?: boolean }
 export type ICommonProperties = Partial<{
