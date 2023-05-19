@@ -14,6 +14,10 @@ export class PatchEntity {
     return this._id
   }
 
+  public getEntity(id: string) {
+    return new PatchEntity(this.patch, id)
+  }
+
   public addEvent(event: PatchAction_AddEventConnectionData): PatchEntity {
     if(event.on instanceof Array) {
       event.on = event.on.map(x => x instanceof PatchEntity ? x.id : x)

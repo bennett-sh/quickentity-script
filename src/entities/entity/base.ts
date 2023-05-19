@@ -27,6 +27,10 @@ export class Entity {
     this.data = deepMerge(data, this.data)
   }
 
+  public getEntity(id: string) {
+    return new Entity(this.entity, id)
+  }
+
   public addChild(entityConfig: ICreateChildEntity): Entity {
     return this.entity.addEntity({ ...entityConfig, parent: this._id })
   }
