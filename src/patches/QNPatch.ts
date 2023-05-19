@@ -407,7 +407,11 @@ export class QNPatch {
               {
                 "PatchArrayPropertyValue": [
                   data.name,
-                  data.operations
+                  data.operations.map(operation => Object.entries(operation).map(([op, data]) => {
+                    if(op === 'AddItem' || op === 'RemoveItemByValue') data = ensureID(data)
+                    if(op === 'AddItemAfter' || op === 'AddItemBefore') data = data.map(x => ensureID(x))
+                    return [op, data]
+                  }))
                 ]
               }
             ]
