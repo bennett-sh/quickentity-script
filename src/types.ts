@@ -28,18 +28,22 @@ export type ICommonProperties = Partial<{
   m_mTransform: {
     type: 'SMatrix43'
     value: ITransform
+    postInit?: boolean
   },
   m_eidParent: {
-    type: 'SEntityTemplateReference',
+    type: 'SEntityTemplateReference'
     value: TRef
+    postInit?: boolean
   },
   m_eRoomBehaviour: {
-    type: 'ZSpatialEntity.ERoomBehaviour',
+    type: 'ZSpatialEntity.ERoomBehaviour'
     value: TRoomBehaviour
+    postInit?: boolean
   },
   m_RepositoryId: {
     type: 'ZGuid',
     value: string
+    postInit?: boolean
   }
 }>
 export type TProperties = ICommonProperties & Record<string, IProperty>
