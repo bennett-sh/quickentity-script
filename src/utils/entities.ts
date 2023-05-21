@@ -113,9 +113,24 @@ export function ensurePropertyIDs<T extends ICreateChildEntity | ICreateEntity>(
   return entityConfig
 }
 
+export function ensureExposedIDs<T extends ICreateChildEntity | ICreateEntity>(entityConfig: T): T {
+  entityConfig.exposedEntities = Object.fromEntries(
+    Object.entries(entityConfig.exposedEntities ?? {})
+    .map(([name, val]) => [
+      name,
+      {
+        ...val,
+        refersTo: val.isArray ? val.refersTo.map(x => ensureID(x)) : ensureID(val.refersTo as TRef)
+      }
+    ]) as any
+  )
+  return entityConfig
+}
+
 export function ensureEntityIDs<T extends ICreateChildEntity | ICreateEntity>(entityConfig: T): T {
   entityConfig = ensureEventIDs(entityConfig)
   entityConfig = ensurePropertyIDs(entityConfig)
+  entityConfig = ensureExposedIDs(entityConfig)
 
   if(entityConfig.parent) entityConfig.parent = ensureID(entityConfig.parent) as TRef
 
