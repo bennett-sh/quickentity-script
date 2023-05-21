@@ -40,7 +40,9 @@ export class Entity {
     return this
   }
 
-  public addInt(value: number, name = 'Int ' + generateRandomEntityName()) {
+  public addInt(value: number, entityConfig: Partial<ICreateChildEntity> = {}) {
+    let { name } = entityConfig
+    if(!name) name = 'Int ' + generateRandomEntityName()
     return this.addChild({
       name,
       ...getClassPath('ValueInt_Basic'),
@@ -53,7 +55,9 @@ export class Entity {
     })
   }
 
-  public addBool(value: boolean, name = 'Bool ' + generateRandomEntityName()) {
+  public addBool(value: boolean, entityConfig: Partial<ICreateChildEntity> = {}) {
+    let { name } = entityConfig
+    if(!name) name = 'Bool ' + generateRandomEntityName()
     return this.addChild({
       name,
       ...getPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
@@ -66,8 +70,10 @@ export class Entity {
     })
   }
 
-  public addTimer(timeMS: number, outputs: IEventTriggers, recursive = false, name = 'Timer ' + generateRandomEntityName()) {
-    const id = generateRandomEntityID()
+  public addTimer(timeMS: number, outputs: IEventTriggers, recursive = false, entityConfig: Partial<ICreateChildEntity> = {}) {
+    let { name, id } = entityConfig
+    if(!name) name = 'Bool ' + generateRandomEntityName()
+    if(!id) id = generateRandomEntityID()
     return this.addChild({
       id,
       name,

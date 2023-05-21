@@ -50,7 +50,7 @@ async function main() {
 
   // this will be added everytime it's called so you can modify it's value
   const myChangingBool = aChild.addBool(false)
-  const myChangingInt = aChild.addInt(0, 'A cool counter')
+  const myChangingInt = aChild.addInt(0, { name: 'A cool counter' })
   const myTimer = aChild.addTimer(250, { SetTrue: [myChangingBool] })
 
   // get an existing entity
