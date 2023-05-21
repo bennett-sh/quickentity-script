@@ -480,7 +480,10 @@ export class QNPatch {
               {
                 "SetExposedEntity": [
                   data.name,
-                  data.entity
+                  {
+                    ...data.entity,
+                    refersTo: data.entity.isArray ? data.entity.refersTo.map(x => ensureID(x)) : ensureID(data.entity.refersTo as TRef)
+                  }
                 ]
               }
             ]

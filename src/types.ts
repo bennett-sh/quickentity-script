@@ -65,10 +65,7 @@ export interface IPropertyAlias {
   originalProperty:  string
 }
 
-export interface IExposedEntity {
-  isArray   :  boolean
-  refersTo  :  TRef[]
-}
+export type IExposedEntity = { isArray: true, refersTo: TRef[] } | { isArray: false, refersTo: TRef }
 
 export interface IPropertyOverrideConnection {
   entity            :  TRef
@@ -146,11 +143,6 @@ export interface IPinConnectionOverride {
   value      : any
 }
 export type IPinConnectionOverrideDelete = IPinConnectionOverride
-
-export interface IExposedEntity {
-  isArray  : boolean
-  refersTo : TRef[]
-}
 
 export interface IPropertyAlias {
   originalEntity    : TRef
