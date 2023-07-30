@@ -9,7 +9,7 @@ For example:
 - Easier writing of **repeating & heavily logic-based** QN tasks
 - **Just-in-time constants** for booleans, numbers and more
 - Simple function calls for **commonly used entities** (like bools, numbers, timers, ...)
-- Unbelievably simple parenting system
+- Simple parenting system
 - Easier referencing with variables
 - Includes typings for QN
 - Familiar to anyone who knows QN or TypeScript
