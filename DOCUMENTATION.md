@@ -7,10 +7,7 @@ import { createPatch } from 'quickentity-script';
 ```
 Then call it with the template & blueprint values. Unlike QuickEntity itself, it also supports entering a path instead of a hash.
 ```ts
-const myPatch = createPatch(
-  '[assembly:/_pro/characters/templates/hero/agent47/agent47.template?/agent47_default.entitytemplate].pc_entitytype',
-  '[assembly:/_pro/characters/templates/hero/agent47/agent47.template?/agent47_default.entitytemplate].pc_entityblueprint'
-);
+const myPatch = createPatch(getPath('[assembly:/_pro/characters/templates/hero/agent47/agent47.template?/agent47_default.entitytemplate]'));
 ```
 After you're done building everything you can use the following code to save the file.
 ```ts
