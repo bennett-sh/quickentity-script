@@ -108,5 +108,6 @@ patch.addCustomPatch({
 ```
 *Note: SetEditorOnly is available as ```Entity::setEditorOnly``` so please don't use this example*
 
-## As this was a lot of dull writing down, some patch APIs will still have erros
+## As this was a lot of dull writing down, some patch APIs could still have typos
 ### Please report them!
+Until these are fixed, you can use the custom patch utility to bypass such issues.
