@@ -59,7 +59,7 @@ PatchEntity.prototype.randomAction = function(actions, options = {}) {
     properties: {
       m_Seed: {
         type: 'SEntityTemplateReference',
-        value: "null"
+        value: null
       },
       m_Choices: {
         type: 'TArray<SEntityTemplateReference>',
