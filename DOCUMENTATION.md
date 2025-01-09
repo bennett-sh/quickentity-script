@@ -90,7 +90,10 @@ There're a handful of other utility functions in QNS. For example, timers.
 const myRootEntity = patch.getEntity('facf1234567890AB');
 // Add a timer triggering 1s after receiving In and then triggering DoSomething on myRootEntity
 // Note: you'll still need to manually trigger the In pin of myTimer
-const myTimer = myRootEntity.addTimer(1000, { DoSomething: myRootEntity });
+const myTimer = myRootEntity.addTimer({
+  time: { seconds: 1 },
+  outputs: { DoSomething: myRootEntity }
+});
 ```
 
 ### Custom Patches
