@@ -51,7 +51,10 @@ async function main() {
   // this will be added everytime it's called so you can modify it's value
   const myChangingBool = aChild.addBool(false)
   const myChangingInt = aChild.addInt(0, { name: 'A cool counter' })
-  const myTimer = aChild.addTimer(250, { SetTrue: [myChangingBool] })
+  const myTimer = aChild.addTimer({
+    time: { ms: 250 },
+    outputs: { SetTrue: myChangingBool }
+  })
 
   // get an existing entity
   // note: my_entity_id is neither a valid entity id nor existing in the agent47_default.entitytemplate

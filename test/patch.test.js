@@ -78,7 +78,10 @@ describe('Simple Patch', () => {
   })
 
   const someBool = root.addBool(false)
-  const timer = root.addTimer(1250, { SetTrue: someBool })
+  const timer = root.addTimer({
+    time: { seconds: 1, ms: 250 },
+    outputs: { SetTrue: someBool }
+  })
 
   it('should add timers', () => {
     const build = patch.buildPatch()

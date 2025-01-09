@@ -23,8 +23,11 @@ PatchEntity.prototype.getHero = function(triggers: IEventTriggers, entityConfig?
   })
 
   heroStandIn.addOnGameStartListener({
-    In: heroStandIn.addTimer(1000, {
-      GetHero: heroStandIn
+    In: heroStandIn.addTimer({
+      time: { seconds: 1 },
+      outputs: {
+        GetHero: heroStandIn
+      }
     })
   })
 

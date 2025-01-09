@@ -264,8 +264,17 @@ export class PatchEntity {
     })
   }
 
-  public addTimer(timeMS: number, outputs: IEventTriggers, recursive = false, entityConfig: Partial<ICreateChildEntity> = {}) {
-    let { name, id } = entityConfig
+  public addTimer(options: {
+    time: Partial<{
+      ms: number,
+      seconds: number,
+      minutes: number
+    }>,
+    outputs: IEventTriggers,
+    recursive?: boolean,
+    entityConfig?: Partial<ICreateChildEntity>
+  }) {
+    let { name, id } = options.entityConfig ?? {}
     if(!name) name = 'Timer ' + generateRandomEntityName()
     if(!id) id = generateRandomEntityID()
     return this.addChild({
@@ -275,7 +284,7 @@ export class PatchEntity {
       properties: {
         'Delay time (ms)': {
           type: 'int32',
-          value: timeMS
+          value: (options.time.ms ?? 0) + (options.time.seconds ?? 0) * 1000 + (options.time.minutes ?? 0) * 60 * 1000
         },
         m_bEnabled: {
           type: 'bool',
@@ -284,8 +293,8 @@ export class PatchEntity {
       },
       events: {
         Out: {
-          ...outputsToEvent(outputs),
-          In: recursive ? id : []
+          ...outputsToEvent(options.outputs),
+          In: options.recursive ? id : []
         }
       }
     })

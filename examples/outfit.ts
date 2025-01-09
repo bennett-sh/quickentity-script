@@ -7,8 +7,11 @@ async function main() {
   const entity = patch.addEntity({ parent: CommonRoots.Agent47, ...CommonPaths.Entity })
 
   entity.setHeroOutfit('4d561409-84d4-4dae-abd2-852cf93471bb', modifier => ({
-    In: entity.addTimer(100, {
-      SetOutfit: modifier
+    In: entity.addTimer({
+      time: { ms: 100 },
+      outputs: {
+        SetOutfit: modifier
+      }
     })
   }))
 
