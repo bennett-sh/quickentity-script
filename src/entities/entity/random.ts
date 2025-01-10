@@ -48,7 +48,7 @@ Entity.prototype.randomAction = function(options) {
     properties: {
       m_Seed: {
         type: 'SEntityTemplateReference',
-        value: "null"
+        value: null
       },
       m_Choices: {
         type: 'TArray<SEntityTemplateReference>',
