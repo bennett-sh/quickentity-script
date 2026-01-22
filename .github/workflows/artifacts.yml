@@ -43,7 +43,7 @@ jobs:
           cp -r package.json bun.lock tsconfig.json dist/ src/ DOCUMENTATION.md LICENSE output/
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: QNS-Library
           path: ./output
