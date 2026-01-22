@@ -1,5 +1,20 @@
-import { ICommentEntity, IEntity, IExposedEntity, IPinConnectionOverride, IPinConnectionOverrideDelete, IProperty, IPropertyAlias, IPropertyOverride, IPropertyOverrideConnection, IRefWithConstantValue, TArrayPatchOperation, TDependency, TRef, TSubType } from '../types.js'
-import { PatchEntity } from './entity/_index.js'
+import {
+  ICommentEntity,
+  IEntity,
+  IExposedEntity,
+  IPinConnectionOverride,
+  IPinConnectionOverrideDelete,
+  IProperty,
+  IPropertyAlias,
+  IPropertyOverride,
+  IPropertyOverrideConnection,
+  IRefWithConstantValue,
+  TArrayPatchOperation,
+  TDependency,
+  TRef,
+  TSubType,
+} from "../types.js";
+import { PatchEntity } from "./entity/_index.js";
 
 export enum PatchAction {
   ADD_OVERRIDE_DELETE,
@@ -67,152 +82,205 @@ export enum PatchAction {
   ADD_COMMENT,
   REMOVE_COMMENT,
 
-  CUSTOM_PATCH
+  CUSTOM_PATCH,
 }
 
 interface ISubEntityOperation {
-  target?: string
+  target?: string;
 }
 
-export type PatchAction_CustomPatch = {[key: string]: any}
+export type PatchAction_CustomPatch = { [key: string]: any };
 
-export type PatchAction_AddCommentData = ICommentEntity
-export type PatchAction_RemoveCommentData = ICommentEntity
-export type PatchAction_AddOverrideDeleteData = TRef | TRef[]
-export type PatchAction_RemoveOverrideDeleteData = TRef | TRef[]
-export type PatchAction_AddPropertyOverrideData = IPropertyOverride
-export type PatchAction_RemovePropertyOverrideData = IPropertyOverride
-export type PatchAction_AddPropertyOverrideConnectionData = IPropertyOverrideConnection
-export type PatchAction_RemovePropertyOverrideConnectionData = IPropertyOverrideConnection
-export type PatchAction_AddExternalSceneData = string
-export type PatchAction_RemoveExternalSceneData = string
-export type PatchAction_AddExtraBlueprintDependencyData = TDependency
-export type PatchAction_RemoveExtraBlueprintDependencyData = TDependency
-export type PatchAction_AddExtraFactoryDependencyData = TDependency
-export type PatchAction_RemoveExtraFactoryDependencyData = TDependency
-export type PatchAction_AddEntityData = IEntity
-export type PatchAction_SetSubTypeData = TSubType
-export type PatchAction_SetRootEntityData = string | PatchEntity
-export type PatchAction_RemoveEntityByIDData = string | PatchEntity
+export type PatchAction_AddCommentData = ICommentEntity;
+export type PatchAction_RemoveCommentData = ICommentEntity;
+export type PatchAction_AddOverrideDeleteData = TRef | TRef[];
+export type PatchAction_RemoveOverrideDeleteData = TRef | TRef[];
+export type PatchAction_AddPropertyOverrideData = IPropertyOverride;
+export type PatchAction_RemovePropertyOverrideData = IPropertyOverride;
+export type PatchAction_AddPropertyOverrideConnectionData =
+  IPropertyOverrideConnection;
+export type PatchAction_RemovePropertyOverrideConnectionData =
+  IPropertyOverrideConnection;
+export type PatchAction_AddExternalSceneData = string;
+export type PatchAction_RemoveExternalSceneData = string;
+export type PatchAction_AddExtraBlueprintDependencyData = TDependency;
+export type PatchAction_RemoveExtraBlueprintDependencyData = TDependency;
+export type PatchAction_AddExtraFactoryDependencyData = TDependency;
+export type PatchAction_RemoveExtraFactoryDependencyData = TDependency;
+export type PatchAction_AddEntityData = IEntity;
+export type PatchAction_SetSubTypeData = TSubType;
+export type PatchAction_SetRootEntityData = string | PatchEntity;
+export type PatchAction_RemoveEntityByIDData = string | PatchEntity;
 
-export interface PatchAction_RemoveAllOutputCopyConnectionsForPropagate extends ISubEntityOperation { a: string, b: string }
-export interface PatchAction_RemoveAllOutputCopyConnectionsForOutput extends ISubEntityOperation { a: string }
-export interface PatchAction_RemoveOutputCopyConnectionData extends ISubEntityOperation { a: string, b: string, to: TRef }
-export interface PatchAction_RemoveAllInputCopyConnectionsForTriggerData extends ISubEntityOperation { a: string, b: string }
-export interface PatchAction_RemoveAllInputCopyConnectionsForInputData extends ISubEntityOperation { input: string }
-export interface PatchAction_RemoveAllEventConnectionsForTriggerData extends ISubEntityOperation { a: string, b: string }
-export interface PatchAction_RemoveAllEventConnectionsForEventData extends ISubEntityOperation { event: string }
-export interface PatchAction_RemoveAllSubsetsForData extends ISubEntityOperation { forThing: string }
-export interface PatchAction_SetEditorOnlyData extends ISubEntityOperation { editorOnly: boolean }
-export interface PatchAction_AddPropertyAliasConnectionData extends ISubEntityOperation { name: string, alias: IPropertyAlias }
-export interface PatchAction_RemovePropertyAliasData extends ISubEntityOperation { name: string }
-export interface PatchAction_RemoveConnectionForPropertyAliasData extends ISubEntityOperation { name: string, alias: IPropertyAlias }
-export interface PatchAction_SetExposedInterfaceData extends ISubEntityOperation { name: string, inf: string }
-export interface PatchAction_RemoveExposedInterfaceData extends ISubEntityOperation { name: string }
-export interface PatchAction_SetExposedEntityData extends ISubEntityOperation { name: string, entity: IExposedEntity }
-export interface PatchAction_RemoveExposedEntityData extends ISubEntityOperation { name: string }
-export interface PatchAction_AddPinConnectionOverrideData extends ISubEntityOperation { override: IPinConnectionOverride }
-export interface PatchAction_RemovePinConnectionOverrideData extends ISubEntityOperation { override: IPinConnectionOverride }
-export interface PatchAction_AddPinConnectionOverrideDeleteData extends ISubEntityOperation { override: IPinConnectionOverrideDelete }
-export interface PatchAction_RemovePinConnectionOverrideDeleteData extends ISubEntityOperation { override: IPinConnectionOverrideDelete }
-export interface PatchAction_RemovePropertyByNameData extends ISubEntityOperation { name: string }
+export interface PatchAction_RemoveAllOutputCopyConnectionsForPropagate extends ISubEntityOperation {
+  a: string;
+  b: string;
+}
+export interface PatchAction_RemoveAllOutputCopyConnectionsForOutput extends ISubEntityOperation {
+  a: string;
+}
+export interface PatchAction_RemoveOutputCopyConnectionData extends ISubEntityOperation {
+  a: string;
+  b: string;
+  to: TRef;
+}
+export interface PatchAction_RemoveAllInputCopyConnectionsForTriggerData extends ISubEntityOperation {
+  a: string;
+  b: string;
+}
+export interface PatchAction_RemoveAllInputCopyConnectionsForInputData extends ISubEntityOperation {
+  input: string;
+}
+export interface PatchAction_RemoveAllEventConnectionsForTriggerData extends ISubEntityOperation {
+  a: string;
+  b: string;
+}
+export interface PatchAction_RemoveAllEventConnectionsForEventData extends ISubEntityOperation {
+  event: string;
+}
+export interface PatchAction_RemoveAllSubsetsForData extends ISubEntityOperation {
+  forThing: string;
+}
+export interface PatchAction_SetEditorOnlyData extends ISubEntityOperation {
+  editorOnly: boolean;
+}
+export interface PatchAction_AddPropertyAliasConnectionData extends ISubEntityOperation {
+  name: string;
+  alias: IPropertyAlias;
+}
+export interface PatchAction_RemovePropertyAliasData extends ISubEntityOperation {
+  name: string;
+}
+export interface PatchAction_RemoveConnectionForPropertyAliasData extends ISubEntityOperation {
+  name: string;
+  alias: IPropertyAlias;
+}
+export interface PatchAction_SetExposedInterfaceData extends ISubEntityOperation {
+  name: string;
+  inf: string;
+}
+export interface PatchAction_RemoveExposedInterfaceData extends ISubEntityOperation {
+  name: string;
+}
+export interface PatchAction_SetExposedEntityData extends ISubEntityOperation {
+  name: string;
+  entity: IExposedEntity;
+}
+export interface PatchAction_RemoveExposedEntityData extends ISubEntityOperation {
+  name: string;
+}
+export interface PatchAction_AddPinConnectionOverrideData extends ISubEntityOperation {
+  override: IPinConnectionOverride;
+}
+export interface PatchAction_RemovePinConnectionOverrideData extends ISubEntityOperation {
+  override: IPinConnectionOverride;
+}
+export interface PatchAction_AddPinConnectionOverrideDeleteData extends ISubEntityOperation {
+  override: IPinConnectionOverrideDelete;
+}
+export interface PatchAction_RemovePinConnectionOverrideDeleteData extends ISubEntityOperation {
+  override: IPinConnectionOverrideDelete;
+}
+export interface PatchAction_RemovePropertyByNameData extends ISubEntityOperation {
+  name: string;
+}
 export interface PatchAction_RemoveEventConnectionData extends ISubEntityOperation {
-  when:      string
-  do:        string
-  on:        string | PatchEntity | (string | PatchEntity)[]
+  when: string;
+  do: string;
+  on: string | PatchEntity | (string | PatchEntity)[];
 }
 export interface PatchAction_RemoveInputCopyConnectionData extends ISubEntityOperation {
-  a:        string
-  b:        string
-  to:       TRef
+  a: string;
+  b: string;
+  to: TRef;
 }
 export interface PatchAction_AddInputCopyConnectionData extends ISubEntityOperation {
-  a:   string,
-  b:   string,
-  to:  TRef
+  a: string;
+  b: string;
+  to: TRef;
 }
 export interface PatchAction_AddOutputCopyConnectionData extends ISubEntityOperation {
-  a:   string,
-  b:   string,
-  to:  TRef
+  a: string;
+  b: string;
+  to: TRef;
 }
 export interface PatchAction_RemoveSubsetData extends ISubEntityOperation {
-  a: string,
-  b: string
+  a: string;
+  b: string;
 }
 export interface PatchAction_SetNameData extends ISubEntityOperation {
-  name: string
+  name: string;
 }
 export interface PatchAction_SetFactoryData extends ISubEntityOperation {
-  factory: string
+  factory: string;
 }
 export interface PatchAction_SetFactoryFlagData extends ISubEntityOperation {
-  flag: string
+  flag: string;
 }
 export interface PatchAction_SetBlueprintData extends ISubEntityOperation {
-  blueprint: string
+  blueprint: string;
 }
 export interface PatchAction_SetParentData extends ISubEntityOperation {
-  parent: TRef
+  parent: TRef;
 }
 export interface PatchAction_AddEventConnectionData extends ISubEntityOperation {
-  when:      string
-  do:        string
-  on:        TRef | TRef[] | IRefWithConstantValue | IRefWithConstantValue[]
+  when: string;
+  do: string;
+  on: TRef | TRef[] | IRefWithConstantValue | IRefWithConstantValue[];
 }
 export interface PatchAction_AddPropertyData extends ISubEntityOperation {
-  name:      string
-  property:  IProperty
+  name: string;
+  property: IProperty;
 }
 export interface PatchAction_SetPropertyValueData extends ISubEntityOperation {
-  name:      string
-  value:     any
+  name: string;
+  value: any;
 }
 export interface PatchAction_SetPropertyTypeData extends ISubEntityOperation {
-  name:      string
-  type:      string
+  name: string;
+  type: string;
 }
 export interface PatchAction_SetPropertyPostInitData extends ISubEntityOperation {
-  name:      string
-  postInit:  boolean
+  name: string;
+  postInit: boolean;
 }
 export interface PatchAction_AddPSPropertyData extends ISubEntityOperation {
-  platform:  string
-  name:      string
-  property:  IProperty
+  platform: string;
+  name: string;
+  property: IProperty;
 }
 export interface PatchAction_SetPSPropertyValueData extends ISubEntityOperation {
-  platform:  string
-  name:      string
-  value:     any
+  platform: string;
+  name: string;
+  value: any;
 }
 export interface PatchAction_SetPSPropertyTypeData extends ISubEntityOperation {
-  platform:  string
-  name:      string
-  type:      string
+  platform: string;
+  name: string;
+  type: string;
 }
 export interface PatchAction_SetPSPropertyPostInitData extends ISubEntityOperation {
-  platform:  string
-  name:      string
-  postInit:  boolean
+  platform: string;
+  name: string;
+  postInit: boolean;
 }
 export interface PatchAction_RemovePSPropertyByNameData extends ISubEntityOperation {
-  platform:  string
-  name:      string
+  platform: string;
+  name: string;
 }
 export interface PatchAction_RemovePSPropertiesForPlatformData extends ISubEntityOperation {
-  platform:  string
+  platform: string;
 }
 export interface PatchAction_PatchPSArrayPropertyValueData extends ISubEntityOperation {
-  platform:    string
-  name:        string
-  operations:  TArrayPatchOperation[]
+  platform: string;
+  name: string;
+  operations: TArrayPatchOperation[];
 }
 export interface PatchAction_PatchArrayPropertyValueData extends ISubEntityOperation {
-  name:        string
-  operations:  TArrayPatchOperation[]
+  name: string;
+  operations: TArrayPatchOperation[];
 }
 export interface PatchAction_AddSubsetData extends ISubEntityOperation {
-  a:  string
-  b:  string
+  a: string;
+  b: string;
 }

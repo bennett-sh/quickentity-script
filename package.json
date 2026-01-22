@@ -1,18 +1,31 @@
 {
-  "name": "quickentity-script",
-  "version": "2.3.1",
-  "description": "An easier way of writing QN patches with code",
-  "main": "dist/src/lib.js",
-  "types": "./dist/src/index.d.ts",
-  "type": "module",
-  "scripts": {
-    "build": "tsc && pnpm run build:types",
-    "build:watch": "tsc -w",
-    "build:types": "dts-bundle-generator --export-referenced-types false -o dist/src/index.d.ts src/lib.ts",
-    "test": "mocha",
-    "test:watch": "mocha --parallel --watch --watch-files src/**/*,test/**/* test/**/*.test.js",
-    "prepublish": "rm -rf dist && pnpm run build"
+  "author": "BSh",
+  "bundles": {
+    "index.d.ts": {
+      "inputFiles": [
+        "dist/src/**/*.d.ts"
+      ]
+    }
   },
+  "dependencies": {
+    "md5": "^2.3.0"
+  },
+  "description": "An easier way of writing QN patches with code",
+  "devDependencies": {
+    "@types/jest": "^29.5.1",
+    "@types/md5": "^2.3.2",
+    "@types/node": "^18.16.3",
+    "biome": "^0.3.3",
+    "dts-bundle-generator": "^8.0.1",
+    "mocha": "^10.2.0",
+    "sinon": "^15.0.4",
+    "typescript": "^5.0.4"
+  },
+  "files": [
+    "src/**/*",
+    "dist/**/*"
+  ],
+  "homepage": "https://github.com/bennett-sh/quickentity-script",
   "keywords": [
     "hitman",
     "quickentity",
@@ -20,34 +33,25 @@
     "patch",
     "h3"
   ],
-  "author": "BSh",
   "license": "ISC",
-  "devDependencies": {
-    "@types/jest": "^29.5.1",
-    "@types/md5": "^2.3.2",
-    "@types/node": "^18.16.3",
-    "dts-bundle-generator": "^8.0.1",
-    "mocha": "^10.2.0",
-    "sinon": "^15.0.4",
-    "typescript": "^5.0.4"
-  },
-  "dependencies": {
-    "md5": "^2.3.0"
-  },
-  "files": [
-    "src/**/*",
-    "dist/**/*"
-  ],
+  "main": "dist/src/lib.js",
+  "name": "quickentity-script",
   "repository": {
     "type": "git",
     "url": "https://github.com/bennett-sh/quickentity-script.git"
   },
-  "homepage": "https://github.com/bennett-sh/quickentity-script",
-  "bundles": {
-    "index.d.ts": {
-      "inputFiles": [
-        "dist/src/**/*.d.ts"
-      ]
-    }
-  }
+  "scripts": {
+    "build": "tsc && pnpm run build:types",
+    "build:types": "dts-bundle-generator --export-referenced-types false -o dist/src/index.d.ts src/lib.ts",
+    "build:watch": "tsc -w",
+    "prepublish": "rm -rf dist && pnpm run build",
+    "test": "mocha",
+    "test:watch": "mocha --parallel --watch --watch-files src/**/*,test/**/* test/**/*.test.js"
+  },
+  "trustedDependencies": [
+    "core-js"
+  ],
+  "type": "module",
+  "types": "./dist/src/index.d.ts",
+  "version": "2.3.2"
 }

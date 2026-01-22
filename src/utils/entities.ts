@@ -11,7 +11,7 @@ import {
   TRef,
 } from "../types.js";
 
-export const ENTITY_ID_PREFIX = "faad";
+export const ENTITY_ID_PREFIX = "00ad";
 
 if (ENTITY_ID_PREFIX.length > 6)
   throw new Error(
@@ -23,11 +23,11 @@ export const generateRandomHex = (size: number) =>
     .map(() => Math.floor(Math.random() * 16).toString(16))
     .join("");
 export const generateRandomEntityID = (): string => {
-  const maxID = "00FFFFFFFFFFFFFF";
+  const maxID = BigInt("0x00FFFFFFFFFFFFFF");
   let id: string;
   do {
     id = ENTITY_ID_PREFIX + generateRandomHex(16 - ENTITY_ID_PREFIX.length);
-  } while (id > maxID);
+  } while (BigInt(`0x${id}`) > maxID);
   return id;
 };
 export const generateRandomEntityName = () =>

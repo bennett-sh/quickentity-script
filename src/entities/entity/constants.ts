@@ -1,67 +1,71 @@
-import { getClassPath, getPath } from '../../lib.js'
-import { Entity } from './base.js'
+import { getClassPath, getPath } from "../../lib.js";
+import { Entity } from "./base.js";
 
-declare module './_index.js' {
+declare module "./_index.js" {
   interface Entity {
-    getConstantInt(value: number): Entity
-    getConstantBool(value: boolean): Entity
+    getConstantInt(value: number): Entity;
+    getConstantBool(value: boolean): Entity;
   }
 }
 
-Entity.prototype.getConstantBool = function(value: boolean): Entity {
-  if(value) {
-    const id = this.patch.__constants.BOOL_TRUE
-    if(!id) {
+Entity.prototype.getConstantBool = function (value: boolean): Entity {
+  if (value) {
+    const id = this.patch.__constants.BOOL_TRUE;
+    if (!id) {
       const child = this.addChild({
-        name: 'Constant TRUE',
-        factory: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entitytype',
-        blueprint: '[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entityblueprint',
+        name: "Constant TRUE",
+        factory:
+          "[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entitytype",
+        blueprint:
+          "[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate].pc_entityblueprint",
         properties: {
           m_bValue: {
-            type: 'bool',
-            value: true
-          }
-        }
-      })
-      this.patch.__constants.BOOL_TRUE = child.id
-      return child
+            type: "bool",
+            value: true,
+          },
+        },
+      });
+      this.patch.__constants.BOOL_TRUE = child.id;
+      return child;
     }
-    return new Entity(this.patch, id)
+    return new Entity(this.patch, id);
   } else {
-    const id = this.patch.__constants.BOOL_FALSE
-    if(!id) {
+    const id = this.patch.__constants.BOOL_FALSE;
+    if (!id) {
       const child = this.addChild({
-        name: 'Constant FALSE',
-        ...getPath('[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]'),
+        name: "Constant FALSE",
+        ...getPath(
+          "[assembly:/_pro/design/logic/valuebool.template?/valuebool_basic.entitytemplate]",
+        ),
         properties: {
           m_bValue: {
-            type: 'bool',
-            value: false
-          }
-        }
-      })
-      this.patch.__constants.BOOL_FALSE = child.id
-      return child
+            type: "bool",
+            value: false,
+          },
+        },
+      });
+      this.patch.__constants.BOOL_FALSE = child.id;
+      return child;
     }
-    return new Entity(this.patch, id)
+    return new Entity(this.patch, id);
   }
-}
+};
 
-Entity.prototype.getConstantInt = function(value: number): Entity {
-  const id = this.patch.__constants.INTS[value]
-  if(!id) {
+Entity.prototype.getConstantInt = function (value: number): Entity {
+  const id = this.patch.__constants.INTS[value];
+  if (!id) {
     const child = this.addChild({
       name: `Constant ${value}`,
-      ...getClassPath('ValueInt_Basic'),
+      ...getClassPath("ValueInt_Basic"),
       properties: {
         m_nValue: {
-          type: 'int32',
-          value
-        }
-      }
-    })
-    this.patch.__constants.INTS[value] = child.id
-    return child
+          type: "int32",
+          value,
+        },
+      },
+    });
+    this.patch.__constants.INTS[value] = child.id;
+    return child;
   }
-  return new Entity(this.patch, id)
-}
+  return new Entity(this.patch, id);
+};
