@@ -2,7 +2,7 @@ name: Artifacts
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -13,36 +13,34 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
         with:
-          node-version: '18.x'
+          bun-version: latest
 
       - name: Cache
         id: cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v4
         with:
-          path: node_modules
-          key: buildCachev25
-
-      - name: Install PNPM
-        run: |
-          npm install -g pnpm
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
 
       - name: Install dependencies
         run: |
-          pnpm install
+          bun install
 
       - name: Build
         run: |
-          pnpm run build
+          bun run build
 
       - name: Ready library for upload
         run: |
           rm -rf output
           mkdir output
           find output -name '*.d.ts' ! -name 'index.d.ts' -delete
-          cp -r package.json pnpm-lock.yaml tsconfig.json dist/ src/ DOCUMENTATION.md LICENSE output/
+          cp -r package.json bun.lock tsconfig.json dist/ src/ DOCUMENTATION.md LICENSE output/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
